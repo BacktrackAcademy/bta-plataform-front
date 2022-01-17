@@ -34,13 +34,34 @@
           </svg>
         </form>
       </div>
-      <div class="hidden lg:flex items-center gap-5 ml-auto uppercase text-sm">
-        <div class="text-white font-oswald">Cursos</div>
-        <div class="text-white font-oswald">Artículos</div>
-        <div class="text-white font-oswald">Debates</div>
-        <div class="text-white font-oswald">Noticias</div>
-        <div class="text-white font-oswald border-principal border px-3 py-1 flex-shrink-0">Vuélvete Pro!</div>
-        <div class="text-white font-oswald">Iniciar Sesión</div>
+      <div class="hidden lg:grid grid-flow-col auto-cols-auto items-center justify-items-center gap-8 ml-auto uppercase text-sm">
+        <nuxt-link
+          v-for="link,key in links"
+          :key="key"
+          :to="link.url"
+          class="nav__link"
+        >
+          <span class="relative text-white">
+            {{link.name}}
+          </span>
+        </nuxt-link>
+        <nuxt-link
+          to="/login"
+          class="
+            shadow-md
+            shadow-principal/50
+            text-white
+            font-oswald
+            border-principal
+            border
+            px-3
+            py-1
+            flex-shrink-0
+          "
+        >
+          Vuélvete Pro!
+        </nuxt-link>
+        <nuxt-link to="/login" class="nav__link">Iniciar sesión</nuxt-link>
       </div>
       <HamburgerButton :toggleProp="toggleBurgerMenu" :state="hamburgerMenuIsOpen" />
     </div>
@@ -58,6 +79,12 @@
     data() {
       return {
         hamburgerMenuIsOpen: false,
+        links:[
+          { name: "Cursos", url: "/login" },
+          { name: "Artículos", url: "/login" },
+          { name: "Debates", url: "/login" },
+          { name: "Noticias", url: "/login" },
+        ]
       }
     },
     methods: {
@@ -83,5 +110,9 @@
   .searcher__input:focus ~ .searcher__icon{
     transform: translateX(-50px);
     opacity: 0;
+  }
+
+  .nav__link{
+    @apply text-center text-white font-oswald relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-pink-500 before:scale-x-0 before:transition-all hover:before:scale-x-100;
   }
 </style>
