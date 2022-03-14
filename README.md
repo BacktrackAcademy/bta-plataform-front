@@ -1,4 +1,10 @@
-# bta_platform_front
+# Backtrack Academy Platform
+
+## Instalation
+
+Node 14.17.1 
+https://nodejs.org/es/
+https://nuxtjs.org/
 
 ## Build Setup
 
