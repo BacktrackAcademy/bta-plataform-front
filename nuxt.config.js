@@ -1,7 +1,11 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-
+  // server: {
+  //   port: 8080, // default: 3000
+  //   host: "0.0.0.0", // default: localhost,
+  //   timing: false,
+  // },
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
 
@@ -76,7 +80,7 @@ export default {
           },
         },
         token: {
-          property: "access_token",
+          property: "token",
           type: "Bearer",
           name: "Authorization",
         },
@@ -93,7 +97,7 @@ export default {
     redirect: {
       login: "/login",
       logout: "/login",
-      home: "/flowchart",
+      home: "/cursos",
     },
   },
 
