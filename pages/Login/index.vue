@@ -1,13 +1,24 @@
 <template>
   <div class="h-full w-full">
-    <div class="flex justify-center items-center h-full w-full">
-      <div class="flex flex-col gap-4">
-        <div class="text-center mobile:xl table:text-3xl text-purple-principal font-bold uppercase">
-          Iniciar sesión
+    <div class="h-screen flex">
+      <div class="flex w-1/2 bg-body-back justify-around items-center">
+        <div>
+          <h1 class="text-white font-bold text-4xl font-oswald uppercase">Happy Hacking</h1>
+          <p class="text-white mt-1">Comienza tu carrera en Ciberseguridad</p>
         </div>
-        <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser"/>
+      </div>
+      <div class="flex w-1/2 justify-center items-center bg-white">
+        <form class="bg-white">
+          <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
+          <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+          <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser"/>
+
+          <!-- <button type="submit" class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login</button>
+          <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">Forgot Password ?</span> -->
+        </form>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -17,31 +28,29 @@
     middleware: "auth",
     name: "Login",
     data() {
-      return {}
+      return {
+      }
     },
     components: {
       UserAuthForm
     },
     methods: {
-      async loginUser(loginInfo) {
+      loginUser(loginInfo) {
         try {
-          await this.$auth.loginWith("local", {
-            data: loginInfo
+          this.$auth.loginWith("local", {
+            data: { user: loginInfo },
+            headers: { "Content-Type": "application/json" }
           }).then(res => {
             const user = res.data.user
             this.$auth.setUser(user)
-            const uid         = res.headers["uid"];
-            const client      = res.headers["client"];
-            const accessToken = res.headers["access-token"];
-            this.validateLogin(uid, client, accessToken)
-            this.persistLogin(uid, client, accessToken)
+            console.log('con user', res.data)
           });
         } catch(error) {
           console.log(error)
         }
       },
       validateLogin(uid, client, accessToken) {
-        this.$axios.get("api/v1/auth/validate_token", {
+        this.$axios.get("api/v1/tokens", {
           headers: {
             "uid": uid,
             "client": client,

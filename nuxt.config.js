@@ -32,6 +32,13 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
 
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
+
+  axios: {
+    baseURL: "http://localhost:3001/",
+  },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -41,9 +48,53 @@ export default {
     "@nuxtjs/tailwindcss",
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  router: {
+    middleware: ["auth"],
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        scheme: "local",
+        endpoints: {
+          login: {
+            url: "users/sign_in",
+            method: "post",
+            headers: { 'Content-Type': 'application/json' },
+          },
+          logout: {
+            url: "users/sign_out",
+            method: "delete",
+          },
+          user: {
+            url: "api/v1/user/info",
+            method: "get",
+          },
+        },
+        token: {
+          property: "access_token",
+          type: "Bearer",
+          name: "Authorization",
+        },
+        user: {
+          property: false,
+          autoFetch: false,
+        },
+      },
+    },
+    token: {
+      prefix: "_token.",
+      global: true,
+    },
+    redirect: {
+      login: "/login",
+      logout: "/login",
+      home: "/flowchart",
+    },
+  },
+
 };
