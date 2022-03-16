@@ -66,16 +66,16 @@ export default {
         scheme: "local",
         endpoints: {
           login: {
-            url: "users/sign_in",
+            url: "api/v1/users/sign_in",
             method: "post",
             headers: { 'Content-Type': 'application/json' },
           },
           logout: {
-            url: "users/sign_out",
+            url: "api/v1/users/sign_out",
             method: "delete",
           },
           user: {
-            url: "api/v1/user/info",
+            url: "api/v1/users/current",
             method: "get",
           },
         },
