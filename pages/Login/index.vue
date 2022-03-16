@@ -41,7 +41,7 @@
             data: { user: loginInfo },
             headers: { "Content-Type": "application/json" }
           }).then(res => {
-            const user = res.data.user_data
+            const user = res.data
             this.$auth.setUser(user)
             console.log('con user', res.data)
           });
