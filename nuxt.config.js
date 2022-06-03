@@ -1,11 +1,9 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-  // server: {
-  //   port: 8080, // default: 3000
-  //   host: "0.0.0.0", // default: localhost,
-  //   timing: false,
-  // },
+  server: {
+    port: 8080, // default: 3000
+  },
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
 
@@ -40,7 +38,8 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
   axios: {
-    baseURL: "http://localhost:3001/",
+    // baseURL: "https://backtrackacademy.com/",
+    baseURL: "http://localhost:3000/",
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
