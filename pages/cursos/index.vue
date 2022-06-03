@@ -32,7 +32,7 @@
       <h2 class="font-oswald uppercase  font-semibold justify-center text-4xl text-center py-32">Catálogo de cursos</h2>
     </div>
     <div class="grid grid-cols-4 gap-8 mx-32">
-      <div v-for="course in courses">
+      <div v-for="(course, i) in courses" :key="i" >
         
         <div class="max-w-xs mx-auto">
           <div class="flex flex-col h-full bg-white shadow-lg rounded-lg overflow-hidden">
