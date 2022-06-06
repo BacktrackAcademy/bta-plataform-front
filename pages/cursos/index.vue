@@ -74,6 +74,7 @@
 <script>
 export default {
   name: 'IndexPage',
+  layout:'navbar',
   data() {
     return {
       courses: [],
@@ -86,9 +87,8 @@ export default {
     getCourses() {
       this.$axios.get("api/v1/courses").then((response) => {
         this.courses = response.data;
-      }).catch((error) => {
-        console.log(error)
-      });
+      })
+      .catch((error) => console.log(error));
     }
   }
 }
