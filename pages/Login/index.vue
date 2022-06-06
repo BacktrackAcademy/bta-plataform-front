@@ -1,7 +1,7 @@
 <template>
   <div class="h-full w-full">
     <div class="h-screen flex">
-      <div class="flex w-1/2 bg-body-back justify-around items-center">
+      <div class="flex w-1/2 bg-bta-blue justify-around items-center">
         <div>
           <h1 class="text-white font-bold text-4xl font-oswald uppercase">Happy Hacking</h1>
           <p class="text-white mt-1">Comienza tu carrera en Ciberseguridad</p>
