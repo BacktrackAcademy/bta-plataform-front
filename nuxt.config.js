@@ -38,8 +38,8 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
   axios: {
-    // baseURL: "https://backtrackacademy.com/",
-    baseURL: "http://localhost:3000/",
+    baseURL: "https://backtrackacademy.com/",
+    // baseURL: "http://localhost:3000/",
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components

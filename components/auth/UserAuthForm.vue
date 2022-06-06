@@ -46,9 +46,8 @@
     data() {
       return {
         userInfo: {
-          // email: "gonzaloggdlr@gmail.com",
-          email: "felipe@backtrackacademy.com",
-          password: "demo321#",
+          email: "",
+          password: "",
         },
         error: false,
       }
