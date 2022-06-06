@@ -2,11 +2,11 @@
   <nav class="top-0">
     <div
       :class="{ ' -translate-y-[300%]': !hamburgerMenuIsOpen}"
-      class="block lg:hidden fixed w-full bg-body-back top-20 left-0 z-0 overflow-y-scroll h-full max-h-[calc(100%-5rem)] duration-500"
+      class="block lg:hidden fixed w-full bg-bta-dark-blue top-20 left-0 z-0 overflow-y-scroll h-full max-h-[calc(100%-5rem)] duration-500"
     >
       <HamburgerMenu :close="closeBurgerMenu" />
     </div>
-    <div class="fixed top-0 left-0 flex gap-6 items-center bg-header-back px-8 lg:px-16 w-full h-20 z-10">
+    <div class="fixed top-0 left-0 flex gap-6 items-center bg-bta-dark-blue px-8 lg:px-16 w-full h-20 z-10">
       <div @click.prevent="closeBurgerMenu">
         <nuxt-link to="/">
           <img class="w-32" src="~/assets/logo.svg" />
@@ -49,10 +49,10 @@
           to="/login"
           class="
             shadow-md
-            shadow-principal/50
+            shadow-bta-pink/50
             text-white
             font-oswald
-            border-principal
+            border-bta-pink
             border
             px-3
             py-1
@@ -113,6 +113,6 @@
   }
 
   .nav__link{
-    @apply text-center text-white font-oswald relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-pink-500 before:scale-x-0 before:transition-all hover:before:scale-x-100;
+    @apply text-center text-white font-oswald relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-bta-pink before:scale-x-0 before:transition-all hover:before:scale-x-100;
   }
 </style>
