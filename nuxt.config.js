@@ -1,11 +1,9 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-  // server: {
-  //   port: 8080, // default: 3000
-  //   host: "0.0.0.0", // default: localhost,
-  //   timing: false,
-  // },
+  server: {
+    port: 8080, // default: 3000
+  },
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
 
@@ -40,7 +38,8 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
   axios: {
-    baseURL: "http://localhost:3001/",
+    baseURL: "https://backtrackacademy.com/",
+    // baseURL: "http://localhost:3000/",
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -65,29 +64,31 @@ export default {
       local: {
         scheme: "local",
         endpoints: {
-          login: {
-            url: "api/v1/users/sign_in",
-            method: "post",
-            headers: { 'Content-Type': 'application/json' },
-          },
-          logout: {
-            url: "api/v1/users/sign_out",
-            method: "delete",
-          },
-          user: {
-            url: "api/v1/users/current",
-            method: "get",
-          },
+          login:  { url: 'api/v1/users/sign_in' },
+          logout: { url: 'api/v1/users/sign_out', method: 'delete' },
+          user:   { url: 'api/v1/users/current' }
+          // login: {
+          //   url: "api/v1/users/sign_in",
+          //   method: "post",
+          //   headers: { 'Content-Type': 'application/json' },
+          // },
+          // logout: {
+          //   url: "api/v1/users/sign_out",
+          //   method: "delete",
+          // },
+          // user: {
+          //   url: "api/v1/users/current",
+          // },
         },
-        token: {
-          property: "token",
-          type: "Bearer",
-          name: "Authorization",
-        },
-        user: {
-          property: false,
-          autoFetch: false,
-        },
+        // token: {
+        //   property: "authorization_token",
+        //   type: "Bearer",
+        //   name: "Authorization",
+        // },
+        // user: {
+        //   property: false,
+        //   autoFetch: false,
+        // },
       },
     },
     token: {
