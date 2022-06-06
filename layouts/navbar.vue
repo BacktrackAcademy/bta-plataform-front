@@ -1,6 +1,5 @@
 <template>
   <div v-if="$auth.loggedIn">
-    <Header/>
     <Nuxt />
   </div>
   <div v-else>
