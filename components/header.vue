@@ -2,7 +2,7 @@
   <nav class="top-0">
     <div
       :class="{ ' -translate-y-[300%]': !hamburgerMenuIsOpen}"
-      class="block lg:hidden fixed w-full bg-body-back top-20 left-0 z-0 overflow-y-scroll h-full max-h-[calc(100%-5rem)] duration-500"
+      class="block lg:hidden fixed w-full bg-bta-blue top-20 left-0 z-0 overflow-y-scroll h-full max-h-[calc(100%-5rem)] duration-500"
     >
       <HamburgerMenu :close="closeBurgerMenu" />
     </div>
