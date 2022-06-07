@@ -72,7 +72,7 @@
   import HamburgerButton from "~/components/hamburgerMenu/hamburgerButton.vue"
 
   export default {
-    name: "header",
+    name: "Navbar",
     components: {
       HamburgerButton
     },
@@ -80,7 +80,7 @@
       return {
         hamburgerMenuIsOpen: false,
         links:[
-          { name: "Cursos", url: "/login" },
+          { name: "Cursos", url: "/cursos" },
           { name: "Artículos", url: "/login" },
           { name: "Debates", url: "/login" },
           { name: "Noticias", url: "/login" },
