@@ -10,6 +10,7 @@ module.exports = {
         "bta-dark-blue": "#070916", //header
         "bta-section": "#141224",//
         "gray-border": "#36364e",
+        "gray-muted": "#565982"
       },
       fontFamily: {
         oswald: ["Oswald", "sans-serif"],
