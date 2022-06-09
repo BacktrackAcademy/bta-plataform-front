@@ -18,7 +18,7 @@ module.exports = {
         "gray-muted": "#565982"
       },
       fontFamily: {
-        oswald: ["Oswald", "sans-serif"],
+        oswald: ["Oswald","helvetica neue","Helvetica","Arial", "sans-serif"],
         inconsolata: ["Inconsolata", "monospace"],
       },
       scale: {
