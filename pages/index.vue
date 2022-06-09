@@ -89,12 +89,17 @@
 
 <script>
 export default {
+  auth: false,
   data() {
     return {
 
     }
   },
-
+  beforeCreate(){
+    if (this.$auth.loggedIn) {
+    this.$router.push('/cursos')
+    }
+  }
 }
 </script>
 <style>
