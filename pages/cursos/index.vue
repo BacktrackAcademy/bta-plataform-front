@@ -412,7 +412,7 @@
                     </svg>
                   </div>
 
-                  <div class="py-6 hidden peer-checked:block transition-transform duration-700">
+                  <div class="py-6 peer-checked:hidden transition-transform duration-700">
                     <div class="peer-checked:bg-red-500 space-y-4">
 
                       <div v-for="(level, i) in levels" :key="i">
@@ -446,7 +446,7 @@
                     </svg>
                   </div>
                   <!-- Filter section, show/hide based on section state. -->
-                  <div class="py-6 hidden peer-checked:block transition-transform duration-700">
+                  <div class="py-6 peer-checked:hidden transition-transform duration-700">
                     <div class="space-y-4">
                       <div v-for="(category, i) in categories" :key="i">
                         <div class="flex items-center gap-2">
@@ -479,7 +479,7 @@
                     </svg>
                   </div>
                   <!-- Filter section, show/hide based on section state. -->
-                  <div class="py-6 hidden peer-checked:block transition-transform duration-700">
+                  <div class="py-6 peer-checked:hidden transition-transform duration-700">
                     <div class="space-y-4">
 
                       <div v-for="(teacher, i) in teachers" :key="i">
