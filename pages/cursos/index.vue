@@ -417,9 +417,9 @@
 
                       <div v-for="(level, i) in levels" :key="i">
                         <div class="flex items-center gap-2">
-                          <input id="filter-size-0" name="size[]" :value="level.id" type="checkbox" v-model="level_ids"
+                          <input :id="level.name" name="size[]" :value="level.id" type="checkbox" v-model="level_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                          <label for="filter-size-0"
+                          <label :for="level.name"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ level.name
                             }}</label>
                           <label class="text-gray-muted font-inconsolata hover:text-white">{{ level.number_courses
@@ -450,9 +450,9 @@
                     <div class="space-y-4">
                       <div v-for="(category, i) in categories" :key="i">
                         <div class="flex items-center gap-2">
-                          <input id="filter-size-0" name="size[]" :value="category.id" type="checkbox" v-model="category_ids"
+                          <input :id="category.name" name="size[]" :value="category.id" type="checkbox" v-model="category_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                          <label for="filter-size-0"
+                          <label :for="category.name"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ category.name
                             }}</label>
                           <label class="text-gray-muted font-inconsolata hover:text-white">{{ category.number_courses
@@ -484,9 +484,9 @@
 
                       <div v-for="(teacher, i) in teachers" :key="i">
                         <div class="flex items-center">
-                          <input id="filter-size-0" name="size[]" :value="teacher.id" type="checkbox" v-model="user_ids"
+                          <input :id="teacher.name" name="size[]" :value="teacher.id" type="checkbox" v-model="user_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                          <label for="filter-size-0"
+                          <label :for="teacher.name"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white"> {{ teacher.name }}
                             {{ teacher.lastname }}  </label>
                           <label class="text-gray-muted font-inconsolata hover:text-white"> {{ teacher.number_courses
