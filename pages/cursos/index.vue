@@ -417,7 +417,7 @@
 
                       <div v-for="(level, i) in levels" :key="i">
                         <div class="flex items-center gap-2">
-                          <input id="filter-size-0" name="size[]" value="2l" type="checkbox"
+                          <input id="filter-size-0" name="size[]" :value="level.id" type="checkbox" v-model="level_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                           <label for="filter-size-0"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ level.name
@@ -450,7 +450,7 @@
                     <div class="space-y-4">
                       <div v-for="(category, i) in categories" :key="i">
                         <div class="flex items-center gap-2">
-                          <input id="filter-size-0" name="size[]" value="2l" type="checkbox"
+                          <input id="filter-size-0" name="size[]" :value="category.id" type="checkbox" v-model="category_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                           <label for="filter-size-0"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ category.name
@@ -484,12 +484,12 @@
 
                       <div v-for="(teacher, i) in teachers" :key="i">
                         <div class="flex items-center">
-                          <input id="filter-size-0" name="size[]" value="2l" type="checkbox"
+                          <input id="filter-size-0" name="size[]" :value="teacher.id" type="checkbox" v-model="user_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                           <label for="filter-size-0"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white"> {{ teacher.name }}
-                            {{ teacher.lastname }} </label>
-                          <label class="text-gray-muted font-inconsolata hover:text-white">{{ teacher.number_courses
+                            {{ teacher.lastname }}  </label>
+                          <label class="text-gray-muted font-inconsolata hover:text-white"> {{ teacher.number_courses
                           }}</label>
                         </div>
                       </div>
@@ -567,7 +567,10 @@ export default {
       courses: [],
       teachers: [],
       levels: [],
-      categories: []
+      categories: [],
+      user_ids: [],
+      level_ids: [],
+      category_ids: [],
     }
   },
   mounted() {
@@ -576,9 +579,26 @@ export default {
     this.getLevels();
     this.getCategories();
   },
+  watch:{
+    level_ids(){
+      this.getCourses()
+    },
+    category_ids(){
+      this.getCourses()
+    },
+    user_ids(){
+      this.getCourses()
+    }
+  },
   methods: {
     getCourses() {
-      this.$axios.get("api/v1/courses").then((response) => {
+      this.$axios.get("api/v1/courses", { 
+        params: {
+          user_ids: this.user_ids,
+          level_ids: this.level_ids,
+          category_ids: this.category_ids,
+        }
+      }).then((response) => {
         this.courses = response.data;
       })
         .catch((error) => console.log(error));
