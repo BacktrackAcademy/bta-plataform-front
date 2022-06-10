@@ -92,7 +92,7 @@
         <div v-for="(theme, i) in syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-4xl">
           <h3 class="font-oswald text-white text-3xl font-bold my-10">{{ theme.titulo }}</h3>
 
-          <div v-for="(video, i) in orderVideos(theme.videos)" :key="i + 2000" class="flex gap-4 items-center py-4">
+          <div v-for="(video, i) in theme.videos" :key="i + 2000" class="flex gap-4 items-center py-4">
             <!-- play icon -->
             <div v-if="video.is_free" class="text-white">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -152,17 +152,17 @@ export default {
       this.stars_blank = 5 - stars
     },
 
-    orderVideos(videos) {
-      return videos.sort( (a, b) =>{
-        if(a.slug > b.slug){
-          return 1
-        }
-        if(a.slug < b.slug){
-          return -1
-        }
-        return 0
-      })
-    },
+    // orderVideos(videos) {
+    //   return videos.sort( (a, b) =>{
+    //     if(a.slug > b.slug){
+    //       return 1
+    //     }
+    //     if(a.slug < b.slug){
+    //       return -1
+    //     }
+    //     return 0
+    //   })
+    // },
   }
 }
 </script>
