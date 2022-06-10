@@ -1,7 +1,7 @@
 <template>
   <div v-if="$auth.loggedIn">
     <LoogedNavbar />
-    <Nuxt />
+    <Nuxt class="pt-20"/>
   </div>
   <div v-else>
     <Header />

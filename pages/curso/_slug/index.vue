@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-20">
+  <div>
     <div class="hero bg-bta-dark-blue relative">
       <!-- Hero background -->
 
@@ -151,18 +151,6 @@ export default {
     calcStars(stars) {
       this.stars_blank = 5 - stars
     },
-
-    // orderVideos(videos) {
-    //   return videos.sort( (a, b) =>{
-    //     if(a.slug > b.slug){
-    //       return 1
-    //     }
-    //     if(a.slug < b.slug){
-    //       return -1
-    //     }
-    //     return 0
-    //   })
-    // },
   }
 }
 </script>
