@@ -504,7 +504,7 @@
                 <div class="h-96 lg:h-full">
                   <div class="grid grid-cols-3 gap-8">
                     <div v-for="(course, i) in courses" :key="i">
-                      <div class="max-w-xs mx-auto">
+                      <div class="max-w-xs mx-auto h-full">
                         <div class="flex flex-col h-full bg-bta-dark-blue shadow-lg rounded-lg overflow-hidden">
                           <!-- Image -->
                           <a class="block focus:outline-none focus-visible:ring-2" href="#0">
