@@ -13,8 +13,10 @@
           <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
           <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser"/>
 
-          <!-- <button type="submit" class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login</button>
-          <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">Forgot Password ?</span> -->
+          <!-- <button type="submit" class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login</button> -->
+          <NuxtLink to="/registro">
+            <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">¿No tienes cuenta? Regístrate</span>
+          </NuxtLink>  
         </form>
       </div>
     </div>
