@@ -11,33 +11,36 @@
         <figure class=" h-full py-[53px] px-2">
           <img :src="teacher.avatar_url" class="" />
         </figure>
+        <!-- hero content -->
         <div class="hero-content">
           <p class="font-inconsolata text-sm">Curso</p>
           <h1 class="font-oswald font-bold text-5xl mb-3">{{ course.titulo }}</h1>
           <div class="extra-info flex items-center">
-            <div class="mr-2 flex items-center">
-              <div v-for="(i) in course.stars_evaluation" :key="i">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
-                  class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 576 512">
-                  <path fill="#fddd5b"
-                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
-                  </path>
-                </svg>
+            <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'">
+              <div class="mr-2 flex items-center">
+                <div v-for="(i) in course.stars_evaluation" :key="i">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
+                    class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 576 512">
+                    <path fill="#fddd5b"
+                      d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                    </path>
+                  </svg>
+                </div>
+                <div v-for="(i) in stars_blank" :key="i">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
+                    class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 576 512">
+                    <path fill="currentColor"
+                      d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                    </path>
+                  </svg>
+                </div>
+                <div class="mx-4">
+                  <p class="text-cyan-400">{{ course.count_evaluation }} Opiniones </p>
+                </div>
               </div>
-              <div v-for="(i) in stars_blank" :key="i">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
-                  class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 576 512">
-                  <path fill="currentColor"
-                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
-                  </path>
-                </svg>
-              </div>
-              <div class="mx-4">
-                <p class="text-cyan-400">{{ course.count_evaluation }} Opiniones </p>
-              </div>
-            </div>
+            </NuxtLink>
             <div class="flex items-center justify-center border border-gray-muted rounded-lg mr-2 px-3 py-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 23 21">
                 <g id="Rectángulo_1" data-name="Rectángulo 1" transform="translate(0 12)" fill="#EC1075">
@@ -63,7 +66,6 @@
               <p class="font-medium uppercase pt-[2px] ml-2 text-base"> {{ course.level_name }}</p>
             </div>
           </div>
-          <!-- hero content -->
           <p>{{ teacher.name }}</p>
           <p class="mt-4 text-lg">{{ course.descripcion }}</p>
           <NuxtLink to="/cursos" class="">Regresar a cursos</NuxtLink>
@@ -73,9 +75,9 @@
           <p v-if="course.price" class="font-oswald text-4xl font-medium mb-3">{{ course.price }} USD</p>
           <p v-else class="font-oswald text-4xl font-medium mb-3"> GRATIS</p>
           <NuxtLink to="/" class="btn-bta"> Comprar suscripción mensual</NuxtLink>
-          <p v-if="course.price" class="font-inconsolata text-white text-sm pt-3">Puedes comprar el curso por: {{
-              course.price
-          }} USD</p>
+          <p v-if="course.price" class="font-inconsolata text-white text-sm pt-3">
+            Puedes comprar el curso por: {{ course.price }} USD
+          </p>
           <p v-else class="font-inconsolata text-white text-sm pt-3">¡Es absolutamente gratis!</p>
         </div>
       </div>
@@ -89,10 +91,10 @@
           >
           Temario del Curso de {{ course.titulo }}
         </h2>
-        <div v-for="(theme, i) in syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-4xl">
+        <div v-for="(theme, i) in syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
           <h3 class="font-oswald text-white text-3xl font-bold my-10">{{ theme.titulo }}</h3>
 
-          <div v-for="(video, i) in theme.videos" :key="i + 2000" class="flex gap-4 items-center py-4">
+          <div v-for="(video, i) in theme.videos" :key="i + 2000" class="flex gap-2 items-center p-6 hover:bg-bta-dark-blue rounded-lg relative">
             <!-- play icon -->
             <div v-if="video.is_free" class="text-white">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -112,6 +114,15 @@
             </div>
             <div class="">
               <p class="text-white"> {{ video.titlevideo }} </p>
+            </div>
+            <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
+              <div class="text-bta-pink">
+                <!-- clock icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <p class="text-white"> {{ video.total }}</p>
             </div>
           </div>
         </div>
