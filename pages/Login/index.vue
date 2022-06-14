@@ -14,6 +14,10 @@
           <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser"/>
 
           <!-- <button type="submit" class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login</button> -->
+          <button @click="loginUserGithub" class="py-3 px-5 text-white bg-black rounded">github</button>
+          <button @click="loginUserFacebook" class="py-3 px-5 text-white bg-black rounded">facebook</button>
+          <button @click="loginUserDiscord" class="py-3 px-5 text-white bg-black rounded">discord</button>
+          <button @click="loginUserGoogle" class="py-3 px-5 text-white bg-black rounded">google</button>
           <NuxtLink to="/registro">
             <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">¿No tienes cuenta? Regístrate</span>
           </NuxtLink>  
@@ -51,6 +55,22 @@
           console.log(error)
         }
       },
+
+      loginUserGithub(){
+        this.$auth.loginWith('github')
+      },
+      loginUserFacebook(){
+        this.$auth.loginWith('facebook')
+      },
+      loginUserDiscord(){
+        this.$auth.loginWith('discord')
+      },
+      loginUserGoogle(){
+        this.$auth.loginWith('google')
+      },
+      
+
+
       validateLogin(uid, client, accessToken) {
         this.$axios.get("api/v1/tokens", {
           headers: {
