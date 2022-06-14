@@ -1,0 +1,56 @@
+name: S3 Deploy Backtrackacademy
+on:
+  push:
+    branches:
+      - index-page
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@master
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.7.0
+      - name: Install Dependencies
+        run: |
+          npm cache clean --force
+          npm ci
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      # - name: Cache
+      #   run: npm cache clean --force
+
+      - name: Install
+        run: npm install
+
+      # - name: Lint
+      #   run: npm run lint
+        
+      # - name: Build
+      #   run: npm run build
+
+      - name: Generate
+        run: npm run generate
+
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp \
+            --recursive \
+            --region us-east-1 \
+            dist/ s3://app.backtrackacademy.com
+            
+            
