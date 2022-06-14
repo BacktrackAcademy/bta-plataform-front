@@ -65,8 +65,8 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" 
-                >Cerrar Sesión</a
+              <button @click="$auth.logout()" class="nav-link" 
+                >Cerrar Sesión</button
               >
             </li>
           </ul>
