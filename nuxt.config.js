@@ -39,8 +39,22 @@ export default {
   plugins: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
-
+  modules: [
+  "@nuxtjs/axios", 
+  "@nuxtjs/auth-next", 
+  "@nuxtjs/sitemap",
+  '@nuxtjs/robots',
+],
+  sitemap: {
+    hostname: 'https://app.backtrackacademy.com',
+    gzip: true,
+  },
+  robots: {
+    UserAgent: '*',
+    Allow: '*',
+    Disallow: '/login/',
+    Sitemap: 'https://app.backtrackacademy.com/sitemap.xml'
+  },
   axios: {
     baseURL: "https://backtrackacademy.com/",
     // baseURL: "http://localhost:3000/",
@@ -54,7 +68,6 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
   ],
-
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
@@ -72,7 +85,6 @@ export default {
   //   // googleClientId: process.env.GOOGLE_CLIENT_ID,
   // },
 
-
   auth: {
     strategies: {
       github: {
@@ -82,9 +94,9 @@ export default {
       local: {
         scheme: "local",
         endpoints: {
-          login:  { url: 'api/v1/users/sign_in' },
-          logout: { url: 'api/v1/users/sign_out', method: 'delete' },
-          user:   { url: 'api/v1/users/current' }
+          login: { url: "api/v1/users/sign_in" },
+          logout: { url: "api/v1/users/sign_out", method: "delete" },
+          user: { url: "api/v1/users/current" },
           // login: {
           //   url: "api/v1/users/sign_in",
           //   method: "post",
@@ -119,5 +131,4 @@ export default {
       home: "/cursos",
     },
   },
-
 };
