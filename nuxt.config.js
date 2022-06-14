@@ -91,6 +91,20 @@ export default {
         clientId: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
       },
+      github: {
+        clientId: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      },
+      facebook: {
+        endpoints: {
+          userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}'
+        },
+        clientId: process.env.FACEBOOK_CLIENT_ID,
+        scope: ['public_profile', 'email']
+      },
+      // google: {
+      //   clientId: process.env.GOOGLE_CLIENT_ID
+      // },
       local: {
         scheme: "local",
         endpoints: {
