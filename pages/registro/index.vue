@@ -32,7 +32,7 @@ import UserRegisterForm from "@/components/auth/UserRegisterForm"
         userInfo: {
           email: "",
           password: "",
-
+          confirmPassword:"",
         },
         error: false,
       }
@@ -47,6 +47,11 @@ import UserRegisterForm from "@/components/auth/UserRegisterForm"
     },
     methods: {
       //logica para registra usuario 
+      async registerUser(registrationInfo){
+        await this.$axios.post('/users', registrationInfo)
+        alert("Te registraste satisfactoriamente")
+        this.$router.push('/login')
+      } 
     }
  }
 </script>
