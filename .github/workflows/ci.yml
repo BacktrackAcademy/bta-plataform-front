@@ -2,7 +2,7 @@ name: S3 Deploy Backtrackacademy
 on:
   push:
     branches:
-      - main
+      - index-page
 
 jobs:
   build:
