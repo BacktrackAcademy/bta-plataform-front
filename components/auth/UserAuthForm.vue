@@ -32,7 +32,7 @@
       </div>
       <p v-if="error">Hubo un error al introducir el email o la contraseña.</p>
       <input
-        class="block w-full mt-4 py-2 rounded-xl font-semibold mb-2 bg-black px-8 py-2 text-white cursor-pointer"
+        class="block w-full mt-4 rounded-xl font-semibold mb-2 bg-black px-8 py-2 text-white cursor-pointer"
         type="submit"
         :value="buttonText"
       >
