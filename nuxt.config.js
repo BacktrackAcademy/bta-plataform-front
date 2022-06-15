@@ -44,7 +44,6 @@ export default {
   "@nuxtjs/auth-next", 
   "@nuxtjs/sitemap",
   '@nuxtjs/robots',
-  '@nuxtjs/dotenv',
 ],
   sitemap: {
     hostname: 'https://app.backtrackacademy.com',
