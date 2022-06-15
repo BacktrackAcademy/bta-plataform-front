@@ -3,7 +3,7 @@
     <div class="h-screen flex">
       <div class="hidden md:flex w-1/2 bg-bta-blue justify-around items-center">
         <div>
-          <h1 class="text-white font-bold text-4xl font-oswald uppercase">Happy Hacking</h1>
+          <h1 class="text-white font-bold text-4xl font-oswald uppercase">Happy Hacking {{pruebaEnv}}, asdsadasd</h1>
           <p class="text-white mt-1">Comienza tu carrera en Ciberseguridad</p>
         </div>
       </div>
@@ -85,6 +85,7 @@
     name: "Login",
     data() {
       return {
+        pruebaEnv: process.env.pruebaVar
       }
     },
     components: {
@@ -133,7 +134,7 @@
             console.log("loggedIn:", this.$store.state.auth.loggedIn)
           }
         }).catch((error) => {
-           console.log(error)
+          console.log(error)
         });
       },
       persistLogin (uid, client, accessToken) {
