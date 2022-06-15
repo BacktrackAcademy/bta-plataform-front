@@ -97,7 +97,7 @@ export default {
         endpoints: {
           userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
         },
-        redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/users/auth/facebook/callback
+        redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
         clientId: process.env.FACEBOOK_CLIENT_ID,
         scope: ['public_profile', 'email']
       },

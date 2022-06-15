@@ -1,9 +1,8 @@
-name: S3 Deploy Backtrackacademy
+name: Deploy Backtrackacademy
 on:
   push:
     branches:
-      - index-page
-
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
