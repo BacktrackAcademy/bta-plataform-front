@@ -77,28 +77,28 @@ export default {
     middleware: ["auth"],
   },
 
-  // env: {
-  //   // pruebaVar: process.env.NUXT_ENV_PRUEBAVAR
-  //   // discordClientId: process.env.DISCORD_CLIENT_ID,
-  //   // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
-  //   // googleClientId: process.env.GOOGLE_CLIENT_ID,
-  // },
+  env: {
+    pruebaVar: process.env.NUXT_ENV_PRUEBAVAR
+  //   // discordClientId: process.env.NUXT_ENV_DISCORD_CLIENT_ID,
+  //   // discordClientSecret: process.env.NUXT_ENV_DISCORD_CLIENT_SECRET,
+  //   // googleClientId: process.env.NUXT_ENV_GOOGLE_CLIENT_ID,
+  },
   auth: {
     strategies: {
       github: {
-        clientId: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID,
+        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET,
       },
       facebook: {
         endpoints: {
           userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
         },
         redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
-        clientId: process.env.FACEBOOK_CLIENT_ID,
+        clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID,
         scope: ['public_profile', 'email']
       },
       // google: {
-      //   clientId: process.env.GOOGLE_CLIENT_ID
+      //   clientId: process.env.NUXT_ENV_GOOGLE_CLIENT_ID
       // },
       local: {
         scheme: "local",
