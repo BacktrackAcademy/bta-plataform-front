@@ -44,6 +44,7 @@ export default {
   "@nuxtjs/auth-next", 
   "@nuxtjs/sitemap",
   '@nuxtjs/robots',
+  '@nuxtjs/dotenv',
 ],
   sitemap: {
     hostname: 'https://app.backtrackacademy.com',
@@ -51,8 +52,7 @@ export default {
   },
   robots: {
     UserAgent: '*',
-    Allow: '*',
-    Disallow: '/login/',
+    Disallow: '/',
     Sitemap: 'https://app.backtrackacademy.com/sitemap.xml'
   },
   axios: {
@@ -68,7 +68,6 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
   ],
-
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
@@ -84,7 +83,6 @@ export default {
   //   // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
   //   // googleClientId: process.env.GOOGLE_CLIENT_ID,
   // },
-
   auth: {
     strategies: {
       github: {
@@ -97,8 +95,9 @@ export default {
       },
       facebook: {
         endpoints: {
-          userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}'
+          userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
         },
+        redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/users/auth/facebook/callback
         clientId: process.env.FACEBOOK_CLIENT_ID,
         scope: ['public_profile', 'email']
       },
