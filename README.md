@@ -1,3 +1,5 @@
+[![S3 Deploy Backtrackacademy](https://github.com/BacktrackAcademy/bta-plataform-front/actions/workflows/ci.yml/badge.svg)](https://github.com/BacktrackAcademy/bta-plataform-front/actions/workflows/ci.yml)
+
 # Backtrack Academy Platform
 
 ## Instalation
