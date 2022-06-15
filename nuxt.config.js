@@ -1,6 +1,9 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  generate: {
+    cache: false
+  },
   server: {
     port: 3002, // default: 3000
   },
@@ -74,12 +77,12 @@ export default {
     middleware: ["auth"],
   },
 
-  env: {
-    pruebaVar: process.env.PRUEBAVAR
-    // discordClientId: process.env.DISCORD_CLIENT_ID,
-    // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
-    // googleClientId: process.env.GOOGLE_CLIENT_ID,
-  },
+  // env: {
+  //   // pruebaVar: process.env.NUXT_ENV_PRUEBAVAR
+  //   // discordClientId: process.env.DISCORD_CLIENT_ID,
+  //   // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
+  //   // googleClientId: process.env.GOOGLE_CLIENT_ID,
+  // },
   auth: {
     strategies: {
       github: {
