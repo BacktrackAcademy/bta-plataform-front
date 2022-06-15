@@ -24,6 +24,9 @@ module.exports = {
       scale: {
         '40': '0.4',
         '80': '0.8'
+      },
+      animation:{
+        'fast-pulse': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite'
       }
     },
   },
