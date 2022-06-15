@@ -77,12 +77,12 @@ export default {
     middleware: ["auth"],
   },
 
-  env: {
-    pruebaVar: process.env.NUXT_ENV_PRUEBAVAR
-  //   // discordClientId: process.env.NUXT_ENV_DISCORD_CLIENT_ID,
-  //   // discordClientSecret: process.env.NUXT_ENV_DISCORD_CLIENT_SECRET,
-  //   // googleClientId: process.env.NUXT_ENV_GOOGLE_CLIENT_ID,
-  },
+  // env: {
+  //   pruebaVar: process.env.NUXT_ENV_PRUEBAVAR
+  // //   // discordClientId: process.env.NUXT_ENV_DISCORD_CLIENT_ID,
+  // //   // discordClientSecret: process.env.NUXT_ENV_DISCORD_CLIENT_SECRET,
+  // //   // googleClientId: process.env.NUXT_ENV_GOOGLE_CLIENT_ID,
+  // },
   auth: {
     strategies: {
       github: {
