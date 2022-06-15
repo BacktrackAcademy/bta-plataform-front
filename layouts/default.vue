@@ -1,16 +1,20 @@
 <template>
   <div v-if="$auth.loggedIn">
-    <Nuxt />
+    <LoogedNavbar />
+    <Nuxt class="pt-20"/>
   </div>
   <div v-else>
-    <Login/>
+    <Header />
+    <Nuxt />
   </div>
 </template>
 <script>
-import Login from '../pages/Login/index.vue'
+import Header from "../components/header.vue";
+import LoogedNavbar from "../components/LoogedNavbar.vue";
 export default {
-    components: {
-      Login
-    },
-  };
+  components: {
+    Header,
+    LoogedNavbar,
+  },
+};
 </script>

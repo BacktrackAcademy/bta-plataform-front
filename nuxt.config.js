@@ -2,7 +2,7 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
   server: {
-    port: 8080, // default: 3000
+    port: 3002, // default: 3000
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -25,6 +25,10 @@ export default {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap",
       },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500&display=swap",
+      },
     ],
   },
 
@@ -35,8 +39,22 @@ export default {
   plugins: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
-
+  modules: [
+  "@nuxtjs/axios", 
+  "@nuxtjs/auth-next", 
+  "@nuxtjs/sitemap",
+  '@nuxtjs/robots',
+  '@nuxtjs/dotenv',
+],
+  sitemap: {
+    hostname: 'https://app.backtrackacademy.com',
+    gzip: true,
+  },
+  robots: {
+    UserAgent: '*',
+    Disallow: '/',
+    Sitemap: 'https://app.backtrackacademy.com/sitemap.xml'
+  },
   axios: {
     baseURL: "https://backtrackacademy.com/",
     // baseURL: "http://localhost:3000/",
@@ -50,8 +68,6 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
   ],
-
-
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
@@ -59,14 +75,41 @@ export default {
     middleware: ["auth"],
   },
 
+  // env: {
+  //   githubClientId: process.env.GITHUB_CLIENT_ID,
+  //   githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+  //   // facebookId: process.env.FACEBOOK_CLIENT_ID,
+  //   // discordClientId: process.env.DISCORD_CLIENT_ID,
+  //   // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
+  //   // googleClientId: process.env.GOOGLE_CLIENT_ID,
+  // },
   auth: {
     strategies: {
+      github: {
+        clientId: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      },
+      github: {
+        clientId: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      },
+      facebook: {
+        endpoints: {
+          userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
+        },
+        redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/users/auth/facebook/callback
+        clientId: process.env.FACEBOOK_CLIENT_ID,
+        scope: ['public_profile', 'email']
+      },
+      // google: {
+      //   clientId: process.env.GOOGLE_CLIENT_ID
+      // },
       local: {
         scheme: "local",
         endpoints: {
-          login:  { url: 'api/v1/users/sign_in' },
-          logout: { url: 'api/v1/users/sign_out', method: 'delete' },
-          user:   { url: 'api/v1/users/current' }
+          login: { url: "api/v1/users/sign_in" },
+          logout: { url: "api/v1/users/sign_out", method: "delete" },
+          user: { url: "api/v1/users/current" },
           // login: {
           //   url: "api/v1/users/sign_in",
           //   method: "post",
@@ -101,5 +144,4 @@ export default {
       home: "/cursos",
     },
   },
-
 };
