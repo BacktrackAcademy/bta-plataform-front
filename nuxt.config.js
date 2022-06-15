@@ -74,14 +74,12 @@ export default {
     middleware: ["auth"],
   },
 
-  // env: {
-  //   githubClientId: process.env.GITHUB_CLIENT_ID,
-  //   githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
-  //   // facebookId: process.env.FACEBOOK_CLIENT_ID,
-  //   // discordClientId: process.env.DISCORD_CLIENT_ID,
-  //   // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
-  //   // googleClientId: process.env.GOOGLE_CLIENT_ID,
-  // },
+  env: {
+    facebookId: process.env.FACEBOOK_CLIENT_ID
+    // discordClientId: process.env.DISCORD_CLIENT_ID,
+    // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
+    // googleClientId: process.env.GOOGLE_CLIENT_ID,
+  },
   auth: {
     strategies: {
       github: {
