@@ -75,7 +75,7 @@ export default {
   },
 
   env: {
-    facebookId: process.env.FACEBOOK_CLIENT_ID
+    pruebaVar: process.env.PRUEBAVAR
     // discordClientId: process.env.DISCORD_CLIENT_ID,
     // discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
     // googleClientId: process.env.GOOGLE_CLIENT_ID,
