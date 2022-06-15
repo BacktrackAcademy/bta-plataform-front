@@ -88,10 +88,6 @@ export default {
         clientId: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
       },
-      github: {
-        clientId: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      },
       facebook: {
         endpoints: {
           userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
