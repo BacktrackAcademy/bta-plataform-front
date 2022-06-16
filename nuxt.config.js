@@ -89,12 +89,26 @@ export default {
         clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID,
         clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET,
       },
+      // facebook: {
+      //   clientId: process.env.FACEBOOK_CLIENT_ID,
+      //   responseType: 'code',
+      //   endpoints: {
+      //     token: process.env.BACKEND_URL + '/auth/social/facebook/',
+      //     userInfo: process.env.API_URL + '/user/',
+      //   },
+      //   token: {
+      //     // By default the token type is Bearer, but simple_jwt is configured
+      //     // to accept only JWT tokens.
+      //     type: 'JWT',
+      //   },
+      // },
       facebook: {
+        clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID,
+        responseType: 'code',
         endpoints: {
           userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
         },
         redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
-        clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID,
         scope: ['public_profile', 'email']
       },
       // google: {
