@@ -2,7 +2,7 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
   generate: {
-    cache: false
+    cache: false,
   },
   server: {
     port: 3002, // default: 3000
@@ -43,19 +43,19 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-  "@nuxtjs/axios", 
-  "@nuxtjs/auth-next", 
-  "@nuxtjs/sitemap",
-  '@nuxtjs/robots',
-],
+    "@nuxtjs/axios",
+    "@nuxtjs/auth-next",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+  ],
   sitemap: {
-    hostname: 'https://app.backtrackacademy.com',
+    hostname: "https://app.backtrackacademy.com",
     gzip: true,
   },
   robots: {
-    UserAgent: '*',
-    Disallow: '/',
-    Sitemap: 'https://app.backtrackacademy.com/sitemap.xml'
+    UserAgent: "*",
+    Disallow: "/",
+    Sitemap: "https://app.backtrackacademy.com/sitemap.xml",
   },
   axios: {
     baseURL: "https://backtrackacademy.com/",
@@ -104,12 +104,19 @@ export default {
       // },
       facebook: {
         clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID,
-        responseType: 'code',
+        responseType: "code",
         endpoints: {
-          userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
+          // token: "https://backtrackacademy.com/auth/facebook",
+          userInfo:
+            "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
         },
-        redirectUri: 'https://backtrackacademy.com/auth/facebook/callback', // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
-        scope: ['public_profile', 'email']
+        redirectUri: "https://backtrackacademy.com/auth/facebook/callback", // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
+        scope: ["public_profile", "email"],
+        token: {
+          // By default the token type is Bearer, but simple_jwt is configured
+          // to accept only JWT tokens.
+          type: "JWT",
+        },
       },
       // google: {
       //   clientId: process.env.NUXT_ENV_GOOGLE_CLIENT_ID
