@@ -1,17 +1,28 @@
 <template>
   <div class="h-full w-full">
     <div class="h-screen flex">
-      <div class="hidden md:flex w-1/2 bg-bta-blue justify-around items-center">
+      <div class="hidden md:flex md:w-2/5 lg:w-1/2 bg-bta-blue justify-around items-center">
         <div>
           <h1 class="text-white font-bold text-4xl font-oswald uppercase">Happy Hacking </h1>
           <p class="text-white mt-1">Comienza tu carrera en Ciberseguridad</p>
         </div>
       </div>
-      <div class="flex w-full md:w-1/2 justify-center items-center bg-white p-5 md:p-10">
-        <form class="bg-white">
-          <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
-          <p class="text-gray-800 font-bold mb-4">Usa una de tus redes</p>
+      <div class="flex w-full md:w-3/5 lg:w-1/2 justify-center items-center bg-white p-5 lg:p-10">
+        <form class="bg-white w-full lg:10/12 xl:w-9/12">
+          <h1 class="text-gray-800 font-bold text-2xl mb-8">Inicia Sesión</h1>
+          <!-- <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p> -->
+          <p class="text-gray-800 font-bold mb-4">Usa tu correo electrónico</p>
+          <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser" />
+          <div>
+            <p class="text-center">
+              <span class="text-sm ">¿No tienes una cuenta?</span>
+              <NuxtLink to="/registro">
+                <span class="text-sm  hover:text-blue-500 hover:underline cursor-pointer">Regístrate</span>
+              </NuxtLink>
+            </p>
+          </div>
+          
+          <p class="text-gray-800 font-bold my-4">O usa una de tus redes</p>
           <div class="mb-6">
             <div class="grid grid-cols-4 gap-2 ">
               <a target @click="loginUserGoogle"
@@ -64,13 +75,6 @@
             </div>
           </div>
          
-          <p class="text-gray-800 font-bold mb-4">O Usa tu correo electrónico</p>
-          <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser" />
-
-          <!-- <button type="submit" class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login</button> -->
-          <NuxtLink to="/registro">
-            <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">¿No tienes cuenta? Regístrate</span>
-          </NuxtLink>
         </form>
       </div>
     </div>
