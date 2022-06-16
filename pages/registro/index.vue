@@ -12,46 +12,42 @@
           <h1 class="text-gray-800 font-bold text-2xl mb-1">Regístrate en Backtrack academy</h1>
           <p class="text-sm font-normal text-gray-600 mb-7">Únete <b>gratis</b> y comienza a aprender desde cero con los mejores <b>hackers.</b></p>
           <UserRegisterForm buttonText="Registrarme" :submitForm="registerUser"/>
-          <!-- <button type="submit" class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login</button>
-          <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">Forgot Password ?</span> -->
         </form>
       </div>
     </div>
-    
+
   </div>
 </template>
 
 <script>
 import UserRegisterForm from "@/components/auth/UserRegisterForm"
 
- export default {
-    auth: false,
-    name: "Login",
-    data() {
-      return {
-        userInfo: {
-          email: "",
-          password: "",
-          confirmPassword:"",
-        },
-        error: false,
-      }
-    },
-    beforeCreate(){
-      if (this.$auth.loggedIn) {
-        this.$router.push('/cursos')
-      }
-    },
-    components: {
-      UserRegisterForm,
-    },
-    methods: {
-      //logica para registra usuario 
-      async registerUser(registrationInfo){
-        await this.$axios.post('/users', registrationInfo)
-        alert("Te registraste satisfactoriamente")
-        this.$router.push('/login')
-      } 
+export default {
+  auth: false,
+  middleware: "auth",
+  name: "Registro",
+  data() {
+    return {}
+  },
+  beforeCreate() {
+    if (this.$auth.loggedIn) {
+      this.$router.push('/cursos')
     }
- }
+  },
+  components: {
+    UserRegisterForm,
+  },
+  methods: {
+    async registerUser(registrationInfo) {
+      await this.$axios.post("/users", {
+        user: registrationInfo
+      })
+      // let response = this.$auth.loginWith("local", {
+      //   data: { registrationInfo }
+      // })
+      // console.log("response", response)
+      // this.$router.push('/login')
+    }
+  }
+}
 </script>
