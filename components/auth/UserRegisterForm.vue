@@ -38,7 +38,7 @@
         </svg>
         <input
           class="pl-2 outline-none border-none"
-          v-model="userInfo.confirmPassword"
+          v-model="userInfo.password_confirmation"
           type="password"
           placeholder="Reingresar contraseña"
           required
@@ -61,7 +61,7 @@
         userInfo: {
           email: "",
           password: "",
-          confirmPassword:"",
+          password_confirmation:"",
         },
         error: false,
       }
