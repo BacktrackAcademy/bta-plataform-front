@@ -10,7 +10,7 @@
       <div class="flex w-full md:w-3/5 lg:w-1/2 justify-center items-center bg-white p-5 lg:p-10">
         <form class="bg-white w-full lg:10/12 xl:w-9/12">
           <h1 class="text-gray-800 font-bold text-2xl mb-8">Inicia Sesión</h1>
-          <!-- <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p> -->
+          <p v-if="error">{{ error }}</p>
           <p class="text-gray-800 font-bold mb-4">Usa tu correo electrónico</p>
           <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser" />
           <div>
@@ -21,7 +21,7 @@
               </NuxtLink>
             </p>
           </div>
-          
+
           <p class="text-gray-800 font-bold my-4">O usa una de tus redes</p>
           <div class="mb-6">
             <div class="grid grid-cols-4 gap-2 ">
@@ -74,7 +74,6 @@
               </a>
             </div>
           </div>
-         
         </form>
       </div>
     </div>
@@ -89,6 +88,7 @@
     name: "Login",
     data() {
       return {
+        error: null,
       }
     },
     components: {
@@ -96,18 +96,16 @@
     },
     methods: {
       loginUser(loginInfo) {
-        try {
-          this.$auth.loginWith("local", {
-            data: { user: loginInfo },
-            headers: { "Content-Type": "application/json" }
-          }).then(res => {
-            const user = res.data.user
-            this.$auth.setUser(user)
-            console.log('con user', res.data)
-          });
-        } catch(error) {
-          console.log(error)
-        }
+        this.$auth.loginWith("local", {
+          data: { user: loginInfo },
+          headers: { "Content-Type": "application/json" }
+        }).then(res => {
+          const user = res.data.user
+          this.$auth.setUser(user)
+          console.log('con user', res.data)
+        }).catch((error) => {
+          this.error = error.response.data.error
+        })
       },
 
       async loginUserGithub(){
