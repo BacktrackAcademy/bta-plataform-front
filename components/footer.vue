@@ -94,6 +94,6 @@
 </template>
 <style>
   .foot__link {
-    @apply text-gray-600 relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-bta-pink before:scale-x-0 before:transition-all hover:before:scale-x-100;
+    @apply text-gray-500 relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-bta-pink before:scale-x-0 before:transition-all hover:before:scale-x-100;
   }
 </style>
