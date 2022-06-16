@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     async registerUser(registrationInfo) {
-      await this.$axios.post("/users", {
+      await this.$axios.post("/api/v1/users", {
         user: registrationInfo
       })
       this.$router.push('/login')
