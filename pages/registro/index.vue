@@ -42,11 +42,7 @@ export default {
       await this.$axios.post("/users", {
         user: registrationInfo
       })
-      // let response = this.$auth.loginWith("local", {
-      //   data: { registrationInfo }
-      // })
-      // console.log("response", response)
-      // this.$router.push('/login')
+      this.$router.push('/login')
     }
   }
 }
