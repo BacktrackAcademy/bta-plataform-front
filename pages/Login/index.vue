@@ -10,8 +10,8 @@
       <div class="flex w-full md:w-3/5 lg:w-1/2 justify-center items-center bg-white p-5 lg:p-10">
         <form class="bg-white w-full lg:10/12 xl:w-9/12">
           <h1 class="text-gray-800 font-bold text-2xl mb-8">Inicia Sesión</h1>
-          <p v-if="error">{{ error }}</p>
           <p class="text-gray-800 font-bold mb-4">Usa tu correo electrónico</p>
+          <p v-if="error" class="text-red-500 lg:mb-3 mb-1">{{ error }}</p>
           <UserAuthForm buttonText="Iniciar sesión" :submitForm="loginUser" />
           <div>
             <p class="text-center">
