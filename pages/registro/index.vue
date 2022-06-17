@@ -11,6 +11,7 @@
         <form class="bg-white">
           <h1 class="text-gray-800 font-bold text-2xl mb-1">Regístrate en Backtrack academy</h1>
           <p class="text-sm font-normal text-gray-600 mb-7">Únete <b>gratis</b> y comienza a aprender desde cero con los mejores <b>hackers.</b></p>
+          <p v-if="error" class="text-red-500">{{error}}</p>
           <UserRegisterForm buttonText="Registrarme" :submitForm="registerUser"/>
         </form>
       </div>
@@ -27,7 +28,9 @@ export default {
   middleware: "auth",
   name: "Registro",
   data() {
-    return {}
+    return {
+      error: null
+    }
   },
   beforeCreate() {
     if (this.$auth.loggedIn) {
@@ -39,10 +42,18 @@ export default {
   },
   methods: {
     async registerUser(registrationInfo) {
-      await this.$axios.post("/api/v1/users", {
-        user: registrationInfo
-      })
-      this.$router.push('/login')
+      try{
+        await this.$axios.post("/api/v1/users", {
+          user: registrationInfo
+        })
+        this.$router.push('/login')
+      } catch (error){
+        if (error.response.status == 409){
+          this.error = error.response.data
+        } else{
+          this.error = "Hubo un error, porfavor confirme que ambas contraseñas coincidan y tengan mas de 8 digitos"
+        }
+      }
     }
   }
 }
