@@ -2,7 +2,6 @@
   <div v-if="$auth.loggedIn">
     <LoogedNavbar />
     <Nuxt class="pt-20"/>
-    <Nuxt />
     <Footer />
   </div>
   <div v-else>
@@ -19,6 +18,7 @@ export default {
   components: {
     Header,
     LoogedNavbar,
+    Footer
   },
 };
 </script>
