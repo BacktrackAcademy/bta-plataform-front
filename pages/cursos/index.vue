@@ -295,7 +295,7 @@
         </div>
 
         <main class="max-w-7xl mx-auto sm:px-6">
-          <div class="relative z-10 flex items-baseline justify-between pt-4 pb-6 border-b border-gray-border">
+          <div class="relative flex items-baseline justify-between pt-4 pb-6 border-b border-gray-border">
             <h1 class="text-4xl font-semibold tracking-tight text-white font-oswald">Catálogo de cursos</h1>
 
 
