@@ -297,7 +297,32 @@
         <main class="max-w-7xl mx-auto sm:px-6">
           <div class="relative z-10 flex items-baseline justify-between pt-4 pb-6 border-b border-gray-border">
             <h1 class="text-4xl font-semibold tracking-tight text-white font-oswald">Catálogo de cursos</h1>
-
+            <form
+              class="flex flex-row-reverse gap-1 bg-gray-border items-center px-3 py-2 rounded-full overflow-hidden"
+              action="/search"
+            >
+              <input
+                class="bg-transparent text-white w-60 outline-none text-sm focus:translate-x-10 searcher__input"
+                type="text"
+                placeholder="¿Qué te gustaría aprender?"
+                v-model="query"
+              />
+              <svg
+                class="text-white searcher__icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z"></path>
+                <circle cx="10" cy="10" r="7"></circle>
+                <line x1="21" y1="21" x2="15" y2="15"></line>
+              </svg>
+            </form>
 
 
             <div class="flex items-center">
@@ -571,6 +596,7 @@ export default {
       user_ids: [],
       level_ids: [],
       category_ids: [],
+      query: '',
     }
   },
   mounted() {
@@ -588,6 +614,9 @@ export default {
     },
     user_ids(){
       this.getCourses()
+    },
+    query(){
+      this.getCourses()
     }
   },
   methods: {
@@ -597,6 +626,7 @@ export default {
           user_ids: this.user_ids,
           level_ids: this.level_ids,
           category_ids: this.category_ids,
+          query: this.query
         }
       }).then((response) => {
         this.courses = response.data;
@@ -625,3 +655,18 @@ export default {
   }
 }
 </script>
+<style>
+.searcher__input {
+  transition: 0.5s;
+}
+.searcher__input:focus {
+  transform: translateX(-25px);
+}
+.searcher__icon {
+  transition: 0.5s;
+}
+.searcher__input:focus ~ .searcher__icon {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+</style>
