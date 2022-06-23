@@ -35,7 +35,7 @@
           <input type="checkbox" id="touch">
 
           <ul class="dropdown-menu absolute bg-bta-dark-blue">
-            <li class="nav__link"><a href="#" >Perfil</a></li>
+            <li class="nav__link"><NuxtLink to="/perfil" >Perfil</NuxtLink></li>
             <li class="nav__link"><a href="#" >Configuración</a></li>
             <li class="nav__link">
               <a @click="$auth.logout()" class="cursor-pointer">Cerrar Sesión</a>
