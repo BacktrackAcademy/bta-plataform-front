@@ -20,7 +20,9 @@
               <h2 class="m-0 text-4xl font-semibold font-oswald mb-3 pr-4">
                 {{ $auth.user.name }} {{$auth.user.lastname}}
               </h2>
-              <button class="btn">Editar</button>
+              <nuxt-link to="/perfil/editar">
+                <button class="btn">Editar</button>
+              </nuxt-link>
             </div>
             <!-- profile-description -->
             <div class="text-base pt-3 text-gray-400 font-inconsolata"> 
