@@ -10,7 +10,9 @@
       <div class="flex-col flex md:flex-row gap-2 sm:gap-4 lg:gap-10">
         <!-- profile image -->
         <div class="rounded w-1/2 md:w-1/4 mx-auto ">
-          <img :src="$auth.user.avatar_url" class="rounded-full" :alt="$auth.user.name">
+          <div class="w-40 h-40 md:w-56 md:h-56 ">
+            <img :src="$auth.user.avatar_url" class="rounded-full object-contain" :alt="$auth.user.name">
+          </div>
         </div>
 
         <div class="md:w-3/4 mx-auto text-white flex items-center">
