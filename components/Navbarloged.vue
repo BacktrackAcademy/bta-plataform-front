@@ -25,21 +25,29 @@
       </div>
       <div
         class="hidden lg:grid grid-flow-col auto-cols-auto items-center justify-items-center gap-8 ml-auto uppercase text-sm">
-       <div class="relative">
+       <div class="relative" id="dropdown-selector">
 
           <label for="touch">
             <span class="reference-span bg-bta-dark-blue">{{ $auth.user.name }}
               <ChevronDown class="float-right right-[10%] top-6" />
             </span>
           </label>
-          <input type="checkbox" id="touch">
-
-          <ul class="dropdown-menu absolute bg-bta-dark-blue">
-            <li class="nav__link"><NuxtLink to="/perfil" >Perfil</NuxtLink></li>
-            <li class="nav__link"><a href="#" >Configuración</a></li>
+          <input type="checkbox" id="touch" class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer"
+          v-model="dropdownState"
+          >
+          <ul
+           class="dropdown-menu absolute bg-bta-dark-blue  height-0 peer-checked:h-[225px] peer-checked:border-[1px] peer-checked:border-bta-section"
+           >
+            <NuxtLink to="/perfil" @click.native="dropdownState=false">
+              <li class="nav__link">
+                Perfil
+              </li>
+            </NuxtLink>
             <li class="nav__link">
-              <a @click="$auth.logout()" class="cursor-pointer">Cerrar Sesión</a>
-            </li>
+              <a href="#" >Configuración</a></li>
+            <li class="nav__link">
+              <p @click.prevent="$auth.logout()" class="cursor-pointer">
+              Cerrar Sesión</p></li>
           </ul>
 
         </div>
@@ -85,8 +93,15 @@ import ChevronDown from "./icons/Chevron-down.vue";
           // { name: "Artículos", url: "/login" },
           // { name: "Debates", url: "/login" },
           // { name: "Noticias", url: "/login" },
-        ]
+        ],
+        dropdownState: false,
       }
+    },
+    mounted () {
+      document.addEventListener('click', this.closeDropdown)
+    },
+    beforeDestroy () {
+      document.removeEventListener('click',this.closeDropdown)
     },
     methods: {
       closeBurgerMenu() {
@@ -95,7 +110,12 @@ import ChevronDown from "./icons/Chevron-down.vue";
       toggleBurgerMenu() {
         this.hamburgerMenuIsOpen = !this.hamburgerMenuIsOpen;
       },
-    }
+      closeDropdown(e) {
+        if (!this.$el.querySelector('#dropdown-selector').contains(e.target)) {
+          this.dropdownState = false
+        }
+      },
+    },
   }
 </script>
 <style scoped>
@@ -118,38 +138,27 @@ import ChevronDown from "./icons/Chevron-down.vue";
   }
 
   .reference-span {
-  @apply font-oswald;
-  padding: 0 30px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+    @apply font-oswald;
+    padding: 0 30px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.dropdown-menu {
-  position: absolute;
-  clear: both;
-  top: 40px;
-  width: 100%;
-  height: 0px;
-  overflow: hidden;
-  text-align: center;
-  transition: height .4s ease;
-}
+  .dropdown-menu {
+    position: absolute;
+    clear: both;
+    top: 40px;
+    width: 100%;
+    height: 0px;
+    overflow: hidden;
+    text-align: center;
+    transition: height .4s ease;
+  }
 
-.dropdown-menu li {
-  padding: 25px 30px;
-}
-
-#touch {
-  position: absolute;
-  opacity: 0;
-  height: 0;
-}
-
-#touch:checked+.dropdown-menu {
-  @apply border-[1px] border-bta-section;
-  height: 225px;
-}
+  .dropdown-menu li {
+    padding: 25px 30px;
+  }
 </style>
