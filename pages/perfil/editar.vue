@@ -134,11 +134,11 @@ export default {
 </script>
 <style scoped>
 .form-input {
-  @apply outline-none border-none bg-bta-section rounded py-2 px-4 text-white w-full;
+  @apply outline-none border-none bg-gray-border rounded py-2 px-4 text-white w-full;
 }
 
 .form-textarea {
-  @apply outline-none focus:outline-bta-pink/50 border-none bg-bta-section rounded py-2 px-4 text-white w-full h-full;
+  @apply outline-none focus:outline-bta-pink/50 border-none bg-gray-border rounded py-2 px-4 text-white w-full h-full;
   min-height: 6em;
   max-height: 6m;
 }
