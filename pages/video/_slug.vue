@@ -1,14 +1,14 @@
 <template>
   <section class="bg-bta-section">
-    <div class="flex lg:mx-10">
+    <div class="flex lg:mx-10 mt-2">
 
       <div class=" lg:w-9/12 ">
-        <div>
-          <h1 class="text-4xl text-white font-medium font-oswald mb-3">01- Presentacion threat Hunting</h1>
-        </div>
+        <!-- <div>
+          <h1 class="text-4xl text-white font-medium font-oswald mb-3">Nombre del video</h1>
+        </div> -->
         <!-- Video player -->
         <div class="relative top-0 max-h-[calc(100vh - 52px)] lg:min-w-[1024px] mx-auto">
-          <img src="https://api.lorem.space/image/watch?w=1100&h=600&hash=534sp76b" alt="">
+        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/150485199?h=0eb117b38a&title=0&byline=0&portrait=0&badge=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
         </div>
 
         <div>
@@ -21,7 +21,7 @@
               <!-- header content -->
               <div class="flex flex-wrap">
                 <a href="" class="block w-full">
-                  <h2 class="text-white font-normal text-base">Curso threat Hunting</h2>
+                  <h2 class="text-white font-normal text-base">Nombre del curso</h2>
                 </a>
                 <img src="https://api.lorem.space/image/face?w=30&h=30&hash=l6rom7bp" alt=""
                   class="w-6 h-6 rounded-full mr-1">
@@ -82,7 +82,11 @@
         <!-- Temario -->
         <div>
           <h4 class="text-2xl text-white font-oswald font-medium mt-5 mb-3">Temario</h4>
-          <p><a href="" class="text-bta-pink font-inconsolata">01- Presentación Threat Hunting</a></p>
+          <div v-for="video in videos" :key="video.id">
+            <a :href="'/video/' + video.slug" class="block w-full py-4">
+              <p class="text-white font-normal text-base">{{ video.titlevideo }}</p>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -93,6 +97,27 @@
 
 <script>
 export default {
+
+  data() {
+    return {
+      course: [],
+      syllabus: [],
+      videos: [],
+    }
+  },
+
+  created() {
+    this.getCourse();
+  },
+  methods: {
+    getCourse() {
+      this.$axios.get(`api/v1/course/${this.$route.params.slug}`).then((response) => {
+        this.course = response.data;
+        this.syllabus = response.data.syllabus;
+        this.videos = response.data.syllabus[0].videos;;
+      })
+    }
+  },
 
 }
 </script>
