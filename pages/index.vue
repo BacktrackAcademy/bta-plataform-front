@@ -99,7 +99,19 @@ export default {
     if (this.$auth.loggedIn) {
     this.$router.push('/cursos')
     }
-  }
+  },
+
+  // SEO Meta Tags
+  head: {
+    title: "Cursos online de Hacking ético - Backtrack Academy",
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Diversos cursos esperan por tí. No esperes más, regístrate y comienza a adquirir una nueva habilidad de inmediato.'
+      }
+    ]
+  },
 }
 </script>
 <style>
@@ -117,14 +129,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent
+  background-color: transparent;
 }
 
 section {
-  @apply min-h-[600px] pt-20 pb-20 block
+  @apply min-h-[600px] pt-20 pb-20 block;
 }
 
 .origin-bottom-center {
-  transform-origin: bottom center
+  transform-origin: bottom center;
 }
 </style>
