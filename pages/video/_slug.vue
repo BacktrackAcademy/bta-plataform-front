@@ -1,14 +1,14 @@
 <template>
-  <section class="bg-bta-section">
+  <section class="bg-bta-dark-blue">
     <div class="flex lg:mx-10 mt-2">
 
-      <div class=" lg:w-9/12 ">
-        <!-- <div>
-          <h1 class="text-4xl text-white font-medium font-oswald mb-3">Nombre del video</h1>
-        </div> -->
+      <div class=" lg:w-8/12 ">
         <!-- Video player -->
         <div class="relative top-0 max-h-[calc(100vh - 52px)] lg:min-w-[1024px] mx-auto">
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/150485199?h=0eb117b38a&title=0&byline=0&portrait=0&badge=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+          <div style="padding:56.25% 0 0 0;position:relative;"><iframe
+              src="https://player.vimeo.com/video/150485199?h=0eb117b38a&title=0&byline=0&portrait=0&badge=0"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
         </div>
 
         <div>
@@ -30,8 +30,7 @@
             </div>
 
             <div>
-              <button
-                class="flex items-center bg-bta-pink text-white px-3 py-2 w-[144px] rounded-[8px] mr-2">
+              <button class="flex items-center bg-bta-pink text-white px-3 py-2 w-[144px] rounded-[8px] mr-2">
                 <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="arrow-to-right"
                   class="inline-block text-inherit w-4 overflow-visible mr-3" role="img"
                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -39,8 +38,9 @@
                     d="M200.1 99.5l148.4 148c4.7 4.7 4.7 12.3 0 17l-148.4 148c-4.7 4.7-12.3 4.7-17 0l-19.6-19.6c-4.8-4.8-4.7-12.5.2-17.1l97.1-93.7H12c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h248.8l-97.1-93.7c-4.8-4.7-4.9-12.4-.2-17.1l19.6-19.6c4.7-4.9 12.3-4.9 17-.2zM396 76v360c0 6.6 5.4 12 12 12h28c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12h-28c-6.6 0-12 5.4-12 12z">
                   </path>
                 </svg>
-                <span class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden">Probando el
-                  router</span>
+                <span
+                  class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
+                  >Probandoel router</span>
               </button>
             </div>
           </div>
@@ -60,9 +60,7 @@
               <b>01:40 hrs</b> 84 personas han estudiado este curso.
             </p>
             <p>
-              Los ciberdelincuentes son cada vez más astutos y capaces de evadir los sistemas de defensa más
-              sofisticados. Por eso debemos ser proactivos a través de nuestras redes para detectar y aislar amenazas
-              avanzadas que puedan evadir nuestros sistemas de defensa.
+              Los ciberdelincuentes son cada vez más astutos y capaces de evadir los sistemas de defensa más sofisticados. Por eso debemos ser proactivos a través de nuestras redes para detectar y aislar amenazas avanzadas que puedan evadir nuestros sistemas de defensa.
             </p>
           </div>
 
@@ -70,7 +68,7 @@
 
       </div>
 
-      <div class="lg:w-3/12 p-4">
+      <div class="lg:w-4/12 p-4">
         <!-- badge -->
         <div class="text-[#cacaca] text-center mb-5">
           <p class="font-inconsolata">Has estudiado</p>
@@ -123,5 +121,4 @@ export default {
 </script>
 
 <style>
-
 </style>
