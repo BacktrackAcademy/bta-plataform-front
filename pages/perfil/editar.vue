@@ -130,6 +130,20 @@ export default {
       });
     },
   },
+
+    // SEO Meta tags
+  head() {
+    return {
+      title: "Cursos online de Hacking Ético - Backtrack Academy",
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: "Backtrack Academy plataforma de cursos online de hacking ético y seguridad informática. Únete gratis y comienza a aprender desde cero con los mejores hackers.",
+        }
+      ]
+    }
+  },
 };
 </script>
 <style scoped>
