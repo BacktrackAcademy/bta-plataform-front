@@ -143,6 +143,18 @@
         this.$auth.$storage.setUniversal("client", client)
         this.$auth.$storage.setUniversal("access-token", accessToken)
       }
-    }
-  }
+    },
+
+  // SEO Meta Tags
+  head: {
+    title: "Cursos online de Hacking ético - Backtrack Academy",
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Diversos cursos esperan por tí. No esperes más, regístrate y comienza a adquirir una nueva habilidad de inmediato.'
+      }
+    ]
+  },
+}
 </script>
