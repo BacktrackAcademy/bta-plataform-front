@@ -622,6 +622,23 @@ export default {
         .catch((error) => console.log(error));
     },
 
-  }
+  },
+
+  // SEO Meta Tags
+  head: {
+    title: "Cursos de Hacking Ético - Backtrack Academy",
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Únete gratis y comienza a aprender seguridad informatica desde cero con los mejores hackers.'
+      },
+      {
+        hid: 'keywords',
+        name: 'description',
+        content: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informatica, Seguridad, Academy, Online, Cursos, JavaScript'
+      }
+    ]
+  },
 }
 </script>
