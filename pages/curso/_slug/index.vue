@@ -18,7 +18,7 @@
           <div class="extra-info flex items-center">
             <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'">
               <div class="mr-2 flex items-center">
-                <div v-for="(i) in course.stars_evaluation" :key="i">
+                <div v-for="(i) in course.stars_evaluation" :key="i+'starEvaluation'">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
                     class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 576 512">
@@ -27,7 +27,7 @@
                     </path>
                   </svg>
                 </div>
-                <div v-for="(i) in stars_blank" :key="i">
+                <div v-for="(i) in stars_blank" :key="i+'starBlank'">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
                     class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 576 512">
@@ -159,36 +159,71 @@
 </template>
 
 <script>
-
 export default {
   name: 'courseIndvPage',
 
   data() {
     return {
-      course: [],
+      course: {},
       teacher: {},
       syllabus: [],
       stars_blank: 0,
     }
   },
+  async asyncData({ $axios, params }) {
+    const { data } = await $axios.get("/api/v1/course/" + params.slug);
+    return {
+      course: data,
+      teacher: data.teacher,
+      syllabus: data.syllabus
+    };
+  },
+  head() {
+    return {
+      title: this.course.titulo + " - Bactrack Academy",
+      htmlAttrs: {
+        lang: "es",
+      },
+      meta: [
+        // open graph
+        { hid: "og-site_name", property: "og:site_name", content: "Backtrack Academy" },
+        { hid: "og-type", property: "og:type", content: "website" },
+        {
+          hid: "og-title",
+          property: "og:title",
+          content: this.course.titulo,
+        },
+        {
+          hid: "og-desc",
+          property: "og:description",
+          content: this.course.descripcion,
+        },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: "https://cymasuite.com/preview.png",
+        },
+        // description
+        {
+          hid: "description",
+          name: "description",
+          content: this.course.descripcion,
+        },
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "format-detection", content: "telephone=no" },
+      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    };
+  },
   created() {
-    this.getCourse();
+    this.calcStars(this.course.stars_evaluation)
   },
   methods: {
-    getCourse() {
-      this.$axios.get(`api/v1/course/${this.$route.params.slug}`).then((response) => {
-        this.course = response.data;
-        this.teacher = response.data.teacher;
-        this.syllabus = response.data.syllabus;
-        this.calcStars(response.data.stars_evaluation)
-      })
-        .catch((error) => console.log(error));
-    },
-
     calcStars(stars) {
       this.stars_blank = 5 - stars
     },
-  }
+  },
 }
 </script>
 
