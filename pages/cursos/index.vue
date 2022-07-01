@@ -401,40 +401,6 @@
                     class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer">
                   <div class="w-full h-12 flex items-center">
                     <h3 class="-my-3 flow-root font-medium text-white font-oswald">
-                      Dificultad
-                    </h3>
-                  </div>
-                  <div
-                    class="absolute top-3 right-3 text-white transition-transform duration-500 rotate-0 peer-checked:rotate-180">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                      stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-
-                  <div class="py-6 peer-checked:hidden transition-transform duration-700">
-                    <div class="peer-checked:bg-red-500 space-y-4">
-
-                      <div v-for="(level, i) in levels" :key="i">
-                        <div class="flex items-center gap-2">
-                          <input :id="level.name" name="size[]" :value="level.id" type="checkbox" v-model="level_ids"
-                            class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                          <label :for="level.name"
-                            class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ level.name
-                            }}</label>
-                          <label class="text-gray-muted font-inconsolata hover:text-white">{{ level.number_courses
-                          }}</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="border-b border-gray-border relative">
-                  <input id="but" type="checkbox"
-                    class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer">
-                  <div class="w-full h-12 flex items-center">
-                    <h3 class="-my-3 flow-root font-medium text-white font-oswald">
                       Categorías
                     </h3>
                   </div>
@@ -456,6 +422,40 @@
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ category.name
                             }}</label>
                           <label class="text-gray-muted font-inconsolata hover:text-white">{{ category.number_courses
+                          }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="border-b border-gray-border relative">
+                  <input id="but" type="checkbox"
+                    class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer">
+                  <div class="w-full h-12 flex items-center">
+                    <h3 class="-my-3 flow-root font-medium text-white font-oswald">
+                      Dificultad
+                    </h3>
+                  </div>
+                  <div
+                    class="absolute top-3 right-3 text-white transition-transform duration-500 rotate-0 peer-checked:rotate-180">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+
+                  <div class="py-6 peer-checked:hidden transition-transform duration-700">
+                    <div class="space-y-4">
+
+                      <div v-for="(level, i) in levels" :key="i">
+                        <div class="flex items-center gap-2">
+                          <input :id="level.name" name="size[]" :value="level.id" type="checkbox" v-model="level_ids"
+                            class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                          <label :for="level.name"
+                            class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ level.name
+                            }}</label>
+                          <label class="text-gray-muted font-inconsolata hover:text-white">{{ level.number_courses
                           }}</label>
                         </div>
                       </div>
