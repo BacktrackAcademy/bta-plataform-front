@@ -201,13 +201,18 @@ export default {
         {
           hid: "og-image",
           property: "og:image",
-          content: "https://cymasuite.com/preview.png",
+          content: this.course.wallpaper_thumb,
         },
         // description
         {
           hid: "description",
           name: "description",
           content: this.course.descripcion,
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: this.course.metatag,
         },
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
