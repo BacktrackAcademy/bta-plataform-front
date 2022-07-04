@@ -95,7 +95,7 @@
           <div v-for="(video, i) in theme.videos" :key="i + 2000"
             class="flex gap-2 items-center hover:bg-bta-dark-blue rounded-lg relative">
 
-            <div v-if="video.is_free" class="text-white w-full">
+            <div v-if="video.is_free || course.price == null || course.price == 0" class="text-white w-full">
               <NuxtLink :to="'/video/'+ video.slug">
               <div class="flex flex-row items-center gap-2 p-6">
                 <!-- play icon -->
@@ -133,7 +133,7 @@
                       clip-rule="evenodd" />
                   </svg>
                   <div class="">
-                    <p class="text-white"> {{ video.titlevideo }} </p>
+                    <p class="text-white"> {{ video.titlevideo }}</p>
                   </div>
                   <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
                     <div class="text-bta-pink">
