@@ -416,13 +416,14 @@
                     <div class="space-y-4">
                       <div v-for="(category, i) in categories" :key="i">
                         <div class="flex items-center gap-2">
-                          <input :id="category.name" name="size[]" :value="category.id" type="checkbox" v-model="category_ids"
+                          <input :id="category.name" name="size[]" :value="category.id" type="checkbox"
+                            v-model="category_ids"
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                           <label :for="category.name"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ category.name
                             }}</label>
                           <label class="text-gray-muted font-inconsolata hover:text-white">{{ category.number_courses
-                          }}</label>
+                            }}</label>
                         </div>
                       </div>
                     </div>
@@ -456,7 +457,7 @@
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white">{{ level.name
                             }}</label>
                           <label class="text-gray-muted font-inconsolata hover:text-white">{{ level.number_courses
-                          }}</label>
+                            }}</label>
                         </div>
                       </div>
                     </div>
@@ -488,9 +489,9 @@
                             class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                           <label :for="teacher.name"
                             class="ml-3 text-sm text-gray-muted font-inconsolata hover:text-white"> {{ teacher.name }}
-                            {{ teacher.lastname }}  </label>
+                            {{ teacher.lastname }} </label>
                           <label class="text-gray-muted font-inconsolata hover:text-white"> {{ teacher.number_courses
-                          }}</label>
+                            }}</label>
                         </div>
                       </div>
                     </div>
@@ -504,8 +505,10 @@
                 <div class="h-96 lg:h-full">
                   <div class="grid grid-cols-3 gap-8">
                     <div v-for="(course, i) in courses" :key="i">
-                      <div class="max-w-xs mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 ">
-                        <NuxtLink :to="'/curso/' + course.slug" class=" focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-bta-pink" >
+                      <div
+                        class="max-w-xs mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 ">
+                        <NuxtLink :to="'/curso/' + course.slug"
+                          class=" focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-bta-pink">
                           <div class="flex flex-col h-full bg-bta-dark-blue shadow-lg rounded-lg overflow-hidden">
                             <!-- Image -->
                             <figure class="relative h-0 pb-[56.25%] overflow-hidden">
@@ -520,8 +523,11 @@
                                 <!-- Header -->
                                 <header class="mb-3 site-heading">
                                   <div class="glitch-parent">
-                                    <h3 :data-text="course.titulo" class="glitch text-[22px] font-extrabold leading-snug font-oswald text-white">
+                                    <h3 :data-text="course.titulo"
+                                      class="glitch text-[22px] font-extrabold leading-snug font-oswald text-white">
+                                      <span aria-hidden="true">{{ course.titulo}}</span>
                                       {{ course.titulo}}
+                                      <span aria-hidden="true">{{ course.titulo}}</span>
                                     </h3>
                                   </div>
                                 </header>
@@ -532,12 +538,15 @@
                               </div>
                               <!-- Card footer -->
                               <div class="flex justify-end space-x-2">
-                                <p class="font-inconsolata text-sm inline-flex items-center justify-center px-3 py-1.5 rounded leading-5 text-gray-muted hover:underline focus:outline-none focus-visible:ring-2"
-                                >{{ course.total_length }}</p>
-                                <a v-if="course.price == 0 || course.price == null" class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white"
-                                > Gratis </a>
-                                <div v-else class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white"
-                                >$ {{ course.price }}</div>
+                                <p
+                                  class="font-inconsolata text-sm inline-flex items-center justify-center px-3 py-1.5 rounded leading-5 text-gray-muted hover:underline focus:outline-none focus-visible:ring-2">
+                                  {{ course.total_length }}</p>
+                                <a v-if="course.price == 0 || course.price == null"
+                                  class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white">
+                                  Gratis </a>
+                                <div v-else
+                                  class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white">
+                                  $ {{ course.price }}</div>
                               </div>
                             </div>
                           </div>
@@ -641,92 +650,62 @@ export default {
 }
 </script>
 <style scoped>
-.glitch-parent{
+.glitch:hover{
   position: relative;
+  text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
+    0.025em 0.04em 0 #e7e413fd;
+  animation: glitch 725ms infinite;
 }
-.glitch-parent{
-  display: inline-block;
-  margin-right: .25em;
-}
-.hero-title{
-  text-transform: uppercase;
-}
-.glitch-parent .glitch::before,
-.glitch-parent .glitch::after{
-  content: attr(data-text);
-  display: inline-block;
+
+.glitch span {
   position: absolute;
   top: 0;
   left: 0;
 }
-.glitch.glitch-static::before{
-  left: 2px;
-  text-shadow: -1px 0 red;
-  background: transparent;
-  animation: glitch-anim-2 .3s infinite linear alternate-reverse;
+
+.glitch span:first-child {
+  animation: glitch 500ms infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-0.04em, -0.03em);
+  opacity: 0.75;
 }
-.glitch-parent .glitch.glitch-static:hover:after{
-  clip-path: rect(20px, 400px, 30px, 0);
-  text-shadow: -1px 0 blue;
-  left: -2px;
-  background: transparent;
-  animation: glitch-anim .2s infinite linear alternate-reverse;
+
+.glitch span:last-child {
+  animation: glitch 375ms infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(0.04em, 0.03em);
+  opacity: 0.75;
 }
-.glitch-parent .glitch:hover:before{
-  left: 0;
-  text-shadow: -1px 0 red;
-  background: transparent;
-  animation: glitch-anim-2 .3s infinite linear alternate-reverse;
-}
-.glitch-parent .glitch:hover:after{
-  clip-path: rect(20px, 400px, 30px, 0);
-  left: -2px;
-  text-shadow: -1px 0 blue;
-  background: transparent;
-  animation: glitch-anim .2s infinite linear alternate-reverse;
-}
-.glitch{
-  display: flex;
-}
-@keyframes glitch-anim {
+
+@keyframes glitch {
   0% {
-    clip: rect(10px, 400px, 15px, 0);
+    text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
+      0.025em 0.04em 0 #fffc00;
   }
-  20% {
-    clip: rect(400px, 400px, 41px, 0);
+  15% {
+    text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
+      0.025em 0.04em 0 #fffc00;
   }
-  40% {
-    clip: rect(25px, 400px, 26px, 0);
+  16% {
+    text-shadow: -0.05em -0.025em 0 #0846ff, 0.025em 0.035em 0 #f90c0c,
+      -0.05em -0.05em 0 #fffc00;
   }
-  60% {
-    clip: rect(10px, 400px, 15px, 0);
+  49% {
+    text-shadow: -0.05em -0.025em 0 #0846ff, 0.025em 0.035em 0 #f90c0c,
+      -0.05em -0.05em 0 #fffc00;
   }
-  80% {
-    clip: rect(26px, 400px, 29px, 0);
+  50% {
+    text-shadow: 0.05em 0.035em 0 #0846ff, 0.03em 0 0 #f90c0c,
+      0 -0.04em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.05em 0.035em 0 #0846ff, 0.03em 0 0 #f90c0c,
+      0 -0.04em 0 #fffc00;
   }
   100% {
-    clip: rect(40px, 400px, 45px, 0);
+    text-shadow: -0.05em 0 0 #0846ff, -0.025em -0.04em 0 #f90c0c,
+      -0.04em -0.025em 0 #fffc00;
   }
 }
 
-@keyframes glitch-anim-2 {
-  0% {
-    clip: rect(30px, 400px, 40px, 0);
-  }
-  20% {
-    clip: rect(26px, 400px, 28px, 0);
-  }
-  40% {
-    clip: rect(15px, 400px, 100px, 0);
-  }
-  60% {
-    clip: rect(40px, 400px, 45px, 0);
-  }
-  80% {
-    clip: rect(10px, 400px, 18px, 0);
-  }
-  100% {
-    clip: rect(40px, 400px, 50px, 0);
-  }
-}
 </style>
