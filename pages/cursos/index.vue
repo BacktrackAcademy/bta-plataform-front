@@ -504,47 +504,45 @@
                 <div class="h-96 lg:h-full">
                   <div class="grid grid-cols-3 gap-8">
                     <div v-for="(course, i) in courses" :key="i">
-                      <div class="max-w-xs mx-auto h-full">
-                        <div class="flex flex-col h-full bg-bta-dark-blue shadow-lg rounded-lg overflow-hidden">
-                          <!-- Image -->
-                          <a class="block focus:outline-none focus-visible:ring-2" href="#0">
+                      <div class="max-w-xs mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 ">
+                        <NuxtLink :to="'/curso/' + course.slug" class=" focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-bta-pink" >
+                          <div class="flex flex-col h-full bg-bta-dark-blue shadow-lg rounded-lg overflow-hidden">
+                            <!-- Image -->
                             <figure class="relative h-0 pb-[56.25%] overflow-hidden">
                               <img
                                 class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
-                                :src="course.image_thumb" width="320" height="180" alt="Course">
+                                :src="course.image_thumb" width="320" height="180" alt="Course" />
                             </figure>
-                          </a>
-                          <!-- Card Content -->
-                          <div class="flex-grow flex flex-col p-5">
-                            <!-- Card body -->
-                            <div class="flex-grow">
-                              <!-- Header -->
-                              <header class="mb-3">
-                                <a class="block focus:outline-none focus-visible:ring-2" href="#0">
-                                  <h3 class="text-[22px] font-extrabold leading-snug font-oswald text-white">{{
-                                      course.titulo
-                                  }}</h3>
-                                </a>
-                              </header>
-                              <!-- Content -->
-                              <div class="mb-8 text-gray-muted font-inconsolata">
-                                <p>{{ course.shortdes }}</p>
+                            <!-- Card Content -->
+                            <div class="flex-grow flex flex-col p-5">
+                              <!-- Card body -->
+                              <div class="flex-grow">
+                                <!-- Header -->
+                                <header class="mb-3 site-heading">
+                                  <div class="glitch-parent">
+                                    <h3 :data-text="course.titulo" class="glitch text-[22px] font-extrabold leading-snug font-oswald text-white">
+                                      {{ course.titulo}}
+                                    </h3>
+                                  </div>
+                                </header>
+                                <!-- Content -->
+                                <div class="mb-8 text-gray-muted font-inconsolata">
+                                  <p>{{ course.shortdes }}</p>
+                                </div>
+                              </div>
+                              <!-- Card footer -->
+                              <div class="flex justify-end space-x-2">
+                                <p class="font-inconsolata text-sm inline-flex items-center justify-center px-3 py-1.5 rounded leading-5 text-gray-muted hover:underline focus:outline-none focus-visible:ring-2"
+                                >{{ course.total_length }}</p>
+                                <a v-if="course.price == 0 || course.price == null" class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white"
+                                > Gratis </a>
+                                <div v-else class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white"
+                                >$ {{ course.price }}</div>
                               </div>
                             </div>
-                            <!-- Card footer -->
-                            <div class="flex justify-end space-x-2">
-                              <a class="font-inconsolata text-sm inline-flex items-center justify-center px-3 py-1.5 rounded leading-5 text-gray-muted hover:underline focus:outline-none focus-visible:ring-2"
-                                href="#0">{{ course.total_length }}</a>
-                              <NuxtLink
-                                class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-indigo-50 focus:outline-none focus-visible:ring-2 hover:bg-indigo-100 text-indigo-500"
-                                :to="'/curso/' + course.slug">
-                                Ver
-                              </NuxtLink>
-                              <a class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-indigo-500 focus:outline-none focus-visible:ring-2 hover:bg-indigo-600 text-white"
-                                href="#0">Comprar</a>
-                            </div>
                           </div>
-                        </div>
+
+                        </NuxtLink>
                       </div>
                     </div>
                   </div>
@@ -642,3 +640,93 @@ export default {
   },
 }
 </script>
+<style scoped>
+.glitch-parent{
+  position: relative;
+}
+.glitch-parent{
+  display: inline-block;
+  margin-right: .25em;
+}
+.hero-title{
+  text-transform: uppercase;
+}
+.glitch-parent .glitch::before,
+.glitch-parent .glitch::after{
+  content: attr(data-text);
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.glitch.glitch-static::before{
+  left: 2px;
+  text-shadow: -1px 0 red;
+  background: transparent;
+  animation: glitch-anim-2 .3s infinite linear alternate-reverse;
+}
+.glitch-parent .glitch.glitch-static:hover:after{
+  clip-path: rect(20px, 400px, 30px, 0);
+  text-shadow: -1px 0 blue;
+  left: -2px;
+  background: transparent;
+  animation: glitch-anim .2s infinite linear alternate-reverse;
+}
+.glitch-parent .glitch:hover:before{
+  left: 0;
+  text-shadow: -1px 0 red;
+  background: transparent;
+  animation: glitch-anim-2 .3s infinite linear alternate-reverse;
+}
+.glitch-parent .glitch:hover:after{
+  clip-path: rect(20px, 400px, 30px, 0);
+  left: -2px;
+  text-shadow: -1px 0 blue;
+  background: transparent;
+  animation: glitch-anim .2s infinite linear alternate-reverse;
+}
+.glitch{
+  display: flex;
+}
+@keyframes glitch-anim {
+  0% {
+    clip: rect(10px, 400px, 15px, 0);
+  }
+  20% {
+    clip: rect(400px, 400px, 41px, 0);
+  }
+  40% {
+    clip: rect(25px, 400px, 26px, 0);
+  }
+  60% {
+    clip: rect(10px, 400px, 15px, 0);
+  }
+  80% {
+    clip: rect(26px, 400px, 29px, 0);
+  }
+  100% {
+    clip: rect(40px, 400px, 45px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(30px, 400px, 40px, 0);
+  }
+  20% {
+    clip: rect(26px, 400px, 28px, 0);
+  }
+  40% {
+    clip: rect(15px, 400px, 100px, 0);
+  }
+  60% {
+    clip: rect(40px, 400px, 45px, 0);
+  }
+  80% {
+    clip: rect(10px, 400px, 18px, 0);
+  }
+  100% {
+    clip: rect(40px, 400px, 50px, 0);
+  }
+}
+</style>
