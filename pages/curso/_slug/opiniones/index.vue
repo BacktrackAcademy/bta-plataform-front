@@ -119,7 +119,7 @@ export default {
     }
   },
   created() {
-    // this.getCourse();
+    this.getCourse();
     this.getOpinions();
   },
   methods: {
