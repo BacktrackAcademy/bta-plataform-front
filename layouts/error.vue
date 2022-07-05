@@ -18,7 +18,7 @@
           class="space cursor-pointer z-50 flex-col justify-center items-center flex pt-4 px-8 rounded-md text-purple-800 transform duration-150 ease-in hover:text-white hover:scale-105"
         >
         <!-- Image -->
-          <img src="https://www.pngmart.com/es/image/217684" alt="" />
+          <img src="https://www.pngmart.com/files/15/Floating-Astronaut-PNG-Free-Download.png" alt="" />
         </nuxt-link>
       </div>
     </div>
