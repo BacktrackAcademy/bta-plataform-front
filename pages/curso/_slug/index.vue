@@ -18,7 +18,7 @@
           <div class="extra-info flex items-center">
             <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'">
               <div class="mr-2 flex items-center">
-                <div v-for="(i) in course.stars_evaluation" :key="i">
+                <div v-for="(i) in course.stars_evaluation" :key="i+'starEvaluation'">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
                     class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 576 512">
@@ -27,7 +27,7 @@
                     </path>
                   </svg>
                 </div>
-                <div v-for="(i) in stars_blank" :key="i">
+                <div v-for="(i) in stars_blank" :key="i+'starBlank'">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
                     class="inline-block h-4 overflow-visible mr-2 fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 576 512">
@@ -86,44 +86,70 @@
     <!-- Temario -->
     <section class="bg-bta-section">
       <div class="px-4">
-        <h2 
-          class="font-oswald font-bold text-white text-4xl text-center mb-14"
-          >
+        <h2 class="font-oswald font-bold text-white text-4xl text-center mb-14">
           Temario del Curso de {{ course.titulo }}
         </h2>
         <div v-for="(theme, i) in syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
           <h3 class="font-oswald text-white text-3xl font-bold my-10">{{ theme.titulo }}</h3>
 
-          <div v-for="(video, i) in theme.videos" :key="i + 2000" class="flex gap-2 items-center p-6 hover:bg-bta-dark-blue rounded-lg relative">
-            <!-- play icon -->
-            <div v-if="video.is_free" class="text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <!-- Lock icon -->
-            <div v-else class="text-white ">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                  clip-rule="evenodd" />
-              </svg>
-            </div>
-            <div class="">
-              <p class="text-white"> {{ video.titlevideo }} </p>
-            </div>
-            <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
-              <div class="text-bta-pink">
-                <!-- clock icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div v-for="(video, i) in theme.videos" :key="i + 2000"
+            class="flex gap-2 items-center hover:bg-bta-dark-blue rounded-lg relative">
+
+            <div v-if="video.is_free || course.price == null || course.price == 0" class="text-white w-full">
+              <NuxtLink :to="'/video/'+ video.slug">
+              <div class="flex flex-row items-center gap-2 p-6">
+                <!-- play icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
+                <div class="">
+                  <p class="text-white"> {{ video.titlevideo }} </p>
+                </div>
+                <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
+                  <div class="text-bta-pink">
+                    <!-- clock icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p class="text-white"> {{ video.total }}</p>
+                </div>
               </div>
-              <p class="text-white"> {{ video.total }}</p>
+              </NuxtLink>
             </div>
+
+            <div v-else class="text-white w-full">
+              <NuxtLink :to="'/curso/' + course.slug">
+                <div class="flex flex-row items-center gap-2 p-6">
+                  <!-- Lock icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <div class="">
+                    <p class="text-white"> {{ video.titlevideo }}</p>
+                  </div>
+                  <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
+                    <div class="text-bta-pink">
+                      <!-- clock icon -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <p class="text-white"> {{ video.total }}</p>
+                  </div>
+                </div>
+              </NuxtLink>
+            </div>
+
           </div>
         </div>
       </div>
@@ -133,36 +159,76 @@
 </template>
 
 <script>
-
 export default {
   name: 'courseIndvPage',
 
   data() {
     return {
-      course: [],
+      course: {},
       teacher: {},
       syllabus: [],
       stars_blank: 0,
     }
   },
+  async asyncData({ $axios, params }) {
+    const { data } = await $axios.get("/api/v1/course/" + params.slug);
+    return {
+      course: data,
+      teacher: data.teacher,
+      syllabus: data.syllabus
+    };
+  },
+  head() {
+    return {
+      title: this.course.titulo + " - Bactrack Academy",
+      htmlAttrs: {
+        lang: "es",
+      },
+      meta: [
+        // open graph
+        { hid: "og-site_name", property: "og:site_name", content: "Backtrack Academy" },
+        { hid: "og-type", property: "og:type", content: "website" },
+        {
+          hid: "og-title",
+          property: "og:title",
+          content: this.course.titulo,
+        },
+        {
+          hid: "og-desc",
+          property: "og:description",
+          content: this.course.descripcion,
+        },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: this.course.wallpaper_thumb,
+        },
+        // description
+        {
+          hid: "description",
+          name: "description",
+          content: this.course.descripcion,
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: this.course.metatag,
+        },
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "format-detection", content: "telephone=no" },
+      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    };
+  },
   created() {
-    this.getCourse();
+    this.calcStars(this.course.stars_evaluation)
   },
   methods: {
-    getCourse() {
-      this.$axios.get(`api/v1/course/${this.$route.params.slug}`).then((response) => {
-        this.course = response.data;
-        this.teacher = response.data.teacher;
-        this.syllabus = response.data.syllabus;
-        this.calcStars(response.data.stars_evaluation)
-      })
-        .catch((error) => console.log(error));
-    },
-
     calcStars(stars) {
       this.stars_blank = 5 - stars
     },
-  }
+  },
 }
 </script>
 
