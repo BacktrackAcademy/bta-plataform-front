@@ -27,7 +27,8 @@
           <article v-for="(opinion, i) in opinions" :key="opinion.i + i" class="bg-bta-blue w-[calc(50%-1.5rem)] flex flex-col py-4 px-5 mb-6 rounded-xl">
             <header class="flex mb-4">
               <figure class="inline-block h-11 w-11 mr-4">
-                <img :src="opinion.user.avatar_url_small" class="rounded-full" :alt="opinion.user.name" />
+                <img
+                :src="opinion.user.avatar_url_small=='avatar-50.png'?require(`~/assets/defaultuser.png`):opinion.user.avatar_url_small" class="rounded-full h-11 w-11 bg-bta-pink object-cover" :alt="opinion.user.name" />
               </figure>
               <div class="flex flex-col">
                 <h3 class="text-gray-muted font-normal">{{opinion.user.name}}</h3>
@@ -57,6 +58,7 @@
             </div>
           </article>
         </div>
+        
         <!-- <article class="bg-bta-blue w-[calc(50%-1.5rem)] flex flex-col py-4 px-5 mb-6 rounded-xl">
           <header class="flex mb-4">
             <figure class="inline-block h-11 w-11 mr-4">
@@ -104,6 +106,20 @@
             </div>
           </div>
         </article> -->
+      <div class="flex justify-center items-center space-x-1">
+        <button @click.prevent="prevPage" class="flex items-center px-4 py-2 text-gray-500 bg-gray-300 rounded-md">
+            Previous
+        </button>
+        <div v-for="(page, i) in total_pages" :key="i+'page'">
+          <a @click.prevent="setPage(page)" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-blue-400 hover:text-white">
+            {{ page }}
+          </a>
+        </div>
+
+        <button @click.prevent="nextPage" class="px-4 py-2 font-bold text-gray-500 bg-gray-300 rounded-md hover:bg-blue-400 hover:text-white">
+            Next
+        </button>
+      </div>
     </section>
   </div>
 </template>
@@ -115,12 +131,19 @@ export default {
     return {
       course: [],
       opinions: [],
-
+      page: 1,
+      per_page: 10,
+      total_pages: null, 
     }
   },
   created() {
     this.getCourse();
     this.getOpinions();
+  },
+  watch: {
+    page() {
+      this.getOpinions();
+    }
   },
   methods: {
     getCourse() {
@@ -131,9 +154,28 @@ export default {
     },
     getOpinions() {
       console.log(this.$route.params.slug)
-      this.$axios.get(`api/v1/course/${this.$route.params.slug}/opinions`).then((response) => {
-        this.opinions = response.data;
+      this.$axios.get(`api/v1/course/${this.$route.params.slug}/opinions`,{ params:{
+        page: this.page,
+        per_page: this.per_page
+      }}).then((response) => {
+        this.opinions = response.data.data;
+        this.per_page = response.data.per_page;
+        this.page = response.data.current_page;
+        this.total_pages = response.data.total_pages;
       })
+    },
+    nextPage() {
+      if (this.page < this.total_pages) {
+        this.page++;
+      }
+    },
+    prevPage() {
+      if (this.page > 1) {
+        this.page--;
+      }
+    },
+    setPage(page) {
+      this.page = page;
     }
   }
 }
