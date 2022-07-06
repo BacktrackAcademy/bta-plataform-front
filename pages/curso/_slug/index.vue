@@ -16,7 +16,7 @@
           <p class="font-inconsolata text-sm">Curso</p>
           <h1 class="font-oswald font-bold text-5xl mb-3">{{ course.titulo }}</h1>
           <div class="extra-info flex items-center">
-            <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'">
+            <NuxtLink :to="'/curso/' + course.slug + '/opiniones'">
               <div class="mr-2 flex items-center">
                 <div v-for="(i) in course.stars_evaluation" :key="i+'starEvaluation'">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
