@@ -10,11 +10,16 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
 
+  loadingIndicator: {
+    name: 'circle',
+    color: '#EC1075',
+    background: '#070916',
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "bta_platform_front",
+    title: "Backtrack Academy",
     htmlAttrs: {
-      lang: "en",
+      lang: "es",
     },
     meta: [
       { charset: "utf-8" },
