@@ -38,7 +38,7 @@
           <ul
            class="dropdown-menu absolute bg-bta-dark-blue  height-0 peer-checked:h-[225px] peer-checked:border-[1px] peer-checked:border-bta-section"
            >
-            <NuxtLink to="/perfil" @click.native="dropdownState=false">
+            <NuxtLink :to="'/@' + this.$auth.user.username " @click.native="dropdownState=false">
               <li class="nav__link">
                 Perfil
               </li>
