@@ -96,11 +96,38 @@
           <div v-for="(theme, i) in syllabus" :key="theme.slug + i">
             <h3>{{ theme.titulo }}</h3>
             <div v-for="(video, i) in theme.videos" :key="video.slug + i">
+            <div v-if="video.is_free || course.price == null || course.price == 0" class="text-white w-full">
               <a :href="'/video/' + video.slug" class="block w-full py-4">
-                <p class="text-white font-normal text-base">
-                  {{ video.titlevideo }}
-                </p>
+                <div class="flex flex-row items-center gap-2 text-white">
+                  <!-- play icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div class="">
+                    <p class="text-white"> {{ video.titlevideo }} </p>
+                  </div>
+                </div>
               </a>
+            </div>
+            <div v-else class="text-white w-full">
+              <a :href="'/curso/' + course.slug">
+                <div class="flex flex-row items-center gap-2 p-6">
+                  <!-- Lock icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <div class="">
+                    <p class="text-white"> {{ video.titlevideo }}</p>
+                  </div>
+
+                </div>
+              </a>
+            </div>
             </div>
           </div>
         </div>
@@ -125,6 +152,7 @@ export default {
   },
   async asyncData({ $axios, params }) {
     const { data } = await $axios.get("/api/v1/video/" + params.slug)
+    console.log(data.course)
     return {
       video: data,
       course: data.course,
