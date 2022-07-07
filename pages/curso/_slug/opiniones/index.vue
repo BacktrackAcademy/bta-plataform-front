@@ -17,14 +17,17 @@
           </svg>
         </li>
         <li>
-          <p class="text-gray-500" aria-current="page">comentarios</p>
+          <p class="text-gray-500" aria-current="page">Opiniones</p>
         </li>
       </ol>
     </nav>
     <section class="bg-bta-dark-blue pt-0">
-        <!-- comentarios -->
-        <div class="flex flex-wrap max-w-[1200px] mx-auto gap-5 py-7 px-2 relative" >
-          <article v-for="(opinion, i) in opinions" :key="opinion.i + i" class="bg-bta-blue w-[calc(50%-1.5rem)] flex flex-col py-4 px-5 mb-6 rounded-xl">
+        <!-- opiniones -->
+        <div v-if="loading" class="grid place-content-center min-h-[65vh]" >
+          <Loading />
+        </div>
+        <div v-else class="flex flex-wrap max-w-[1200px]  mx-auto gap-5 py-7 px-2 relative min-h-[70vh]"  >
+          <article  v-for="(opinion, i) in opinions" :key="opinion.i + i" class="bg-bta-blue w-[calc(50%-1.5rem)] flex flex-col py-4 px-5 mb-6 rounded-xl">
             <header class="flex mb-4">
               <figure class="inline-block h-11 w-11 mr-4">
                 <img
@@ -108,16 +111,16 @@
         </article> -->
       <div class="flex justify-center items-center space-x-1">
         <button @click.prevent="prevPage" class="flex items-center px-4 py-2 text-gray-500 bg-gray-300 rounded-md">
-            Previous
+            Anterior
         </button>
         <div v-for="(page, i) in total_pages" :key="i+'page'">
-          <a @click.prevent="setPage(page)" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-blue-400 hover:text-white">
+          <a @click.prevent="setPage(page)" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-bta-pink hover:text-white hover:cursor-pointer">
             {{ page }}
           </a>
         </div>
 
-        <button @click.prevent="nextPage" class="px-4 py-2 font-bold text-gray-500 bg-gray-300 rounded-md hover:bg-blue-400 hover:text-white">
-            Next
+        <button @click.prevent="nextPage" class="px-4 py-2 font-bold text-gray-500 bg-gray-300 rounded-md hover:bg-bta-pink hover:text-white">
+            Siguiente
         </button>
       </div>
     </section>
@@ -125,16 +128,19 @@
 </template>
 
 <script>
+import Loading from "../../../../components/icons/Loading.vue";
 export default {
-  name: 'comentario',
+  name: "comentario",
+  components: { Loading },
   data() {
     return {
       course: [],
       opinions: [],
       page: 1,
       per_page: 10,
-      total_pages: null, 
-    }
+      total_pages: null,
+      loading: false,
+    };
   },
   created() {
     this.getCourse();
@@ -143,43 +149,56 @@ export default {
   watch: {
     page() {
       this.getOpinions();
-    }
+    },
   },
   methods: {
     getCourse() {
-      console.log(this.$route.params.slug)
-      this.$axios.get(`api/v1/course/${this.$route.params.slug}`).then((response) => {
-        this.course = response.data;
-      })
+      console.log(this.$route.params.slug);
+      this.$axios
+        .get(`api/v1/course/${this.$route.params.slug}`)
+        .then((response) => {
+          this.course = response.data;
+        });
     },
     getOpinions() {
-      console.log(this.$route.params.slug)
-      this.$axios.get(`api/v1/course/${this.$route.params.slug}/opinions`,{ params:{
-        page: this.page,
-        per_page: this.per_page
-      }}).then((response) => {
-        this.opinions = response.data.data;
-        this.per_page = response.data.per_page;
-        this.page = response.data.current_page;
-        this.total_pages = response.data.total_pages;
-      })
+      this.loading = true;
+      this.$axios
+        .get(`api/v1/course/${this.$route.params.slug}/opinions`, {
+          params: {
+            page: this.page,
+            per_page: this.per_page,
+          },
+        })
+        .then((response) => {
+          this.opinions = response.data.data;
+          this.per_page = response.data.per_page;
+          this.page = response.data.current_page;
+          this.total_pages = response.data.total_pages;
+          this.loading = false;
+        });
     },
     nextPage() {
       if (this.page < this.total_pages) {
+        window.scrollTo(0, 0);
         this.page++;
       }
     },
     prevPage() {
       if (this.page > 1) {
+        window.scrollTo(0, 0);
         this.page--;
       }
     },
     setPage(page) {
+      window.scrollTo(0, 0);
       this.page = page;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
 </style>
