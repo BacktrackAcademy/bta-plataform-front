@@ -9,7 +9,6 @@
       <section class="w-[calc(100%-2rem)] lg:max-w-[calc(100%-4rem)] mx-4 py-2">
         <div class="sm:w-3/4 lg:w-1/2 mx-auto flex flex-col gap-4 bg-bta-dark-blue p-6 md:p-8 relative rounded-lg">
 
-
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
             <div class="flex flex-col mb-8">
               <label class="text-white mb-2" for="user_name">Nombre de Usuario</label>
@@ -102,6 +101,49 @@
         </div>
       </section>
     </form>
+    <section class="bg-bta-section px-10">
+      <h2 class="text-3xl text-white font-oswald font-semibold">Formacion Profesional</h2>
+      <form>
+      <div class="text-white my-4">
+        <div>
+          <legend class="font-inconsolata">Nivel de estudios</legend>
+        </div>
+        <input type="radio" name="nivelEstudios" value="1" v-model="user.nivel_estudios"> Secundaria
+        <input type="radio" name="nivelEstudios" value="2" v-model="user.nivel_estudios"> Universidad
+      </div>
+      <div>
+        <h2 class="text-white font-oswald font-medium">Habilidades</h2>
+        <v-select multiple v-model="selected" :options="['Canada','United States']" class="v-select"/>
+      </div>
+      <div>
+        <button class="text-white hover:text-gray-muted font-inconsolata">Agregar Educación</button>
+        <div class="text-white">
+          <div class="flex justify-between text-white text-xl font-oswald">
+            <p>Educación</p>
+            <button>Eliminar</button>
+          </div>
+          <div>
+            <div class="mb-3">
+              <label for="">Seleccione Universidad, Instituto u otra Academia. </label>
+              <input type="text" placeholder="ej. Universidad Pontificia">
+            </div>
+            <div class="mb-3">
+              <label for="">Grado, Licenciatura ó diplamado</label>
+              <datalist id="degree">
+                <option value="">Ingeniería en Computación</option>
+              </datalist>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div>
+        <button class="bg-bta-pink px-4 py-2 text-white text-xl font-oswald font-medium">Actualizar</button>
+      </div>
+    </form>
+    </section>
+
   </section>
 </template>
 
@@ -161,5 +203,17 @@ export default {
   .m-cols-2 {
     grid-column-end: span 2;
   }
+}
+.v-select {
+  --vs-selected-bg: #565982;
+  --vs-selected-color: #fff;
+  --vs-selected-border-color: #565982;
+  --vs-selected-border-width: 1px;
+  --vs-selected-border-style: solid;
+  --vs-selected-border-radius: 0;
+  --vs-selected-padding: 0.5rem;
+  --vs-selected-font-weight: 400;
+  --vs-controls-color: #EC1075;
+  --vs-search-input-color: #070916;
 }
 </style>
