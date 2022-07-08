@@ -52,6 +52,7 @@ export default {
     "@nuxtjs/auth-next",
     "@nuxtjs/sitemap",
     "@nuxtjs/robots",
+    'nuxt-vue-select',
   ],
   sitemap: {
     hostname: "https://app.backtrackacademy.com",
