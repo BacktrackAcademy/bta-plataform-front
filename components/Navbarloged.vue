@@ -25,6 +25,24 @@
       </div>
       <div
         class="hidden lg:grid grid-flow-col auto-cols-auto items-center justify-items-center gap-8 ml-auto uppercase text-sm">
+        <nuxt-link to="/login" class="
+            shadow-md
+            shadow-bta-pink/50
+            text-white
+            font-oswald
+            border-bta-pink
+            border
+            px-3
+            py-1
+            flex-shrink-0
+          ">
+          Vuélvete Pro!
+        </nuxt-link>
+        <nuxt-link v-for="link,key in links" :key="key" :to="link.url" class="text-white font-oswald relative">
+          <span class="relative text-white">
+            {{link.name}}
+          </span>
+        </nuxt-link>
         <div class="relative" id="dropdown-selector">
 
           <label for="touch">
@@ -79,24 +97,6 @@
           </ul>
 
         </div>
-        <nuxt-link v-for="link,key in links" :key="key" :to="link.url" class="text-white font-oswald relative">
-          <span class="relative text-white">
-            {{link.name}}
-          </span>
-        </nuxt-link>
-        <nuxt-link to="/login" class="
-            shadow-md
-            shadow-bta-pink/50
-            text-white
-            font-oswald
-            border-bta-pink
-            border
-            px-3
-            py-1
-            flex-shrink-0
-          ">
-          Vuélvete Pro!
-        </nuxt-link>
       </div>
       <HamburgerButton :toggleProp="toggleBurgerMenu" :state="hamburgerMenuIsOpen" />
     </div>
