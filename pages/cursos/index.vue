@@ -152,9 +152,20 @@
         <div class="lg:col-span-3 bg-bta-blue w-9/12">
 
           <div class="h-96 lg:h-full lg:w-11/12 mx-auto">
-            <div class="py-10">
+            <div class="flex items-center justify-between py-10">
               <h1 class="text-white text-3xl xl:text-5xl font-oswald font-semibold">
                 Cursos de hacking ético</h1>
+                <div class="flex flex-row-reverse gap-1 bg-gray-border w-1/6 items-center px-3 py-2 rounded-full overflow-hidden"
+                  action="/search">
+                  <input class="bg-transparent text-white w-60 outline-none text-sm focus:translate-x-10 searcher__input"
+                    type="text" placeholder="¿Qué te gustaría aprender?" v-model="query"/>
+                  <svg class="text-white searcher__icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z"></path>
+                    <circle cx="10" cy="10" r="7"></circle>
+                    <line x1="21" y1="21" x2="15" y2="15"></line>
+                  </svg>
+                </div>
             </div>
             <div class="grid grid-cols-3 gap-8">
               <div v-for="(course, i) in courses" :key="i">
@@ -520,6 +531,7 @@ export default {
       user_ids: [],
       level_ids: [],
       category_ids: [],
+      query: ''
     }
   },
   mounted() {
@@ -529,6 +541,9 @@ export default {
     this.getCategories();
   },
   watch:{
+    query(){
+      this.getCourses()
+    },
     level_ids(){
       this.getCourses()
     },
@@ -546,6 +561,7 @@ export default {
           user_ids: this.user_ids,
           level_ids: this.level_ids,
           category_ids: this.category_ids,
+          query: this.query
         }
       }).then((response) => {
         this.courses = response.data;
@@ -592,6 +608,19 @@ export default {
 }
 </script>
 <style scoped>
+ .searcher__input{
+    transition: .5s;
+  }
+  .searcher__input:focus{
+    transform: translateX(-25px);
+  }
+  .searcher__icon{
+    transition: .5s;
+  }
+  .searcher__input:focus ~ .searcher__icon{
+    transform: translateX(-50px);
+    opacity: 0;
+  }
 .glitch:hover{
   position: relative;
   text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
