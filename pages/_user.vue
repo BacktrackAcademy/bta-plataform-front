@@ -14,7 +14,7 @@
               </figure>
               <!-- profile underline -->
               <div>
-                <a href="/perfil/editar" class="text-blue-500 underline text-base font-bold">Editar perfil</a>
+                <a href="/editar-perfil" class="text-blue-500 underline text-base font-bold">Editar perfil</a>
               </div>
             </div>
           </div>
