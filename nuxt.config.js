@@ -12,9 +12,9 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "bta_platform_front",
+    title: "Cursos online de Hacking ético - Backtrack Academy",
     htmlAttrs: {
-      lang: "en",
+      lang: "es",
     },
     meta: [
       { charset: "utf-8" },
