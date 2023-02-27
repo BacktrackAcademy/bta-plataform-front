@@ -67,7 +67,7 @@
             </div>
           </div>
           <p>{{ teacher.name }}</p>
-          <p class="mt-4 text-lg">{{ course.descripcion }}</p>
+          <p class="mt-4 text-base font-inconsolata mb-3">{{ course.descripcion }}</p>
           <NuxtLink to="/cursos" class="">Regresar a cursos</NuxtLink>
         </div>
         <div class="pt-[53px]">
