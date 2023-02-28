@@ -121,11 +121,15 @@ body {
 
 ::-webkit-scrollbar {
   background: transparent;
-  width: 2px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #EC1075;
 }
 
 ::-webkit-scrollbar-track {
