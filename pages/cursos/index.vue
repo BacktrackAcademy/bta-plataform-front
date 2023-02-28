@@ -149,14 +149,14 @@
             </div>
           </div>
         </form>
-        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-full overflow-auto">
+        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-full overflow-auto px-4 sm:px-6 xl:px-8">
 
-          <div class="lg:h-full lg:w-11/12 mx-auto">
+          <div class="lg:h-full">
             <div class="py-10">
-              <h1 class="text-white text-3xl xl:text-5xl font-oswald font-semibold">
+              <h1 class="text-white text-3xl lg:text-4xl xl:text-5xl font-oswald font-semibold">
                 Cursos de hacking ético</h1>
             </div>
-            <div class="grid grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               <div v-for="(course, i) in courses" :key="i">
                 <div
                   class="max-w-[300px] mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 ">
