@@ -81,9 +81,9 @@
         hamburgerMenuIsOpen: false,
         links:[
           { name: "Cursos", url: "/cursos" },
-          { name: "Artículos", url: "/login" },
-          { name: "Debates", url: "/login" },
-          { name: "Noticias", url: "/login" },
+          { name: "Artículos", url: "/articulos" },
+          { name: "Debates", url: "/debates" },
+          { name: "Noticias", url: "/noticias" },
         ]
       }
     },
