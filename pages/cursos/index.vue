@@ -30,8 +30,6 @@
                 type="text"
                 placeholder="¿Qué te gustaría aprender?"
                 v-model="query"
-                @input="getCourses()"
-
               />
               <svg
                 class="text-white searcher__icon"
@@ -278,7 +276,8 @@ export default {
       level_ids: [],
       category_ids: [],
       query: null,
-      isLoading: true
+      isLoading: true,
+      awaitingSearch: false,
     }
   },
   mounted() {
@@ -288,6 +287,15 @@ export default {
     this.getCategories();
   },
   watch:{
+    query() {
+      if (!this.awaitingSearch) {
+          setTimeout(() => {
+            this.getCourses();
+            this.awaitingSearch = false;
+          }, 1000); // 1 sec delay
+        }
+        this.awaitingSearch = true;
+    },
     level_ids(){
       this.getCourses()
     },
@@ -296,10 +304,11 @@ export default {
     },
     user_ids(){
       this.getCourses()
-    }
+    },
   },
   methods: {
     getCourses() {
+      this.isLoading = true
       this.$axios.get("api/v1/courses", {
         params: {
           user_ids: this.user_ids,
