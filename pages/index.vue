@@ -126,6 +126,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:active {
