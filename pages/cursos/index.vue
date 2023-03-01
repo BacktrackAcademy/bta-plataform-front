@@ -3,7 +3,7 @@
     <main class="bg-bta-section mx-auto sm-px-6">
       <div class="flex bg-bta-dark-blue">
         <!-- Filters -->
-        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[3%]">
+        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[3%] relative h-screen overflow-y-auto">
           <!-- <h3 class="sr-only">Tipos</h3>
           <ul role="list"
             class="text-sm font-medium font-inconsolata text-white space-y-4 pb-6 border-b border-gray-border">
@@ -149,7 +149,7 @@
             </div>
           </div>
         </form>
-        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-full overflow-auto px-4 sm:px-6 xl:px-8">
+        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-screen overflow-y-auto px-4 sm:px-6 xl:px-8">
 
           <div class="lg:h-full">
             <div class="py-10">
@@ -161,7 +161,7 @@
                 <div
                   class="max-w-[300px] mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 ">
                   <NuxtLink :to="'/curso/' + course.slug"
-                    class=" focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-bta-pink">
+                    class=" focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-bta-pink group">
                     <div class="flex flex-col h-full bg-bta-dark-blue shadow-lg rounded-lg overflow-hidden">
                       <!-- Image -->
                       <figure class="relative h-0 pb-[56.25%] overflow-hidden">
@@ -184,8 +184,9 @@
                             </div>
                           </header>
                           <!-- Content -->
+                          <div class="mt-4 h-1 w-12 bg-bta-pink group-hover:animate-fast-pulse"></div>
                           <div class="mb-8 text-gray-muted font-inconsolata">
-                            <p>{{ course.shortdes }}</p>
+                            <p class="py-2">{{ course.shortdes }}</p>
                           </div>
                         </div>
                         <!-- Card footer -->
@@ -227,7 +228,6 @@ export default {
       user_ids: [],
       level_ids: [],
       category_ids: [],
-      showFilters: false,
     }
   },
   mounted() {
@@ -248,9 +248,6 @@ export default {
     }
   },
   methods: {
-    closeFilters() {
-      this.showFilters = false;
-    },
     getCourses() {
       this.$axios.get("api/v1/courses", {
         params: {
