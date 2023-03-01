@@ -116,7 +116,7 @@ export default {
 </script>
 <style>
 body {
-  overflow: overlay;
+  /* overflow: overlay; */
 }
 
 ::-webkit-scrollbar {
