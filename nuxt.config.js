@@ -103,14 +103,14 @@ export default {
       //   },
       // },
       facebook: {
-        clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID,
+        clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID, 
         responseType: "code",
         endpoints: {
-          // token: "https://backtrackacademy.com/auth/facebook",
-          userInfo:
-            "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
+          token: "https://backtrackacademy.com/auth/facebook/callback",
+          // userInfo:
+          //   "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
         },
-        redirectUri: "https://backtrackacademy.com/auth/facebook/callback", // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
+        redirectUri: "https://backtrackacademy.com/auth/facebook", // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
         scope: ["public_profile", "email"],
         token: {
           // By default the token type is Bearer, but simple_jwt is configured
