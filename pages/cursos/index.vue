@@ -3,7 +3,7 @@
     <main class="bg-bta-section mx-auto sm-px-6">
       <div class="flex bg-bta-dark-blue">
         <!-- Filters -->
-        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[3%] relative h-screen overflow-y-auto">
+        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[2.4%] relative h-screen overflow-y-auto">
           <!-- <h3 class="sr-only">Tipos</h3>
           <ul role="list"
             class="text-sm font-medium font-inconsolata text-white space-y-4 pb-6 border-b border-gray-border">
@@ -23,7 +23,30 @@
               <a href="#"> Premiun </a>
             </li>
           </ul> -->
+          <div class="relative pt-12 pb-4">
+            <form class="flex flex-row-reverse gap-1 bg-gray-border items-center px-3 py-2 rounded-full overflow-hidden" action="/search">
+              <input
+                class="bg-transparent text-white w-60 outline-none text-sm focus:translate-x-10 searcher__input"
+                type="text"
+                placeholder="¿Qué te gustaría aprender?"
+                v-model="query"
+                @input="getCourses()"
 
+              />
+              <svg
+                class="text-white searcher__icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                fill="none" stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z"></path><circle cx="10" cy="10" r="7"></circle><line x1="21" y1="21" x2="15" y2="15"></line>
+              </svg>
+            </form>
+            </div>
           <div class="relative">
             <input id="but" type="checkbox"
               class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer">
@@ -44,23 +67,27 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
-            <!-- Filter section, show/hide based on section state. -->
+            <!-- Filter section categories, show/hide based on section state. -->
             <div class="py-6 peer-checked:hidden transition-transform duration-700">
               <div class="space-y-4">
                 <div v-for="(category, i) in categories" :key="i">
                   <div class="flex items-center gap-2 ">
                     <label :for="category.name"
-                      class="label-container text-sm items-center gap-2 font-sans text-white relative select-none cursor-pointer">
-
-                      <input :id="category.name" name="size[]" :value="category.id" type="checkbox"
-                        v-model="category_ids"
-                        class="absolute opacity-0 cursor-pointer h-0 w-0 border-gray-300 rounded focus:ring-indigo-500">
-
-                      <div class="cursor-pointer h-2 w-2 bg-inherit"></div>
+                      class="flex text-sm items-center gap-2 font-inconsolata text-white relative select-none cursor-pointer">
+                      <label class="main-label flex items-center mr-1">
+                        <input
+                          :id="category.name"
+                          :value="category.id"
+                          name="size[]"
+                          type="checkbox"
+                          v-model="category_ids"
+                        >
+                        <span></span>
+                      </label>
                       <h3>{{ category.name}}</h3>
-
-                      <label class="text-gray-muted hover:text-white">
-                        {{ category.number_courses }}</label>
+                      <span class="text-gray-muted hover:text-white">
+                        {{ category.number_courses }}
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -86,22 +113,28 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
-
+            <!-- Filter section levels, show/hide based on section state. -->
             <div class="py-6 peer-checked:hidden transition-transform duration-700">
               <div class="space-y-4">
 
                 <div v-for="(level, i) in levels" :key="i">
                   <div class="flex items-center gap-2">
                     <label :for="level.name"
-                      class="label-container text-sm items-center gap-2 font-sans text-white relative select-none cursor-pointer">
-
-                      <input :id="level.name" name="size[]" :value="level.id" type="checkbox" v-model="level_ids"
-                        class="absolute opacity-0 cursor-pointer h-0 w-0 border-gray-300 rounded focus:ring-indigo-500">
-                      <div class="cursor-pointer h-2 w-2 bg-inherit"></div>
+                      class="flex text-sm items-center gap-2 font-sans text-white relative select-none cursor-pointer">
+                      <label class="main-label flex items-center mr-1">
+                        <input
+                          :id="level.name"
+                          :value="level.id"
+                          name="size[]"
+                          type="checkbox"
+                          v-model="level_ids"
+                        >
+                        <span></span>
+                      </label>
                       <h3>{{ level.name}}</h3>
-
-                      <label class="text-gray-muted font-inconsolata hover:text-white">{{ level.number_courses
-                        }}</label>
+                      <label class="text-gray-muted font-inconsolata hover:text-white">
+                        {{ level.number_courses }}
+                      </label>
                     </label>
                   </div>
                 </div>
@@ -127,21 +160,28 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
-            <!-- Filter section, show/hide based on section state. -->
+            <!-- Filter section teachers, show/hide based on section state. -->
             <div class="py-6 peer-checked:hidden transition-transform duration-700">
               <div class="space-y-4">
 
                 <div v-for="(teacher, i) in teachers" :key="i">
                   <div class="flex items-center">
                     <label :for="teacher.name"
-                      class="label-container text-sm items-center gap-2 font-sans text-white relative select-none cursor-pointer">
-
-                      <input :id="teacher.name" name="size[]" :value="teacher.id" type="checkbox" v-model="user_ids"
-                        class="absolute opacity-0 cursor-pointer h-0 w-0 border-gray-300 rounded focus:ring-indigo-500">
-                      <div class="cursor-pointer h-2 w-2 bg-inherit"></div>
+                      class="flex text-sm items-center gap-2 font-sans text-white relative select-none cursor-pointer">
+                      <label class="main-label flex items-center mr-1">
+                        <input
+                          :id="teacher.name"
+                          :value="teacher.id"
+                          name="size[]"
+                          type="checkbox"
+                          v-model="user_ids"
+                        >
+                        <span></span>
+                      </label>
                       <h3>{{ teacher.name }} {{ teacher.lastname }} </h3>
-                      <label class="text-gray-muted font-inconsolata hover:text-white"> {{ teacher.number_courses
-                        }}</label>
+                      <label class="text-gray-muted font-inconsolata hover:text-white">
+                        {{ teacher.number_courses }}
+                      </label>
                     </label>
                   </div>
                 </div>
@@ -156,7 +196,16 @@
               <h1 class="text-white text-3xl lg:text-4xl xl:text-5xl font-oswald font-semibold">
                 Cursos de hacking ético</h1>
             </div>
+            <template v-if="isLoading">
+              <div class="grid place-items-center min-h-[50vh]">
+                <div class="flex flex-col items-center">
+                  <IconsSpinner class="text-white"/>
+                  <p class="text-white text-center mt-2">Cargando cursos...</p>
+                </div>
+              </div>
+            </template>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
               <div v-for="(course, i) in courses" :key="i">
                 <div
                   class="max-w-[300px] mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 ">
@@ -228,6 +277,8 @@ export default {
       user_ids: [],
       level_ids: [],
       category_ids: [],
+      query: null,
+      isLoading: true
     }
   },
   mounted() {
@@ -254,11 +305,19 @@ export default {
           user_ids: this.user_ids,
           level_ids: this.level_ids,
           category_ids: this.category_ids,
+          query: this.query
         }
-      }).then((response) => {
+      })
+      .then((response) => {
         this.courses = response.data;
       })
-        .catch((error) => console.log(error));
+      .catch((error) => {
+          console.log(error)
+      })
+      .finally(() => {
+        console.log("Cursos cargados")
+        this.isLoading = false
+      });
     },
     getTeachers() {
       this.$axios.get("api/v1/teacher").then((response) => {
@@ -288,13 +347,20 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Únete gratis y comienza a aprender seguridad informatica desde cero con los mejores hackers.'
+        content: 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers."'
       },
       {
         hid: 'keywords',
         name: 'description',
-        content: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informatica, Seguridad, Academy, Online, Cursos, JavaScript'
-      }
+        content: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informática, Seguridad, Academy, Online, Cursos, JavaScript'
+      },
+
+      // Open Graph / Facebook
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://backtrackacademy.com/' },
+      { property: 'og:title', content: 'Backtrack Academy - Cursos online de Hacking Ético' },
+      { property: 'og:description', content: 'Únete gratis y comienza a aprender seguridad informatica desde cero con los mejores hackers.' },
+      { property: 'og:image', content: 'https://backtrack-academy-01.s3.amazonaws.com/OpenGraph+Facebook.png' },
     ]
   },
 }
@@ -358,14 +424,44 @@ export default {
   }
 }
 
-.label-container{
-  display: flex;
+.searcher__input{
+    transition: .5s;
+  }
+.searcher__input:focus{
+  transform: translateX(-25px);
 }
-.label-container:hover input ~ div {
-  @apply bg-gray-muted;
+.searcher__icon{
+  transition: .5s;
 }
-.label-container input:checked ~ div {
-  @apply bg-bta-pink shadow-2xl shadow-bta-pink;
+.searcher__input:focus ~ .searcher__icon{
+  transform: translateX(-50px);
+  opacity: 0;
 }
 
+.main-label {
+  @apply text-[1em] cursor-pointer;
+}
+.main-label span{
+  @apply inline-block relative h-[1.2em] w-[1.2em] bg-gray-muted rounded-full transition-all duration-700;
+}
+.main-label input {
+  opacity: 0;
+}
+.main-label input:checked ~ span {
+  box-shadow: 0px 0px 30px 0px #EC1075;
+}
+
+.main-label input:checked ~ span:before {
+  content: "";
+  position: absolute;
+  background-color: #EC1075;
+  width: 1.2em;
+  height: 1.2em;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: .3s ease;
+}
+.main-label input:checked ~ span:after {
+  opacity: 1;
+}
 </style>
