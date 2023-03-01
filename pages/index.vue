@@ -116,16 +116,21 @@ export default {
 </script>
 <style>
 body {
-  overflow: overlay;
+  /* overflow: overlay; */
 }
 
 ::-webkit-scrollbar {
   background: transparent;
-  width: 2px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #EC1075;
 }
 
 ::-webkit-scrollbar-track {

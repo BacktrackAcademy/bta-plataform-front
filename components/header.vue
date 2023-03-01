@@ -12,28 +12,6 @@
           <img class="w-32" src="~/assets/logo.svg" />
         </nuxt-link>
       </div>
-      <div class="hidden lg:block relative">
-        <form class="flex flex-row-reverse gap-1 bg-gray-border items-center px-3 py-2 rounded-full overflow-hidden" action="/search">
-          <input
-            class="bg-transparent text-white w-60 outline-none text-sm focus:translate-x-10 searcher__input"
-            type="text"
-            placeholder="¿Qué te gustaría aprender?"
-            value=""
-          />
-          <svg
-            class="text-white searcher__icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none" stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z"></path><circle cx="10" cy="10" r="7"></circle><line x1="21" y1="21" x2="15" y2="15"></line>
-          </svg>
-        </form>
-      </div>
       <div class="hidden lg:grid grid-flow-col auto-cols-auto items-center justify-items-center gap-8 ml-auto uppercase text-sm">
         <nuxt-link
           v-for="link,key in links"
@@ -81,9 +59,9 @@
         hamburgerMenuIsOpen: false,
         links:[
           { name: "Cursos", url: "/cursos" },
-          { name: "Artículos", url: "/login" },
-          { name: "Debates", url: "/login" },
-          { name: "Noticias", url: "/login" },
+          { name: "Artículos", url: "/articulos" },
+          { name: "Debates", url: "/debates" },
+          { name: "Noticias", url: "/noticias" },
         ]
       }
     },
@@ -98,19 +76,6 @@
   }
 </script>
 <style scoped>
-  .searcher__input{
-    transition: .5s;
-  }
-  .searcher__input:focus{
-    transform: translateX(-25px);
-  }
-  .searcher__icon{
-    transition: .5s;
-  }
-  .searcher__input:focus ~ .searcher__icon{
-    transform: translateX(-50px);
-    opacity: 0;
-  }
 
   .nav__link{
     @apply text-center text-white font-oswald relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-bta-pink before:scale-x-0 before:transition-all hover:before:scale-x-100;

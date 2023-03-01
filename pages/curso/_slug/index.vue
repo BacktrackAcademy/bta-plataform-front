@@ -14,9 +14,9 @@
         <!-- hero content -->
         <div class="hero-content">
           <p class="font-inconsolata text-sm">Curso</p>
-          <h1 class="font-oswald font-bold text-5xl mb-3">{{ course.titulo }}</h1>
-          <div class="extra-info flex items-center">
-            <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'">
+          <h1 class="font-oswald font-bold text-3xl lg:text-5xl mb-3">{{ course.titulo }}</h1>
+          <div class="extra-info flex items-center flex-wrap gap-3">
+            <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'" class="group">
               <div class="mr-2 flex items-center">
                 <div v-for="(i) in course.stars_evaluation" :key="i+'starEvaluation'">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
@@ -36,8 +36,10 @@
                     </path>
                   </svg>
                 </div>
-                <div class="mx-4">
-                  <p class="text-cyan-400">{{ course.count_evaluation }} Opiniones </p>
+                <div class="sm:mx-4">
+                  <p class="text-cyan-400 group-hover:underline underline-offset-2">
+                    {{ course.count_evaluation }} Opiniones
+                  </p>
                 </div>
               </div>
             </NuxtLink>
@@ -63,12 +65,14 @@
                   <rect x="0.5" y="0.5" width="4" height="20" fill="none" />
                 </g>
               </svg>
-              <p class="font-medium uppercase pt-[2px] ml-2 text-base"> {{ course.level_name }}</p>
+              <p class="font-medium uppercase pt-[2px] ml-2 text-sm xl:text-base"> {{ course.level_name }}</p>
             </div>
           </div>
           <p>{{ teacher.name }}</p>
-          <p class="mt-4 text-lg">{{ course.descripcion }}</p>
-          <NuxtLink to="/cursos" class="">Regresar a cursos</NuxtLink>
+          <p class="mt-4 text-base font-inconsolata mb-3">{{ course.descripcion }}</p>
+          <NuxtLink to="/cursos" class="hover:text-sky-500 hover:underline underline-offset-2 duration-300">
+            Regresar a cursos
+          </NuxtLink>
         </div>
         <div class="pt-[53px]">
           <p class="font-inconsolata text-sm">Consíguelo</p>
