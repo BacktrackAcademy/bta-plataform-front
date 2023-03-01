@@ -14,8 +14,8 @@
         <!-- hero content -->
         <div class="hero-content">
           <p class="font-inconsolata text-sm">Curso</p>
-          <h1 class="font-oswald font-bold text-5xl mb-3">{{ course.titulo }}</h1>
-          <div class="extra-info flex items-center">
+          <h1 class="font-oswald font-bold text-3xl lg:text-5xl mb-3">{{ course.titulo }}</h1>
+          <div class="extra-info flex items-center flex-wrap gap-3">
             <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'" class="group">
               <div class="mr-2 flex items-center">
                 <div v-for="(i) in course.stars_evaluation" :key="i+'starEvaluation'">
@@ -36,8 +36,10 @@
                     </path>
                   </svg>
                 </div>
-                <div class="mx-4">
-                  <p class="text-cyan-400 group-hover:underline underline-offset-2">{{ course.count_evaluation }} Opiniones </p>
+                <div class="sm:mx-4">
+                  <p class="text-cyan-400 group-hover:underline underline-offset-2">
+                    {{ course.count_evaluation }} Opiniones
+                  </p>
                 </div>
               </div>
             </NuxtLink>
@@ -63,7 +65,7 @@
                   <rect x="0.5" y="0.5" width="4" height="20" fill="none" />
                 </g>
               </svg>
-              <p class="font-medium uppercase pt-[2px] ml-2 text-base"> {{ course.level_name }}</p>
+              <p class="font-medium uppercase pt-[2px] ml-2 text-sm xl:text-base"> {{ course.level_name }}</p>
             </div>
           </div>
           <p>{{ teacher.name }}</p>
