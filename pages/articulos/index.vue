@@ -30,12 +30,12 @@ export default {
 
   head() {
     return {
-      title: "Artículos",
+      title: "Artículos - Backtrack Academy",
       meta: [
         {
           hid: "description",
           name: "description",
-          content: "Preguntas y respuestas",
+          content: "Artículos sobre seguridad informática",
         },
       ],
     };
