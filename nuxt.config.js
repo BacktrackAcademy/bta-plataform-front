@@ -88,6 +88,7 @@ export default {
       github: {
         clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID,
         clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET,
+        redirectUri: "https://backtrackacademy.com/auth/github", // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
       },
       // facebook: {
       //   clientId: process.env.FACEBOOK_CLIENT_ID,
@@ -106,7 +107,7 @@ export default {
         clientId: process.env.NUXT_ENV_FACEBOOK_CLIENT_ID, 
         responseType: "code",
         endpoints: {
-          token: "https://backtrackacademy.com/auth/facebook/callback",
+          // token: "https://backtrackacademy.com/auth/facebook/callback",
           // userInfo:
           //   "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
         },
