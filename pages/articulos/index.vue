@@ -42,6 +42,7 @@ import CardArticle from "~/components/CardArticle.vue";
 export default {
   name: "ArticlesPage",
   components: { CardArticle },
+  auth: false,
 
   data() {
     return {
