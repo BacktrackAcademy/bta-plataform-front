@@ -189,16 +189,16 @@
         </form>
         <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-screen overflow-y-auto px-4 sm:px-6 xl:px-8">
 
-          <div class="lg:h-full">
+          <div class="lg:h-full max-w-6xl mx-auto">
             <div class="py-10">
-              <h1 class="text-white text-3xl lg:text-4xl xl:text-5xl font-oswald font-semibold">
+              <h1 class="text-white text-3xl lg:text-4xl xl:text-5xl font-oswald font-semibold xl:pl-5">
                 Cursos de hacking ético</h1>
             </div>
             <template v-if="isLoading">
               <div class="grid place-items-center min-h-[50vh]">
                 <div class="flex flex-col items-center">
                   <IconsSpinner class="text-white"/>
-                  <p class="text-white text-center mt-2">Cargando cursos...</p>
+                  <p class="text-white font-inconsolata text-center mt-2">Cargando cursos...</p>
                 </div>
               </div>
             </template>
