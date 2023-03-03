@@ -109,7 +109,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div class="">
-                  <p class="text-white"> {{ video.titlevideo }} </p>
+                  <p class="text-white font-inconsolata"> {{ video.titlevideo }} </p>
                 </div>
                 <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
                   <div class="text-bta-pink">
@@ -136,7 +136,7 @@
                       clip-rule="evenodd" />
                   </svg>
                   <div class="">
-                    <p class="text-white"> {{ video.titlevideo }}</p>
+                    <p class="text-white font-inconsolata"> {{ video.titlevideo }}</p>
                   </div>
                   <div class="flex items-center gap-3 ml-auto flex-shrink-0 w-20">
                     <div class="text-bta-pink">
