@@ -16,7 +16,7 @@
           <div class="text-center" v-else>
             <button
               v-if="page < totalPages"
-              class="text-sm bg-bta-pink text-white px-6 py-2 rounded font-medium"
+              class="text-sm bg-bta-pink/90 hover:bg-bta-pink text-white px-6 py-2 rounded font-medium"
               @click="getMoreArticles"
             >
               Cargas más artículos
