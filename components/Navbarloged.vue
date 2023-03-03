@@ -77,8 +77,8 @@ import ChevronDown from "./icons/Chevron-down.vue";
         hamburgerMenuIsOpen: false,
         links:[
           { name: "Cursos", url: "/cursos" },
-          // { name: "Artículos", url: "/login" },
-          // { name: "Debates", url: "/login" },
+          { name: "Artículos", url: "/articulos" },
+          { name: "Debates", url: "/debates" },
           // { name: "Noticias", url: "/login" },
         ],
         dropdownState: false,
@@ -106,20 +106,6 @@ import ChevronDown from "./icons/Chevron-down.vue";
   }
 </script>
 <style scoped>
-  .searcher__input{
-    transition: .5s;
-  }
-  .searcher__input:focus{
-    transform: translateX(-25px);
-  }
-  .searcher__icon{
-    transition: .5s;
-  }
-  .searcher__input:focus ~ .searcher__icon{
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-
   .nav__link{
     @apply text-center text-white font-oswald relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-gray-800 hover:before:bg-bta-pink before:scale-x-75 before:transition-all hover:before:scale-x-100;
   }
