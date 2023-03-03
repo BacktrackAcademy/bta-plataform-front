@@ -24,7 +24,7 @@
             </li>
           </ul> -->
           <div class="relative pt-12 pb-4">
-            <form class="flex flex-row-reverse gap-1 bg-gray-border items-center px-3 py-2 rounded-full overflow-hidden" action="/search">
+            <form class="flex flex-row-reverse gap-1 bg-gray-border items-center justify-between px-3 py-2 rounded-full overflow-hidden" action="/search">
               <input
                 class="bg-transparent text-white w-60 outline-none text-sm focus:translate-x-10 searcher__input"
                 type="text"
@@ -44,7 +44,7 @@
                 <path stroke="none" d="M0 0h24v24H0z"></path><circle cx="10" cy="10" r="7"></circle><line x1="21" y1="21" x2="15" y2="15"></line>
               </svg>
             </form>
-            </div>
+          </div>
           <div class="relative">
             <input id="but" type="checkbox"
               class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer">
@@ -443,6 +443,12 @@ export default {
   }
 .searcher__input:focus{
   transform: translateX(-25px);
+}
+
+@media (min-width: 1440px) {
+  .searcher__input:focus{
+    transform: translateX(-34px);
+  }
 }
 .searcher__icon{
   transition: .5s;
