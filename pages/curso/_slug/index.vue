@@ -13,7 +13,9 @@
         </figure>
         <!-- hero content -->
         <div class="hero-content">
-          <p class="font-inconsolata text-sm">Curso</p>
+          <NuxtLink to="/cursos" class="hover:text-sky-500 hover:underline underline-offset-2 duration-300 font-inconsolata">
+            Regresar a cursos
+          </NuxtLink>
           <h1 class="font-oswald font-bold text-3xl lg:text-5xl mb-3">{{ course.titulo }}</h1>
           <div class="extra-info flex items-center flex-wrap gap-3">
             <NuxtLink :to="'/curso/' + course.slug + '/comentarios/'" class="group">
@@ -37,7 +39,7 @@
                   </svg>
                 </div>
                 <div class="sm:mx-4">
-                  <p class="text-cyan-400 group-hover:underline underline-offset-2">
+                  <p class="text-cyan-400 group-hover:underline underline-offset-2 font-inconsolata">
                     {{ course.count_evaluation }} Opiniones
                   </p>
                 </div>
@@ -70,9 +72,6 @@
           </div>
           <p>{{ teacher.name }}</p>
           <p class="mt-4 text-base font-inconsolata mb-3">{{ course.descripcion }}</p>
-          <NuxtLink to="/cursos" class="hover:text-sky-500 hover:underline underline-offset-2 duration-300">
-            Regresar a cursos
-          </NuxtLink>
         </div>
         <div class="pt-[53px]">
           <p class="font-inconsolata text-sm">Consíguelo</p>
