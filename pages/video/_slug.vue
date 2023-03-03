@@ -1,6 +1,6 @@
 <template>
   <section class="bg-bta-dark-blue px-4 sm:px-6 xl:px-8">
-    <div class="md:flex mt-2 gap-6 xl:gap-8">
+    <div class="lg:flex mt-2 gap-6 xl:gap-8">
       <div class="lg:w-[70%]">
         <!-- Video player -->
         <div
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <div class="lg:w-[30%] p-4">
+      <div class="lg:w-[30%]">
         <!-- badge -->
         <div class="text-[#cacaca] text-center mb-5">
           <p class="font-inconsolata">Has estudiado</p>
@@ -161,7 +161,6 @@ export default {
   },
   async asyncData({ $axios, params }) {
     const { data } = await $axios.get("/api/v1/video/" + params.slug)
-    console.log(data.course.syllabus)
     return {
       video: data,
       course: data.course,
