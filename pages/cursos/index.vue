@@ -3,7 +3,7 @@
     <main class="bg-bta-section mx-auto sm-px-6">
       <div class="flex bg-bta-dark-blue">
         <!-- Filters -->
-        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[2.4%] relative h-screen overflow-y-auto">
+        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[2.4%] sticky top-20 h-screen overflow-y-auto">
           <!-- <h3 class="sr-only">Tipos</h3>
           <ul role="list"
             class="text-sm font-medium font-inconsolata text-white space-y-4 pb-6 border-b border-gray-border">
@@ -187,7 +187,7 @@
             </div>
           </div>
         </form>
-        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-screen overflow-y-auto px-4 sm:px-6 xl:px-8">
+        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 px-4 sm:px-6 xl:px-8 min-h-screen lg:min-h-min">
 
           <div class="lg:h-full max-w-6xl mx-auto">
             <div class="py-10">
@@ -202,7 +202,7 @@
                 </div>
               </div>
             </template>
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4 xl:gap-x-8 pb-10">
 
               <div v-for="(course, i) in courses" :key="i">
                 <div
