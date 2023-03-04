@@ -3,7 +3,7 @@
     <main class="bg-bta-section mx-auto sm-px-6">
       <div class="flex bg-bta-dark-blue">
         <!-- Filters -->
-        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[2.4%] relative h-screen overflow-y-auto">
+        <form class="hidden lg:block w-3/12 px-[1%] xl:px-[2.4%] sticky top-20 h-screen overflow-y-auto">
           <!-- <h3 class="sr-only">Tipos</h3>
           <ul role="list"
             class="text-sm font-medium font-inconsolata text-white space-y-4 pb-6 border-b border-gray-border">
@@ -24,7 +24,7 @@
             </li>
           </ul> -->
           <div class="relative pt-12 pb-4">
-            <form class="flex flex-row-reverse gap-1 bg-gray-border items-center px-3 py-2 rounded-full overflow-hidden" action="/search">
+            <form class="flex flex-row-reverse gap-1 bg-gray-border items-center justify-between px-3 py-2 rounded-full overflow-hidden" action="/search">
               <input
                 class="bg-transparent text-white w-60 outline-none text-sm focus:translate-x-10 searcher__input"
                 type="text"
@@ -44,7 +44,7 @@
                 <path stroke="none" d="M0 0h24v24H0z"></path><circle cx="10" cy="10" r="7"></circle><line x1="21" y1="21" x2="15" y2="15"></line>
               </svg>
             </form>
-            </div>
+          </div>
           <div class="relative">
             <input id="but" type="checkbox"
               class="peer absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer">
@@ -187,22 +187,22 @@
             </div>
           </div>
         </form>
-        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 h-screen overflow-y-auto px-4 sm:px-6 xl:px-8">
+        <div class="lg:col-span-3 bg-bta-blue w-full lg:w-9/12 px-4 sm:px-6 xl:px-8 min-h-screen lg:min-h-min">
 
-          <div class="lg:h-full">
+          <div class="lg:h-full max-w-6xl mx-auto">
             <div class="py-10">
-              <h1 class="text-white text-3xl lg:text-4xl xl:text-5xl font-oswald font-semibold">
+              <h1 class="text-white text-3xl lg:text-4xl xl:text-5xl font-oswald font-semibold xl:pl-5">
                 Cursos de hacking ético</h1>
             </div>
             <template v-if="isLoading">
               <div class="grid place-items-center min-h-[50vh]">
                 <div class="flex flex-col items-center">
                   <IconsSpinner class="text-white"/>
-                  <p class="text-white text-center mt-2">Cargando cursos...</p>
+                  <p class="text-white font-inconsolata text-center mt-2">Cargando cursos...</p>
                 </div>
               </div>
             </template>
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4 xl:gap-x-8 pb-10">
 
               <div v-for="(course, i) in courses" :key="i">
                 <div
@@ -443,6 +443,12 @@ export default {
   }
 .searcher__input:focus{
   transform: translateX(-25px);
+}
+
+@media (min-width: 1440px) {
+  .searcher__input:focus{
+    transform: translateX(-34px);
+  }
 }
 .searcher__icon{
   transition: .5s;

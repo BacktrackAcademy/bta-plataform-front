@@ -124,13 +124,11 @@ export default {
   },
   methods: {
     getCourse() {
-      console.log(this.$route.params.slug)
       this.$axios.get(`api/v1/course/${this.$route.params.slug}`).then((response) => {
         this.course = response.data;
       })
     },
     getOpinions() {
-      console.log(this.$route.params.slug)
       this.$axios.get(`api/v1/course/${this.$route.params.slug}/opinions`).then((response) => {
         this.opinions = response.data;
       })
