@@ -58,8 +58,8 @@ export default {
     Sitemap: "https://app.backtrackacademy.com/sitemap.xml",
   },
   axios: {
-    baseURL: "https://backtrackacademy.com/",
-    // baseURL: "http://localhost:3000/",
+    // baseURL: "https://backtrackacademy.com/",
+    baseURL: "http://localhost:3000/",
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -86,9 +86,14 @@ export default {
   auth: {
     strategies: {
       github: {
-        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID,
-        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET,
-        redirectUri: "https://backtrackacademy.com/auth/github", // redirect_uri https://backtrackacademy.com/api/v1/social_auth/callback
+        clientId: "6115787fa03c2eb81b10",
+        clientSecret: "3b5efe47238e637b760bc3563370dfc8b530f7e9",
+        codeChallengeMethod: '',
+        responseType: 'code',
+        endpoints: {
+          // token: 'http://localhost:3000/auth/github-nuxt/callback', // somm backend url to resolve your auth with google and give you the token back
+          userInfo: 'http://localhost:3000/api/users/auth/github/' // the endpoint to get the user info after you recived the token 
+        },
       },
       // facebook: {
       //   clientId: process.env.FACEBOOK_CLIENT_ID,
@@ -119,15 +124,39 @@ export default {
           type: "JWT",
         },
       },
-      // google: {
-      //   clientId: process.env.NUXT_ENV_GOOGLE_CLIENT_ID
-      // },
+      google: {
+        clientId: "16651669541-lj5hic9dtlpg7t6r2eh760e2n26sh8ru.apps.googleusercontent.com",
+        codeChallengeMethod: '',
+        responseType: 'code',
+        endpoints: {
+          authorization: 'https://github.com/login/oauth/authorize',
+          token: 'http://localhost:3000/auth/google-nuxt/callback', // somm backend url to resolve your auth with google and give you the token back
+          userInfo: 'http://localhost:3000/auth/google-nuxt/callback/' // the endpoint to get the user info after you recived the token 
+        },
+      },
       local: {
         scheme: "local",
         endpoints: {
           login: { url: "api/v1/users/sign_in" },
           logout: { url: "api/v1/users/sign_out", method: "delete" },
           user: { url: "api/v1/users/current" },
+        },
+        // token: {
+        //   property: "authorization_token",
+        //   type: "Bearer",
+        //   name: "Authorization",
+        // },
+        // user: {
+        //   property: false,
+        //   autoFetch: false,
+        // },
+      },
+      gh2: {
+        scheme: "local",
+        endpoints: {
+          login: { url: "https://backtrackacademy.com/api/users/auth/github",method: "get" },
+          // logout: { url: "api/v1/users/sign_out", method: "delete" },
+          // user: { url: "api/v1/users/current" },
           // login: {
           //   url: "api/v1/users/sign_in",
           //   method: "post",
