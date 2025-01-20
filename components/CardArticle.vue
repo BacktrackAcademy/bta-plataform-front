@@ -12,7 +12,7 @@
         >
           <!-- Image -->
           <figure class="relative h-0 pb-[56.25%] overflow-hidden">
-            <img
+            <NuxtImg
               class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
               :src="article.image_thumb_variant_310"
               width="320"

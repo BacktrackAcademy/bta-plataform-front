@@ -31,8 +31,3 @@
     </g>
   </svg>
 </template>
-<script>
-export default {
-  name: "BTALogo",
-}
-</script>

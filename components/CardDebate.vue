@@ -1,3 +1,15 @@
+<script>
+export default {
+  name: "CardDebate",
+  props: {
+    discussion: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
+
 <template>
   <article class="max-w-3xl rounded-xl bg-bta-dark-blue p-6 drop-shadow-xl">
     <!-- Header -->
@@ -6,14 +18,11 @@
         <img
           src="https://api.lorem.space/image/?w=100&h=100&hash=tdr2k6fu"
           alt="pizza"
-        />
+        >
       </picture>
       <div class="flex flex-col">
         <p class="font-inconsolata text-gray-muted">
-          <NuxtLink
-            class="text-white"
-            :to="'/' + name_creator"
-          >
+          <NuxtLink class="text-white" :to="'/' + name_creator">
             {{ discussion.name_creator }}
           </NuxtLink>
           realizó una pregunta
@@ -22,10 +31,7 @@
     </header>
     <!-- body -->
     <h2 class="text-white font-medium font-oswald text-2xl mb-2">
-      <NuxtLink
-        class="text-white"
-        :to="'/debates/' + discussion.slug"
-      >
+      <NuxtLink class="text-white" :to="'/debates/' + discussion.slug">
         {{ discussion.title }}
       </NuxtLink>
     </h2>
@@ -44,14 +50,3 @@
   </article>
 </template>
 
-<script>
-export default {
-  name: "CardDebate",
-  props: {
-    discussion: {
-      type: Object,
-      required: true,
-    },
-  },
-};
-</script>

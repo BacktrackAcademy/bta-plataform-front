@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import BTALogo from './icons/BTALogo.vue'
+import Mail from './icons/Mail.vue'
+</script>
+
 <template>
   <footer
     class="border-t-2 border-bta-blue py-16 flex flex-col bg-bta-dark-blue"
@@ -18,22 +23,34 @@
         </h3>
         <ul>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Empresas</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Empresas
+            </NuxtLink>
           </li>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Usuarios</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Usuarios
+            </NuxtLink>
           </li>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Cursos Gratis</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Cursos Gratis
+            </NuxtLink>
           </li>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Nosotros</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Nosotros
+            </NuxtLink>
           </li>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Patrocinios</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Patrocinios
+            </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/" class="foot__link">Catálogo de Cursos</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Catálogo de Cursos
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -43,21 +60,31 @@
         </h3>
         <ul>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Políticas de Privacidad</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Políticas de Privacidad
+            </NuxtLink>
           </li>
           <li class="mb-8">
-            <NuxtLink to="/" class="foot__link">Términos de servicio</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Términos de servicio
+            </NuxtLink>
           </li>
         </ul>
         <ul>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Ranking</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Ranking
+            </NuxtLink>
           </li>
           <li class="mb-4">
-            <NuxtLink to="/" class="foot__link">Preguntas Frecuentes</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Preguntas Frecuentes
+            </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/" class="foot__link">Valida tus certificado</NuxtLink>
+            <NuxtLink to="/" class="foot__link">
+              Valida tus certificado
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -92,51 +119,38 @@
         </form>
       </div> -->
     </div>
-    <hr class="border-bta-section sm:mx-auto" />
+    <hr class="border-bta-section sm:mx-auto">
     <div class="flex flex-col items-center justify-around">
       <div class="mt-2 md:mt-0">
-        <h3 class="text-gray-400 font-oswald uppercase">Síguenos</h3>
+        <h3 class="text-gray-400 font-oswald uppercase">
+          Síguenos
+        </h3>
       </div>
       <div class="flex my-4 space-x-6 sm:justify-center">
         <a href="https://www.facebook.com/BackTrackAcademy/" target="_blank" class="text-gray-500 hover:text-bta-pink">
-          <Facebook />
+          <Icon name="lucide:facebook" class="size-5" />
         </a>
         <a href="https://www.instagram.com/backtrackacademy/" target="_blank" class="text-gray-500 hover:text-bta-pink">
-          <Instagram />
+          <Icon name="lucide:instagram" class="size-5" />
         </a>
-        <a href="https://www.linkedin.com/company/backtrack-academy/" target="_blank"
-          class="text-gray-500 hover:text-bta-pink">
-          <Linkedin />
+        <a
+          href="https://www.linkedin.com/company/backtrack-academy/" target="_blank"
+          class="text-gray-500 hover:text-bta-pink"
+        >
+          <Icon name="lucide:linkedin" class="size-5" />
         </a>
       </div>
       <span class="text-sm text-gray-500 text-center">
         <a href="#" class="">
-          © 2022 Backtrack Academy. · Av. Lib. O’Higgis #1302 70,
-          Santiago,Chile. <br />
+          © 2025 Backtrack Academy. · Av. Lib. O’Higgis #1302 70,
+          Santiago,Chile. <br>
           Todos los Derechos Reservados.
         </a>
       </span>
     </div>
   </footer>
 </template>
-<script>
-import Instagram from "./icons/Instagram.vue";
-import Facebook from "./icons/Facebook.vue";
-import Linkedin from "./icons/Linkedin.vue";
-import Mail from "./icons/Mail.vue";
-import BTALogo from "./icons/BTALogo.vue";
 
-export default {
-  name: "Footer",
-  components: {
-    Instagram,
-    Facebook,
-    Linkedin,
-    Mail,
-    BTALogo,
-  },
-};
-</script>
 <style>
 .foot__link {
   @apply text-gray-500 relative before:block before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-bta-pink before:scale-x-0 before:transition-all hover:before:scale-x-100;
