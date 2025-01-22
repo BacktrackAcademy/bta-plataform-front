@@ -1,20 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
     '@nuxt/fonts',
     // '@nuxtjs/robots',
     // '@nuxtjs/sitemap',
-    // 'shadcn-nuxt',
     // '@nuxt/content',
-    // '@nuxtjs/color-mode',
     '@nuxt/image',
     '@nuxt/eslint',
+    'shadcn-nuxt',
+    '@nuxtjs/color-mode',
   ],
 
-  devtools: {
-    enabled: true,
+  shadcn: {
+    prefix: '',
+    componentDir: './components/ui',
   },
 
   runtimeConfig: {
@@ -28,11 +30,11 @@ export default defineNuxtConfig({
     typedPages: true,
   },
 
-  compatibilityDate: '2025-01-18',
-
   eslint: {
     config: {
       standalone: false,
     },
   },
+
+  compatibilityDate: '2025-01-18',
 })
