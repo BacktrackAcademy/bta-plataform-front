@@ -11,7 +11,15 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@nuxtjs/color-mode": "3.5.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.473.0",
     "nuxt": "^3.15.2",
+    "radix-vue": "^1.9.12",
+    "shadcn-nuxt": "0.11.3",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.13"
   },
   "devDependencies": {
