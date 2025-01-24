@@ -36,7 +36,7 @@ interface Course {
 // Estados reactivos para filtros
 const query = ref('')
 const isLoading = ref(true)
-const awaitingSearch = ref(false)
+const ingSearch = ref(false)
 const user_ids = ref<number[]>([])
 const level_ids = ref<number[]>([])
 const category_ids = ref<number[]>([])
@@ -47,74 +47,44 @@ const teachers = ref<Teacher[]>([])
 const levels = ref<Level[]>([])
 const categories = ref<Category[]>([])
 
-// Función para obtener los cursos
+const config = useRuntimeConfig()
+
 async function getCourses() {
   isLoading.value = true
-  try {
-    const { data } = await useFetch<Course[]>('/api/v1/courses', {
-      params: {
-        user_ids: user_ids.value,
-        level_ids: level_ids.value,
-        category_ids: category_ids.value,
-        query: query.value,
-      },
-    })
-    if (data.value)
-      courses.value = data.value
-  }
-  catch (error) {
-    console.error('Error al cargar los cursos:', error)
-  }
-  finally {
-    isLoading.value = false
-  }
+  const data = await $fetch<Course[]>(`${config.public.apiBaseUrl}/api/v1/courses`, {
+    params: {
+      user_ids: user_ids.value,
+      level_ids: level_ids.value,
+      category_ids: category_ids.value,
+      query: query.value,
+    },
+  })
+  courses.value = data
 }
 
-// Función para obtener profesores
 async function getTeachers() {
-  try {
-    const { data } = await useFetch<Teacher[]>('/api/v1/teacher')
-    if (data.value)
-      teachers.value = data.value
-  }
-  catch (error) {
-    console.error('Error al cargar los profesores:', error)
-  }
+  const data = await $fetch<Teacher[]>(`${config.public.apiBaseUrl}/api/v1/teacher`)
+  teachers.value = data
 }
 
-// Función para obtener niveles
 async function getLevels() {
-  try {
-    const { data } = await useFetch<Level[]>('/api/v1/level')
-    if (data.value)
-      levels.value = data.value
-  }
-  catch (error) {
-    console.error('Error al cargar los niveles:', error)
-  }
+  const data = await $fetch<Level[]>(`${config.public.apiBaseUrl}/api/v1/level`)
+  levels.value = data
 }
 
-// Función para obtener categorías
 async function getCategories() {
-  try {
-    const { data } = await useFetch<Category[]>('/api/v1/category')
-    if (data.value)
-      categories.value = data.value
-  }
-  catch (error) {
-    console.error('Error al cargar las categorías:', error)
-  }
+  const data = await $fetch<Category[]>(`${config.public.apiBaseUrl}/api/v1/category`)
+  categories.value = data
 }
 
-// Watchers para los filtros
 watch(query, () => {
-  if (!awaitingSearch.value) {
+  if (!ingSearch.value) {
     setTimeout(() => {
       getCourses()
-      awaitingSearch.value = false
+      ingSearch.value = false
     }, 1000)
   }
-  awaitingSearch.value = true
+  ingSearch.value = true
 })
 
 // Watch para los filtros de selección múltiple
@@ -123,9 +93,9 @@ watch([level_ids, category_ids, user_ids], () => {
 }, { deep: true })
 
 // Cargar datos iniciales
-onMounted(async () => {
+onMounted(() => {
   try {
-    await Promise.all([
+    Promise.all([
       getCourses(),
       getTeachers(),
       getLevels(),
