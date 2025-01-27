@@ -1,12 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  compatibilityDate: '2025-01-18',
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
     '@nuxt/fonts',
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
+    '@nuxt/image',
+    '@nuxt/eslint',
   ],
 
   shadcn: {
@@ -20,7 +24,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBaseUrl: 'http://localhost:3000/api/v1',
+      apiBaseUrl: '',
       // web3forms_access_key: '',
     },
   },
@@ -35,5 +39,4 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2025-01-18',
 })
