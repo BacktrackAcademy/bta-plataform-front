@@ -39,7 +39,7 @@ interface Course {
 // Estados reactivos para filtros
 const query = ref('')
 const isLoading = ref(true)
-const ingSearch = ref(false)
+const awaitingSearch = ref(false)
 const user_ids = ref<number[]>([])
 const level_ids = ref<number[]>([])
 const category_ids = ref<number[]>([])
@@ -67,12 +67,12 @@ async function getCourses() {
 }
 
 async function getTeachers() {
-  const data = await $fetch<Teacher[]>(`${config.public.apiBaseUrl}/teacher`)
+  const data = await apiFetch('/teacher')
   teachers.value = data
 }
 
 async function getLevels() {
-  const data = await $fetch<Level[]>(`${config.public.apiBaseUrl}/level`)
+  const data = await apiFetch('/level')
   levels.value = data
 }
 
@@ -88,13 +88,13 @@ async function getCategories() {
 }
 
 watch(query, () => {
-  if (!ingSearch.value) {
+  if (!awaitingSearch.value) {
     setTimeout(() => {
       getCourses()
-      ingSearch.value = false
+      awaitingSearch.value = false
     }, 1000)
   }
-  ingSearch.value = true
+  awaitingSearch.value = true
 })
 
 // Watch para los filtros de selección múltiple
