@@ -1,7 +1,6 @@
 <script setup lang="ts">
 interface Props {
   buttonText: string
-  hasName?: boolean
 }
 
 defineProps<Props>()
@@ -14,8 +13,6 @@ const userInfo = ref({
   email: '',
   password: '',
 })
-
-const error = ref(false)
 
 function handleSubmit() {
   emit('register', userInfo.value)
@@ -39,7 +36,6 @@ function handleSubmit() {
             v-model="userInfo.email"
             class="pl-2 outline-none border-none w-full"
             type="email"
-            autocomplete="userrname"
             placeholder="mail@example.com"
             required
           >
@@ -57,19 +53,11 @@ function handleSubmit() {
             v-model="userInfo.password"
             class="pl-2 outline-none border-none w-full"
             type="password"
-            autocomplete="current-password"
             placeholder="Ingresar contraseña"
             required
           >
         </div>
       </div>
-
-      <p
-        v-if="error"
-        class="text-red-500 text-sm"
-      >
-        Hubo un error al introducir el email o la contraseña.
-      </p>
 
       <button
         type="submit"
