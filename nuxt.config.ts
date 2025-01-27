@@ -5,11 +5,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
     '@nuxt/fonts',
-    // '@nuxtjs/robots',
-    // '@nuxtjs/sitemap',
-    // '@nuxt/content',
-    '@nuxt/image',
-    '@nuxt/eslint',
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
   ],
@@ -19,9 +14,13 @@ export default defineNuxtConfig({
     componentDir: './components/ui',
   },
 
+  pages: {
+    '/dashboard': { middleware: 'auth' },
+  },
+
   runtimeConfig: {
     public: {
-      apiBaseUrl: '',
+      apiBaseUrl: 'http://localhost:3000/api/v1',
       // web3forms_access_key: '',
     },
   },
