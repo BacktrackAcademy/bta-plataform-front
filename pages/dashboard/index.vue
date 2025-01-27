@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { apiFetch } from '@/utils/api'
+
 definePageMeta({
   layout: 'custom',
+  middleware: 'auth', // Asociar el middleware de autenticación
 })
 
 interface Teacher {
@@ -51,7 +54,7 @@ const config = useRuntimeConfig()
 
 async function getCourses() {
   isLoading.value = true
-  const data = await $fetch<Course[]>(`${config.public.apiBaseUrl}/api/v1/courses`, {
+  const data = await $fetch<Course[]>(`${config.public.apiBaseUrl}/courses`, {
     params: {
       user_ids: user_ids.value,
       level_ids: level_ids.value,
@@ -63,18 +66,23 @@ async function getCourses() {
 }
 
 async function getTeachers() {
-  const data = await $fetch<Teacher[]>(`${config.public.apiBaseUrl}/api/v1/teacher`)
+  const data = await $fetch<Teacher[]>(`${config.public.apiBaseUrl}/teacher`)
   teachers.value = data
 }
 
 async function getLevels() {
-  const data = await $fetch<Level[]>(`${config.public.apiBaseUrl}/api/v1/level`)
+  const data = await $fetch<Level[]>(`${config.public.apiBaseUrl}/level`)
   levels.value = data
 }
 
+// Fetch categories using the helper
 async function getCategories() {
-  const data = await $fetch<Category[]>(`${config.public.apiBaseUrl}/api/v1/category`)
-  categories.value = data
+  try {
+    const data = await apiFetch('/category')
+    categories.value = data
+  } catch (error) {
+    console.error('Error fetching categories:', error.message)
+  }
 }
 
 watch(query, () => {
