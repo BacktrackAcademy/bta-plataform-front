@@ -54,15 +54,16 @@ const config = useRuntimeConfig()
 
 async function getCourses() {
   isLoading.value = true
-  const data = await $fetch<Course[]>(`${config.public.apiBaseUrl}/courses`, {
-    params: {
-      user_ids: user_ids.value,
-      level_ids: level_ids.value,
-      category_ids: category_ids.value,
-      query: query.value,
-    },
-  })
-  courses.value = data
+  try {
+    const data = await apiFetch('/courses')
+    courses.value = data
+  }
+  catch (error) {
+    console.error('Error fetching courses:', error.message)
+  }
+  finally {
+    isLoading.value = false
+  }
 }
 
 async function getTeachers() {
@@ -80,7 +81,8 @@ async function getCategories() {
   try {
     const data = await apiFetch('/category')
     categories.value = data
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error fetching categories:', error.message)
   }
 }
@@ -105,9 +107,9 @@ onMounted(() => {
   try {
     Promise.all([
       getCourses(),
-      getTeachers(),
-      getLevels(),
-      getCategories(),
+      // getTeachers(),
+      // getLevels(),
+      // getCategories(),
     ])
   }
   catch (error) {
