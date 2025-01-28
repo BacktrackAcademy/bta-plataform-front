@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { apiFetch } from '@/utils/api'
+import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
   layout: 'custom',
@@ -36,6 +37,13 @@ interface Course {
   teacher: Teacher
 }
 
+interface CoursesHistory {
+  number_courses: number
+  progress_percentage: number
+  total_length: string
+  total_viewed: string
+}
+
 // Estados reactivos para filtros
 const query = ref('')
 const isLoading = ref(true)
@@ -43,12 +51,24 @@ const awaitingSearch = ref(false)
 const user_ids = ref<number[]>([])
 const level_ids = ref<number[]>([])
 const category_ids = ref<number[]>([])
+const coursesHistory = ref<CoursesHistory | null>(null)
 
 // Estados para almacenar datos
 const courses = ref<Course[]>([])
 const teachers = ref<Teacher[]>([])
 const levels = ref<Level[]>([])
 const categories = ref<Category[]>([])
+
+// Función para formatear las horas de manera redondeada
+function formatTime(timeString: string | undefined): string {
+  if (!timeString)
+    return '0'
+
+  const [hours, minutes] = timeString.split(':')
+  const totalHours = Math.round(Number.parseInt(hours) + Number.parseInt(minutes) / 60)
+
+  return `${totalHours}`
+}
 
 async function getCourses() {
   isLoading.value = true
@@ -85,6 +105,16 @@ async function getCategories() {
   }
 }
 
+async function getCoursesHistory() {
+  try {
+    const data = await apiFetch('/courses/history')
+    coursesHistory.value = data
+  }
+  catch (error: any) {
+    console.error('Error fetching courses history:', error.message)
+  }
+}
+
 watch(query, () => {
   if (!awaitingSearch.value) {
     setTimeout(() => {
@@ -108,6 +138,7 @@ onMounted(() => {
       getTeachers(),
       getLevels(),
       getCategories(),
+      getCoursesHistory(),
     ])
   }
   catch (error) {
@@ -129,15 +160,76 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full px-4 sm:px-6 xl:px-8">
+  <div class="w-full sm:px-6 py-5 px-4">
     <div class="lg:h-full max-w-6xl mx-auto">
-      <div class="py-10">
-        <h1 class="text-white text-3xl font-oswald font-semibold xl:pl-5">
-          Cursos de hacking ético
-        </h1>
+      <h1 class="text-white text-3xl font-oswald font-semibold mb-5">
+        Cursos de hacking ético
+      </h1>
+
+      <!-- Sección de widget "mis cursos" -->
+      <div v-if="isLoading" class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
+        <div class="flex items-center gap-4 mb-6">
+          <Skeleton class="w-12 h-12 rounded-full" />
+          <div class="space-y-2">
+            <Skeleton class="h-5 w-24" />
+            <Skeleton class="h-4 w-32" />
+          </div>
+        </div>
+        <div class="space-y-2">
+          <Skeleton class="h-2 w-full rounded-full" />
+          <div class="flex justify-end">
+            <Skeleton class="h-4 w-20" />
+          </div>
+        </div>
       </div>
+      <div v-else class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700">
+            <img
+              src="https://ui-avatars.com/api/?background=1A1D24&color=fff"
+              alt="Profile"
+              class="w-full h-full object-cover"
+            >
+          </div>
+          <div>
+            <h2 class="text-lg font-bold text-white">
+              Mis Cursos
+            </h2>
+            <div class="text-gray-400 text-sm">
+              <span class="font-medium">{{ coursesHistory?.number_courses }} cursos</span> - Ruta Personalizada
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+            <div
+              class="h-full rounded-full bg-gradient-to-r from-bta-pink to-rose-500 transition-all duration-500 ease-out"
+              :style="{ width: `${coursesHistory?.progress_percentage}%` }"
+            />
+          </div>
+          <div class="mt-2 flex justify-between items-center text-sm">
+            <span v-if="coursesHistory?.progress_percentage" class="text-bta-pink font-medium">
+              {{ Math.round(coursesHistory.progress_percentage) }}%
+            </span>
+            <div class="flex gap-1 ml-auto">
+              <span class="text-gray-400">
+                {{ formatTime(coursesHistory?.total_viewed) }}
+              </span>
+              <span class="text-gray-400">
+                de
+              </span>
+              <span class="text-gray-400">
+                {{ formatTime(coursesHistory?.total_length) }} horas
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de cursos -->
       <template v-if="isLoading">
-        <div class="grid place-items-center min-h-[50vh]">
+        <div class="grid place-items-center min-h-[calc(100vh-400px)]">
           <div class="flex flex-col items-center">
             <IconsSpinner class="text-white" />
             <p class="text-white font-inconsolata text-center mt-2">
@@ -146,14 +238,14 @@ useSeoMeta({
           </div>
         </div>
       </template>
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 pb-10">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 pb-10 mt-8">
         <div v-for="(course, i) in courses" :key="i" class="flex justify-center">
           <div class="w-full max-w-[300px] h-full shadow-lg shadow-bta-dark-blue/50 hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <NuxtLink
               :to="`/curso/${course.slug}`"
               class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
             >
-              <div class="flex flex-col h-full bg-[#1e2229] hover:bg-[#242834] rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
+              <div class="flex flex-col h-full bg-[#1A1D24]  hover:bg-[#1e2229] rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
                 <!-- Image -->
                 <figure class="relative h-0 pb-[56.25%] overflow-hidden">
                   <img
