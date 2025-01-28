@@ -50,16 +50,14 @@ const teachers = ref<Teacher[]>([])
 const levels = ref<Level[]>([])
 const categories = ref<Category[]>([])
 
-const config = useRuntimeConfig()
-
 async function getCourses() {
   isLoading.value = true
   try {
     const data = await apiFetch('/courses')
     courses.value = data
   }
-  catch (error) {
-    console.error('Error fetching courses:', error.message)
+  catch (error: any) {
+    console.error('Error fetching courses:', error?.message)
   }
   finally {
     isLoading.value = false
@@ -82,7 +80,7 @@ async function getCategories() {
     const data = await apiFetch('/category')
     categories.value = data
   }
-  catch (error) {
+  catch (error: any) {
     console.error('Error fetching categories:', error.message)
   }
 }
@@ -107,9 +105,9 @@ onMounted(() => {
   try {
     Promise.all([
       getCourses(),
-      // getTeachers(),
-      // getLevels(),
-      // getCategories(),
+      getTeachers(),
+      getLevels(),
+      getCategories(),
     ])
   }
   catch (error) {
@@ -148,21 +146,23 @@ useSeoMeta({
           </div>
         </div>
       </template>
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4 xl:gap-x-8 pb-10">
-        <div v-for="(course, i) in courses" :key="i">
-          <div
-            class="max-w-[300px] mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500 "
-          >
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 pb-10">
+        <div v-for="(course, i) in courses" :key="i" class="flex justify-center">
+          <div class="w-full max-w-[300px] h-full shadow-lg shadow-bta-dark-blue/50 hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <NuxtLink
               :to="`/curso/${course.slug}`"
-              class=" focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-bta-pink group"
+              class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
             >
-              <div class="flex flex-col h-full bg-bta-dark-blue shadow-lg rounded-lg overflow-hidden">
+              <div class="flex flex-col h-full bg-[#1e2229] hover:bg-[#242834] rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
                 <!-- Image -->
                 <figure class="relative h-0 pb-[56.25%] overflow-hidden">
                   <img
-                    class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
-                    :src="course.image_thumb" width="320" height="180" alt="Course"
+                    class="absolute inset-0 w-full h-full object-cover transform hover:scale-110 transition-transform duration-700 ease-out"
+                    :src="course.image_thumb"
+                    width="320"
+                    height="180"
+                    :alt="course.titulo"
+                    loading="lazy"
                   >
                 </figure>
                 <!-- Card Content -->
@@ -170,44 +170,35 @@ useSeoMeta({
                   <!-- Card body -->
                   <div class="flex-grow">
                     <!-- Header -->
-                    <header class="mb-3 site-heading">
+                    <header class="mb-1">
                       <div class="glitch-parent">
-                        <h3 class="glitch text-[22px] font-extrabold leading-snug font-oswald text-white">
-                          <span aria-hidden="true">{{ course.titulo }}</span>
+                        <h3 class="text-2xl font-bold leading-tight font-oswald text-white glitch" :data-text="course.titulo">
                           {{ course.titulo }}
-                          <span aria-hidden="true">{{ course.titulo }}</span>
                         </h3>
                       </div>
                       <div class="mt-2">
-                        <p class="text-white font-inconsolata">
+                        <p class="text-gray-300 font-inconsolata">
                           {{ course.teacher.name }} {{ course.teacher.lastname }}
                         </p>
                       </div>
                     </header>
                     <!-- Content -->
-                    <div class="mt-4 h-1 w-12 bg-bta-pink group-hover:animate-fast-pulse" />
-                    <div class="mb-8 text-gray-muted font-inconsolata">
+                    <div class="mt-2 h-1 w-12 bg-bta-pink group-hover:animate-pulse" />
+                    <div class="mb-8 text-gray-400 font-inconsolata">
                       <p class="py-2">
                         {{ course.shortdes }}
                       </p>
                     </div>
                   </div>
                   <!-- Card footer -->
-                  <div class="flex justify-end space-x-2">
-                    <p
-                      class="font-inconsolata text-sm inline-flex items-center justify-center px-3 py-1.5 rounded leading-5 text-gray-muted hover:underline focus:outline-none focus-visible:ring-2"
-                    >
+                  <div class="flex justify-between items-center">
+                    <p class="font-inconsolata text-sm text-gray-400">
                       {{ course.total_length }}
                     </p>
-                    <a
-                      v-if="course.price === 0 || course.price === null"
-                      class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white"
-                    >
-                      Gratis </a>
-                    <div
-                      v-else
-                      class="font-semibold text-sm inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out bg-bta-pink/95 focus:outline-none focus-visible:ring-2 hover:bg-bta-pink text-white"
-                    >
+                    <div v-if="course.price === 0 || course.price === null" class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
+                      Gratis
+                    </div>
+                    <div v-else class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
                       $ {{ course.price }}
                     </div>
                   </div>
@@ -222,62 +213,39 @@ useSeoMeta({
 </template>
 
 <style scoped>
-.glitch:hover{
+.glitch {
   position: relative;
-  text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
-    0.025em 0.04em 0 #e7e413fd;
-  animation: glitch 725ms infinite;
+  cursor: pointer;
 }
 
-.glitch span {
+.glitch:hover::before,
+.glitch:hover::after {
+  content: attr(data-text);
   position: absolute;
-  top: 0;
   left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.glitch span:first-child {
-  animation: glitch 500ms infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-  transform: translate(-0.04em, -0.03em);
-  opacity: 0.75;
+.glitch:hover::before {
+  animation: glitch-effect 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  text-shadow: -2px 0 #ff00c1;
 }
 
-.glitch span:last-child {
-  animation: glitch 375ms infinite;
-  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-  transform: translate(0.04em, 0.03em);
-  opacity: 0.75;
+.glitch:hover::after {
+  animation: glitch-effect 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  text-shadow: 2px 0 #00fff9;
 }
 
-@keyframes glitch {
-  0% {
-    text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
-      0.025em 0.04em 0 #fffc00;
-  }
-  15% {
-    text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
-      0.025em 0.04em 0 #fffc00;
-  }
-  16% {
-    text-shadow: -0.05em -0.025em 0 #0846ff, 0.025em 0.035em 0 #f90c0c,
-      -0.05em -0.05em 0 #fffc00;
-  }
-  49% {
-    text-shadow: -0.05em -0.025em 0 #0846ff, 0.025em 0.035em 0 #f90c0c,
-      -0.05em -0.05em 0 #fffc00;
-  }
-  50% {
-    text-shadow: 0.05em 0.035em 0 #0846ff, 0.03em 0 0 #f90c0c,
-      0 -0.04em 0 #fffc00;
-  }
-  99% {
-    text-shadow: 0.05em 0.035em 0 #0846ff, 0.03em 0 0 #f90c0c,
-      0 -0.04em 0 #fffc00;
-  }
-  100% {
-    text-shadow: -0.05em 0 0 #0846ff, -0.025em -0.04em 0 #f90c0c,
-      -0.04em -0.025em 0 #fffc00;
-  }
+@keyframes glitch-effect {
+  0% { transform: translateX(-2px); }
+  25% { transform: translateX(2px); }
+  50% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
 }
 
 .searcher__input{
