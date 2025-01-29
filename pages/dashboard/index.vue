@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { apiFetch } from '@/utils/api'
 import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
@@ -33,7 +32,7 @@ interface Course {
   shortdes: string
   image_thumb: string
   price: number
-  total_length: string
+  total_duration_text: string
   teacher: Teacher
 }
 
@@ -45,19 +44,12 @@ interface CoursesHistory {
 }
 
 // Estados reactivos para filtros
-const query = ref('')
-const isLoading = ref(true)
-const awaitingSearch = ref(false)
-const user_ids = ref<number[]>([])
-const level_ids = ref<number[]>([])
-const category_ids = ref<number[]>([])
-const coursesHistory = ref<CoursesHistory | null>(null)
-
-// Estados para almacenar datos
-const courses = ref<Course[]>([])
-const teachers = ref<Teacher[]>([])
-const levels = ref<Level[]>([])
-const categories = ref<Category[]>([])
+// const query = ref('')
+// const awaitingSearch = ref(false)
+// const user_ids = ref<number[]>([])
+// const level_ids = ref<number[]>([])
+// const category_ids = ref<number[]>([])
+// const coursesHistory = ref<CoursesHistory | null>(null)
 
 // Función para formatear las horas de manera redondeada
 function formatTime(timeString: string | undefined): string {
@@ -70,81 +62,12 @@ function formatTime(timeString: string | undefined): string {
   return `${totalHours}`
 }
 
-async function getCourses() {
-  isLoading.value = true
-  try {
-    const data = await apiFetch('/courses')
-    courses.value = data
-  }
-  catch (error: any) {
-    console.error('Error fetching courses:', error?.message)
-  }
-  finally {
-    isLoading.value = false
-  }
-}
+const { data: courses, status } = await useAPI<Course[]>('/courses')
 
-async function getTeachers() {
-  const data = await apiFetch('/teacher')
-  teachers.value = data
-}
-
-async function getLevels() {
-  const data = await apiFetch('/level')
-  levels.value = data
-}
-
-// Fetch categories using the helper
-async function getCategories() {
-  try {
-    const data = await apiFetch('/category')
-    categories.value = data
-  }
-  catch (error: any) {
-    console.error('Error fetching categories:', error.message)
-  }
-}
-
-async function getCoursesHistory() {
-  try {
-    const data = await apiFetch('/courses/history')
-    coursesHistory.value = data
-  }
-  catch (error: any) {
-    console.error('Error fetching courses history:', error.message)
-  }
-}
-
-watch(query, () => {
-  if (!awaitingSearch.value) {
-    setTimeout(() => {
-      getCourses()
-      awaitingSearch.value = false
-    }, 1000)
-  }
-  awaitingSearch.value = true
-})
-
-// Watch para los filtros de selección múltiple
-watch([level_ids, category_ids, user_ids], () => {
-  getCourses()
-}, { deep: true })
-
-// Cargar datos iniciales
-onMounted(() => {
-  try {
-    Promise.all([
-      getCourses(),
-      getTeachers(),
-      getLevels(),
-      getCategories(),
-      getCoursesHistory(),
-    ])
-  }
-  catch (error) {
-    console.error('Error al cargar los datos iniciales:', error)
-  }
-})
+const { data: teachers, status: teachersStatus } = await useAPI<Teacher[]>('/teacher')
+const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
+const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
+const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses/history')
 
 // SEO Metadata
 useSeoMeta({
@@ -167,7 +90,7 @@ useSeoMeta({
       </h1>
 
       <!-- Sección de widget "mis cursos" -->
-      <div v-if="isLoading" class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
+      <div v-if="status === 'pending'" class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
         <div class="flex items-center gap-4 mb-6">
           <Skeleton class="w-12 h-12 rounded-full" />
           <div class="space-y-2">
@@ -228,7 +151,7 @@ useSeoMeta({
       </div>
 
       <!-- Sección de cursos -->
-      <template v-if="isLoading">
+      <template v-if="status === 'pending'">
         <div class="grid place-items-center min-h-[calc(100vh-400px)]">
           <div class="flex flex-col items-center">
             <IconsSpinner class="text-white" />
@@ -242,7 +165,7 @@ useSeoMeta({
         <div v-for="(course, i) in courses" :key="i" class="flex justify-center">
           <div class="w-full max-w-[300px] h-full shadow-lg shadow-bta-dark-blue/50 hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <NuxtLink
-              :to="`/curso/${course.slug}`"
+              :to="`/curso/${course?.slug}`"
               class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
             >
               <div class="flex flex-col h-full bg-[#1A1D24]  hover:bg-[#1e2229] rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
@@ -285,7 +208,7 @@ useSeoMeta({
                   <!-- Card footer -->
                   <div class="flex justify-between items-center">
                     <p class="font-inconsolata text-sm text-gray-400">
-                      {{ course.total_length }}
+                      {{ course.total_duration_text }}
                     </p>
                     <div v-if="course.price === 0 || course.price === null" class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
                       Gratis
