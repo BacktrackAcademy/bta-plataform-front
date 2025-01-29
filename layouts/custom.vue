@@ -1,15 +1,5 @@
 <script setup lang="ts">
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-// Lógica específica para el layout de listado de cursos
-function logout() {
-  console.warn('logout')
-}
+
 </script>
 
 <template>
@@ -25,7 +15,7 @@ function logout() {
 
       <!-- Navigation -->
       <ul class="space-y-1 m-0 flex flex-nowrap justify-center items-center lg:flex-col lg:items-start">
-        <li class="px-4">
+        <li class="px-4 lg:w-full">
           <NuxtLink
             to="/cursos"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
@@ -35,7 +25,7 @@ function logout() {
           </NuxtLink>
         </li>
 
-        <li class="px-4">
+        <li class="px-4 lg:w-full">
           <NuxtLink
             to="/mis-rutas"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
@@ -45,7 +35,7 @@ function logout() {
           </NuxtLink>
         </li>
 
-        <li class="px-4">
+        <li class="px-4 lg:w-full">
           <NuxtLink
             to="/mi-progreso"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
@@ -55,7 +45,7 @@ function logout() {
           </NuxtLink>
         </li>
 
-        <li class="px-4">
+        <li class="px-4 lg:w-full">
           <NuxtLink
             to="/notificaciones"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
@@ -73,47 +63,7 @@ function logout() {
           <input type="text" placeholder="Buscar curso" class="w-full bg-[#1e2229] border border-[#2a2f3a] rounded-sm px-3 py-1 text-white text-sm">
         </div>
         <div class="h-full flex items-center justify-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger class="focus:outline-none hover:bg-[#2a2f3a]/60 transition-colors duration-200 rounded-sm p-1">
-              <div class="flex items-center gap-4">
-                <div class="flex items-center gap-3">
-                  <Avatar class="border-2 border-[#1e2229] cursor-pointer hover:border-white/50 transition-colors duration-200">
-                    <AvatarImage src="https://github.com/shadcn.png" alt="Avatar" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div class="hidden md:flex items-center gap-2">
-                    <div>
-                      <p class="text-sm font-medium text-white">
-                        Usuario
-                      </p>
-                      <p class="text-xs text-[#c4c8ce]">
-                        usuario@email.com
-                      </p>
-                    </div>
-                    <Icon
-                      name="radix-icons:chevron-down"
-                      class="w-4 h-4 text-[#c4c8ce] transition-transform duration-200 group-data-[state=open]:rotate-180"
-                    />
-                  </div>
-                </div>
-              </div>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent class="w-56 bg-[#1e2229] border-[#2a2f3a] mt-2">
-              <DropdownMenuItem as-child>
-                <NuxtLink to="/perfil" class="flex items-center gap-2 w-full text-white">
-                  <Icon name="radix-icons:person" class="w-4 h-4" />
-                  <span>Ver mi perfil</span>
-                </NuxtLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem class="flex items-center gap-2 w-full transition-colors duration-200">
-                <button class="flex items-center gap-2 w-full text-red-500" @click="logout">
-                  <Icon name="radix-icons:exit" class="w-4 h-4" />
-                  <span>Cerrar sesión</span>
-                </button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ProfileMenu />
         </div>
       </div>
     </header>
