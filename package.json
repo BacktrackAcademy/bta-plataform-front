@@ -15,15 +15,15 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.473.0",
-    "nuxt": "^3.15.2",
-    "radix-vue": "^1.9.12",
+    "nuxt": "^3.15.4",
+    "radix-vue": "^1.9.13",
     "shadcn-nuxt": "0.11.3",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.14.0",
+    "@antfu/eslint-config": "^4.1.0",
     "@nuxt/devtools": "2.0.0-beta.3",
     "@nuxt/eslint": "^0.7.5",
     "@nuxt/fonts": "^0.10.3",
