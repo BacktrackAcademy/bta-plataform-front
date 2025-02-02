@@ -157,7 +157,7 @@ useSeoMeta({
         <h2 class="text-white text-lg font-oswald my-4">
           Continuar estudiando...
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-10 mt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex justify-center">
             <Course :course="course" />
           </div>
