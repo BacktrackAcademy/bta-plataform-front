@@ -34,6 +34,8 @@ jobs:
         run: |
           touch .env
           echo "NUXT_PUBLIC_API_BASE_URL=${{ secrets.NUXT_PUBLIC_API_BASE_URL }}" >> .env
+          echo "NUXT_PUBLIC_AUTH_COOKIE_NAME=${{ secrets.NUXT_PUBLIC_AUTH_COOKIE_NAME }}" >> .env
+          echo "NUXT_PUBLIC_AUTH_TOKEN_NAME=${{ secrets.NUXT_PUBLIC_AUTH_TOKEN_NAME }}" >> .env
 
       - name: Build
         run: npm run build
