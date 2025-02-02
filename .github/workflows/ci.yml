@@ -41,6 +41,6 @@ jobs:
           aws s3 cp \
             --recursive \
             --region us-east-1 \
-            dist/ s3://app.backtrackacademy.com
+            .output/public/ s3://app.backtrackacademy.com
 
 
