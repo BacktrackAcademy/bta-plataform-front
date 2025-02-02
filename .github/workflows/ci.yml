@@ -8,35 +8,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v1
+
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v4
         with:
           node-version: 22.10.0
-      - name: Install Dependencies
-        run: |
-          npm cache clean --force
-          npm ci
-      - name: Cache node modules
-        uses: actions/cache@v1
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v3
         with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+            ${{ runner.os }}-pnpm-
 
-      - name: Install
-        run: npm install
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Create .env file if it does not exist
+      - name: Create .env file
         run: |
           touch .env
           echo "NUXT_PUBLIC_API_BASE_URL=${{ secrets.NUXT_PUBLIC_API_BASE_URL }}" >> .env
 
-      - name: Build
-        run: npm run build
+      - name: Build project
+        run: pnpm build
 
       - name: Deploy to S3
         env:
@@ -47,5 +49,3 @@ jobs:
             --recursive \
             --region us-east-1 \
             .output/public/ s3://app.backtrackacademy.com
-
-
