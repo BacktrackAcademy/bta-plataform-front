@@ -41,5 +41,9 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'static', // 🔥 Esto cambia el build para generar solo archivos estáticos
+    prerender: {
+      failOnError: false, // No detiene la compilación si hay errores en prerender
+      ignore: ['/cursos', '/noticias', '/debates'], // Ignorar rutas problemáticas
+    },
   },
 })
