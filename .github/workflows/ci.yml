@@ -30,6 +30,11 @@ jobs:
       - name: Install
         run: npm install
 
+      - name: Create .env file if it does not exist
+        run: |
+          touch .env
+          echo "NUXT_PUBLIC_API_BASE_URL=${{ secrets.NUXT_PUBLIC_API_BASE_URL }}" >> .env
+
       - name: Build
         run: npm run build
 
