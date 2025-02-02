@@ -39,4 +39,7 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    preset: 'static', // 🔥 Esto cambia el build para generar solo archivos estáticos
+  },
 })
