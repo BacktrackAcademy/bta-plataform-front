@@ -73,13 +73,13 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full sm:px-6 py-5 px-4">
-    <div class="lg:h-full max-w-6xl mx-auto">
+  <div class="w-full sm:px-6 py-5 px-8">
+    <div class="lg:h-full max-w-6xl">
       <h1 class="text-white text-3xl font-oswald font-semibold mb-5">
         Cursos de hacking ético
       </h1>
       <!-- Sección de widget "mis cursos" -->
-      <h2 class="text-white text-lg font-oswald mb-5">
+      <h2 class="text-white text-lg font-oswald mb-4">
         Resumen avances
       </h2>
       <div v-if="status === 'pending'" class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
@@ -154,10 +154,10 @@ useSeoMeta({
         </div>
       </template>
       <div v-else>
-        <h2 class="text-white text-lg font-oswald mb-5">
+        <h2 class="text-white text-lg font-oswald my-4">
           Continuar estudiando...
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 pb-10 mt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-10 mt-8">
           <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex justify-center">
             <Course :course="course" />
           </div>
