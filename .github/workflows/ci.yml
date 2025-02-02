@@ -27,24 +27,11 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
-      # - name: Cache
-      #   run: npm cache clean --force
-
       - name: Install
         run: npm install
 
-      # - name: Lint
-      #   run: npm run lint
-
       - name: Build
         run: npm run build
-
-      # - name: Generate
-      #   env:
-      #     NUXT_ENV_GITHUB_CLIENT_ID: ${{ secrets.NUXT_ENV_GITHUB_CLIENT_ID }}
-      #     NUXT_ENV_GITHUB_CLIENT_SECRET: ${{ secrets.NUXT_ENV_GITHUB_CLIENT_SECRET }}
-      #     NUXT_ENV_FACEBOOK_CLIENT_ID: ${{ secrets.NUXT_ENV_FACEBOOK_CLIENT_ID }}
-      #   run: npm run generate
 
       - name: Deploy to S3
         env:
