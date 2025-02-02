@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Course from '@/components/courses/Course.vue'
 import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
@@ -23,17 +24,6 @@ interface Category {
   id: number
   name: string
   number_courses: number
-}
-
-interface Course {
-  id: number
-  titulo: string
-  slug: string
-  shortdes: string
-  image_thumb: string
-  price: number
-  total_duration_text: string
-  teacher: Teacher
 }
 
 interface CoursesHistory {
@@ -62,11 +52,11 @@ function formatTime(timeString: string | undefined): string {
   return `${totalHours}`
 }
 
-const { data: courses, status } = await useAPI<Course[]>('/courses')
+// const { data: courses, status } = await useAPI<Course[]>('/courses')
 
-const { data: teachers, status: teachersStatus } = await useAPI<Teacher[]>('/teacher')
-const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
-const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
+// const { data: teachers, status: teachersStatus } = await useAPI<Teacher[]>('/teacher')
+// const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
+// const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
 const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses/history')
 
 // SEO Metadata
@@ -88,8 +78,10 @@ useSeoMeta({
       <h1 class="text-white text-3xl font-oswald font-semibold mb-5">
         Cursos de hacking ético
       </h1>
-
       <!-- Sección de widget "mis cursos" -->
+      <h2 class="text-white text-lg font-oswald mb-5">
+        Resumen avances
+      </h2>
       <div v-if="status === 'pending'" class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
         <div class="flex items-center gap-4 mb-6">
           <Skeleton class="w-12 h-12 rounded-full" />
@@ -149,8 +141,8 @@ useSeoMeta({
           </div>
         </div>
       </div>
-
       <!-- Sección de cursos -->
+
       <template v-if="status === 'pending'">
         <div class="grid place-items-center min-h-[calc(100vh-400px)]">
           <div class="flex flex-col items-center">
@@ -161,65 +153,13 @@ useSeoMeta({
           </div>
         </div>
       </template>
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 pb-10 mt-8">
-        <div v-for="(course, i) in courses" :key="i" class="flex justify-center">
-          <div class="w-full max-w-[300px] h-full shadow-lg shadow-bta-dark-blue/50 hover:shadow-xl transition-shadow duration-300 ease-in-out">
-            <NuxtLink
-              :to="`/curso/${course?.slug}`"
-              class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
-            >
-              <div class="flex flex-col h-full bg-[#1A1D24]  hover:bg-[#1e2229] rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
-                <!-- Image -->
-                <figure class="relative h-0 pb-[56.25%] overflow-hidden">
-                  <img
-                    class="absolute inset-0 w-full h-full object-cover transform hover:scale-110 transition-transform duration-700 ease-out"
-                    :src="course.image_thumb"
-                    width="320"
-                    height="180"
-                    :alt="course.titulo"
-                    loading="lazy"
-                  >
-                </figure>
-                <!-- Card Content -->
-                <div class="flex-grow flex flex-col p-5">
-                  <!-- Card body -->
-                  <div class="flex-grow">
-                    <!-- Header -->
-                    <header class="mb-1">
-                      <div class="glitch-parent">
-                        <h3 class="text-2xl font-bold leading-tight font-oswald text-white glitch" :data-text="course.titulo">
-                          {{ course.titulo }}
-                        </h3>
-                      </div>
-                      <div class="mt-2">
-                        <p class="text-gray-300 font-inconsolata">
-                          {{ course.teacher.name }} {{ course.teacher.lastname }}
-                        </p>
-                      </div>
-                    </header>
-                    <!-- Content -->
-                    <div class="mt-2 h-1 w-12 bg-bta-pink group-hover:animate-pulse" />
-                    <div class="mb-8 text-gray-400 font-inconsolata">
-                      <p class="py-2">
-                        {{ course.shortdes }}
-                      </p>
-                    </div>
-                  </div>
-                  <!-- Card footer -->
-                  <div class="flex justify-between items-center">
-                    <p class="font-inconsolata text-sm text-gray-400">
-                      {{ course.total_duration_text }}
-                    </p>
-                    <div v-if="course.price === 0 || course.price === null" class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
-                      Gratis
-                    </div>
-                    <div v-else class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
-                      $ {{ course.price }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </NuxtLink>
+      <div v-else>
+        <h2 class="text-white text-lg font-oswald mb-5">
+          Continuar estudiando...
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 pb-10 mt-8">
+          <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex justify-center">
+            <Course :course="course" />
           </div>
         </div>
       </div>
