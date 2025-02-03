@@ -7,25 +7,6 @@ definePageMeta({
   middleware: 'auth', // Asociar el middleware de autenticación
 })
 
-interface Teacher {
-  id: number
-  name: string
-  lastname: string
-  number_courses: number
-}
-
-interface Level {
-  id: number
-  name: string
-  number_courses: number
-}
-
-interface Category {
-  id: number
-  name: string
-  number_courses: number
-}
-
 interface CoursesHistory {
   number_courses: number
   progress_percentage: number
@@ -33,13 +14,11 @@ interface CoursesHistory {
   total_viewed: string
 }
 
-// Estados reactivos para filtros
-// const query = ref('')
-// const awaitingSearch = ref(false)
-// const user_ids = ref<number[]>([])
-// const level_ids = ref<number[]>([])
-// const category_ids = ref<number[]>([])
-// const coursesHistory = ref<CoursesHistory | null>(null)
+interface Degree {
+  id: number
+  name: string
+  description: string
+}
 
 // Función para formatear las horas de manera redondeada
 function formatTime(timeString: string | undefined): string {
@@ -51,6 +30,10 @@ function formatTime(timeString: string | undefined): string {
 
   return `${totalHours}`
 }
+// Función para obtener la URL del avatar
+function getAvatarUrl(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}`
+}
 
 // const { data: courses, status } = await useAPI<Course[]>('/courses')
 
@@ -58,6 +41,7 @@ function formatTime(timeString: string | undefined): string {
 // const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
 // const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
 const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses/history')
+const { data: Degree, status: DegreeStatus } = await useAPI<Degree>('/degrees')
 
 // SEO Metadata
 useSeoMeta({
@@ -74,8 +58,8 @@ useSeoMeta({
 
 <template>
   <div class="w-full sm:px-6 py-5 px-8">
-    <div class="lg:h-full max-w-6xl">
-      <h1 class="text-white text-3xl font-oswald font-semibold mb-5">
+    <div class="lg:h-full">
+      <h1 class="text-white text-3xl font-oswald mb-5 uppercase">
         Cursos de hacking ético
       </h1>
       <!-- Sección de widget "mis cursos" -->
@@ -141,8 +125,26 @@ useSeoMeta({
           </div>
         </div>
       </div>
+      <!-- Descubre las escuelas -->
+      <section className="space-y-4">
+        <h2 class="text-white text-lg font-oswald my-4">
+          Descubre las escuelas
+        </h2>
+        <div class="flex items-center gap-y-4 gap-4">
+          <div
+            v-for="(degree, i) in Degree" :key="i"
+            class="flex flex-col items-center gap-y-4 gap-4 justify-center rounded-md border border-[#1A1D24] hover:bg-[#1A1D24] p-4 space-y-2"
+          >
+            <div class="flex items-center gap-2">
+              <img :src="getAvatarUrl(degree.name)" alt="Avatar" class="w-12 h-12 rounded-full">
+              <div class="text-sm font-oswald text-left break-words">
+                {{ degree.name }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <!-- Sección de cursos -->
-
       <template v-if="status === 'pending'">
         <div class="grid place-items-center min-h-[calc(100vh-400px)]">
           <div class="flex flex-col items-center">
@@ -154,11 +156,11 @@ useSeoMeta({
         </div>
       </template>
       <div v-else>
-        <h2 class="text-white text-lg font-oswald my-4">
+        <h2 class="text-white text-lg font-oswald my-4 mt-8">
           Continuar estudiando...
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex justify-center">
+          <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex">
             <Course :course="course" />
           </div>
         </div>
