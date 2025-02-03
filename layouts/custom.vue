@@ -55,6 +55,20 @@
           </NuxtLink>
         </li>
       </ul>
+      <!-- Info Area (Cuéntanos tu opinión) -->
+      <div class="absolute bottom-0">
+        <section class="bg-[#1e2229] rounded-lg h-fit layout-info m-6 hidden lg:block">
+          <div class="p-4">
+            <div class="flex items-center gap-3 text-white mb-2">
+              <Icon name="radix-icons:chat-bubble" class="w-5 h-5" />
+              <span class="text-[15px]">Cuéntanos tu opinión</span>
+            </div>
+            <p class="text-[#c4c8ce] text-sm">
+              Ayúdanos a mejorar la plataforma
+            </p>
+          </div>
+        </section>
+      </div>
     </nav>
     <!-- Top Area -->
     <header class="layout-top h-16 border-b border-[#1e2229] px-4 py-2">
@@ -67,20 +81,6 @@
         </div>
       </div>
     </header>
-    <!-- Info Area (Cuéntanos tu opinión) -->
-    <div>
-      <section class="bg-[#1e2229] rounded-lg h-fit layout-info m-6 hidden lg:block">
-        <div class="p-4">
-          <div class="flex items-center gap-3 text-white mb-2">
-            <Icon name="radix-icons:chat-bubble" class="w-5 h-5" />
-            <span class="text-[15px]">Cuéntanos tu opinión</span>
-          </div>
-          <p class="text-[#c4c8ce] text-sm">
-            Ayúdanos a mejorar la plataforma
-          </p>
-        </div>
-      </section>
-    </div>
 
     <!-- Main Content Area -->
     <main class="layout-main lg:overflow-x-hidden lg:overflow-y-auto bg-[#13161c]">
