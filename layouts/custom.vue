@@ -9,7 +9,7 @@
       <!-- Logo -->
       <div class="hidden px-4 py-6 lg:block w-full">
         <NuxtLink to="/" class="text-white font-bold text-xl">
-          Backtrack Academy
+          <img class="pl-4 w-32" src="~/assets/logo.svg">
         </NuxtLink>
       </div>
 
