@@ -1,96 +1,62 @@
-<script>
-export default {
-  name: 'CourseIndvPage',
-  async asyncData({ $axios, params }) {
-    const { data } = await $axios.get(`/api/v1/course/${params.slug}`)
-    return {
-      course: data,
-      teacher: data.teacher,
-      syllabus: data.syllabus,
-    }
-  },
+<script setup lang="ts">
+// import { useSeoMeta } from '#app'
+import { useRoute } from 'vue-router'
 
-  data() {
-    return {
-      course: {},
-      teacher: {},
-      syllabus: [],
-      stars_blank: 0,
-    }
-  },
-  head() {
-    return {
-      title: `${this.course.titulo} - Bactrack Academy`,
-      htmlAttrs: {
-        lang: 'es',
-      },
-      meta: [
-        // open graph
-        { hid: 'og-site_name', property: 'og:site_name', content: 'Backtrack Academy' },
-        { hid: 'og-type', property: 'og:type', content: 'website' },
-        {
-          hid: 'og-title',
-          property: 'og:title',
-          content: this.course.titulo,
-        },
-        {
-          hid: 'og-desc',
-          property: 'og:description',
-          content: this.course.descripcion,
-        },
-        {
-          hid: 'og-image',
-          property: 'og:image',
-          content: this.course.wallpaper_thumb,
-        },
-        // description
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.course.descripcion,
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: this.course.metatag,
-        },
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'format-detection', content: 'telephone=no' },
-      ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    }
-  },
-  created() {
-    this.calcStars(this.course.stars_evaluation)
-  },
-  methods: {
-    calcStars(stars) {
-      this.stars_blank = 5 - stars
-    },
-  },
+definePageMeta({
+  layout: 'custom',
+  middleware: 'auth', // Asociar el middleware de autenticación
+})
+
+interface Teacher {
+  id: number
+  name: string
+  avatar?: string
 }
+
+interface SyllabusItem {
+  id: number
+  title: string
+  description: string
+}
+
+interface Course {
+  id: number
+  titulo: string
+  descripcion: string
+  wallpaper_thumb: string
+  metatag: string
+  stars_evaluation: number
+  teacher: Teacher
+  syllabus: SyllabusItem[]
+}
+
+const route = useRoute()
+const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
+
+// const starsBlank = computed(() => 5 - (course.value?.stars_evaluation || 0))
+
+// SEO Metadata
+// useSeoMeta({
+//   title: () => `${course.value?.titulo} - Backtrack Academy`,
+//   description: () => course.value?.descripcion || '',
+//   keywords: () => course.value?.metatag || '',
+//   ogType: 'website',
+//   ogUrl: 'https://backtrackacademy.com/',
+//   ogTitle: () => course.value?.titulo || 'Backtrack Academy',
+//   ogDescription: () => course.value?.descripcion || '',
+//   ogImage: () => course.value?.wallpaper_thumb || '',
+// })
 </script>
 
 <template>
   <div>
-    <div class="hero bg-bta-dark-blue relative">
-      <!-- Hero background -->
-
+    <div class="bg-bta-dark-blue">
       <!-- Hero base -->
       <div
-        class="hero-base bg-bta-dark-blue min-h-[300px] mx-auto p-5 text-white rounded grid max-w-[1280px] relative w-full"
+        class="flex gap-32 py-8 bg-bta-dark-blue min-h-[400px] mx-auto p-5 text-white rounded max-w-[1280px] w-full"
       >
-        <!-- hero teacher -->
-        <figure class=" h-full py-[53px] px-2">
-          <img :src="teacher.avatar_url" class="">
-        </figure>
-        <!-- hero content -->
-        <div class="hero-content">
-          <NuxtLink to="/cursos" class="hover:text-sky-500 hover:underline underline-offset-2 duration-300 font-inconsolata">
-            Regresar a cursos
-          </NuxtLink>
-          <h1 class="font-oswald font-bold text-3xl lg:text-5xl mb-3">
+        <div class="w-2/3">
+          <h1 class="font-oswald font-bold text-4xl lg:text-5xl mb-8 uppercase">
             {{ course.titulo }}
           </h1>
           <div class="extra-info flex items-center flex-wrap gap-3">
@@ -121,7 +87,7 @@ export default {
                   </svg>
                 </div>
                 <div class="sm:mx-4">
-                  <p class="text-cyan-400 group-hover:underline underline-offset-2 font-inconsolata">
+                  <p class="text-cyan-300 group-hover:underline underline-offset-2 font-inconsolata">
                     {{ course.count_evaluation }} Opiniones
                   </p>
                 </div>
@@ -160,12 +126,12 @@ export default {
               </p>
             </div>
           </div>
-          <p>{{ teacher.name }}</p>
+          <!-- <p>{{ teacher.name }}</p> -->
           <p class="mt-4 text-base font-inconsolata mb-3">
             {{ course.descripcion }}
           </p>
         </div>
-        <div class="pt-[53px]">
+        <div class="w-1/3">
           <p class="font-inconsolata text-sm">
             Consíguelo
           </p>
@@ -175,9 +141,9 @@ export default {
           <p v-else class="font-oswald text-4xl font-medium mb-3">
             GRATIS
           </p>
-          <NuxtLink to="/" class="btn-bta">
+          <Button to="/" class="bg-bta-pink text-white font-inconsolata">
             Comprar suscripción mensual
-          </NuxtLink>
+          </Button>
           <p v-if="course.price" class="font-inconsolata text-white text-sm pt-3">
             Puedes comprar el curso por: {{ course.price }} USD
           </p>
@@ -287,31 +253,5 @@ export default {
 </template>
 
 <style>
-.btn-bta {
-  @apply text-base px-5 py-4 font-oswald uppercase text-white bg-bta-pink border border-bta-pink inline-block mb-0 font-normal text-center align-middle whitespace-nowrap duration-200
-}
 
-.hero-base {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 28px 16px;
-  position: relative;
-  width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .hero-base {
-    background: 0 0;
-    grid-template-columns: 3fr 7fr 1fr;
-    margin-top: 0;
-    padding: 0;
-  }
-
-  .hero-content {
-    padding: 53px 8px 53px 5rem;
-    width: calc(70% - -8rem);
-  }
-}
 </style>
