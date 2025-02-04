@@ -50,10 +50,12 @@ export default {
 
           // Redirigir después del login
           this.$router.push('/dashboard')
-        } else {
+        }
+        else {
           throw new Error('Respuesta inválida del servidor')
         }
-      } catch (err) {
+      }
+      catch (err) {
         this.error = err.message
       }
     },
