@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="layout student-layout text-white bg-[#13161c]">
+  <div class="layout student-layout text-white bg-bta-dark-blue">
     <!-- Main Menu Area -->
     <nav class="layout-menu">
       <!-- Logo -->
@@ -71,10 +71,10 @@
       </div>
     </nav>
     <!-- Top Area -->
-    <header class="layout-top h-16 border-b border-[#1e2229] px-4 py-2">
+    <header class="layout-top h-16 px-4 py-2">
       <div class="flex items-center justify-between gap-2">
         <div>
-          <input type="text" placeholder="Buscar curso" class="w-full bg-[#1e2229] border border-[#2a2f3a] rounded-sm px-3 py-1 text-white text-sm">
+          <!-- <input type="text" placeholder="Buscar curso" class="w-full bg-[#1e2229] border border-[#2a2f3a] rounded-sm px-3 py-1 text-white text-sm"> -->
         </div>
         <div class="h-full flex items-center justify-end">
           <ProfileMenu />
@@ -83,7 +83,7 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="layout-main lg:overflow-x-hidden lg:overflow-y-auto bg-[#13161c]">
+    <main class="layout-main lg:overflow-x-hidden lg:overflow-y-auto bg-bta-blue">
       <slot />
     </main>
   </div>
@@ -107,7 +107,7 @@
 .layout-menu {
   grid-area: main-menu;
   display: block;
-  background-color: #13161c;
+  background-color: #070916;
   position: fixed;
   bottom: 0;
   left: 0;
