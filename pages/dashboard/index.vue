@@ -101,7 +101,7 @@ useSeoMeta({
         </div>
 
         <div class="relative">
-          <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+          <div class="w-full h-2 bg-bta-blue rounded-full overflow-hidden">
             <div
               class="h-full rounded-full bg-gradient-to-r from-bta-pink to-rose-500 transition-all duration-500 ease-out"
               :style="{ width: `${coursesHistory?.progress_percentage}%` }"
@@ -111,14 +111,14 @@ useSeoMeta({
             <span v-if="coursesHistory?.progress_percentage" class="text-bta-pink font-medium">
               {{ Math.round(coursesHistory.progress_percentage) }}%
             </span>
-            <div class="flex gap-1 ml-auto">
-              <span class="text-gray-400">
+            <div class="flex gap-1 ml-auto font-inconsolata text-white">
+              <span>
                 {{ formatTime(coursesHistory?.total_viewed) }}
               </span>
-              <span class="text-gray-400">
+              <span>
                 de
               </span>
-              <span class="text-gray-400">
+              <span>
                 {{ formatTime(coursesHistory?.total_length) }} horas
               </span>
             </div>
