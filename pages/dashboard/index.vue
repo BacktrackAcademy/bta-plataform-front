@@ -66,7 +66,7 @@ useSeoMeta({
       <h2 class="text-white text-lg font-oswald mb-4">
         Resumen avances
       </h2>
-      <div v-if="status === 'pending'" class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
+      <div v-if="status === 'pending'" class="max-w-sm bg-bta-dark-blue rounded-xl shadow-lg p-6 relative overflow-hidden">
         <div class="flex items-center gap-4 mb-6">
           <Skeleton class="w-12 h-12 rounded-full" />
           <div class="space-y-2">
