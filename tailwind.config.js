@@ -28,7 +28,7 @@ module.exports = {
       },
       colors: {
         'bta-pink': '#EC1075', // principal
-        'bta-blue': '#171524', // body-back
+        'bta-blue': '#141224', // body-back
         'bta-dark-blue': '#070916', // header
         'bta-section': '#141224', //
         'gray-border': '#36364e',
