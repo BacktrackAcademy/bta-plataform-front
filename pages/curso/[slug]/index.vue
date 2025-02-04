@@ -121,7 +121,7 @@ const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
                   <rect x="0.5" y="0.5" width="4" height="20" fill="none" />
                 </g>
               </svg>
-              <p class="font-medium uppercase pt-[2px] ml-2 text-sm xl:text-base">
+              <p class="font-medium uppercase ml-2 text-xs xl:text-base font-inconsolata">
                 {{ course.level_name }}
               </p>
             </div>
@@ -160,9 +160,9 @@ const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
         <h2 class="font-oswald font-bold text-white text-4xl text-center mb-14">
           Temario del Curso de {{ course.titulo }}
         </h2>
-        <div v-for="(theme, i) in syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
+        <div v-for="(theme, i) in course.syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
           <h3 class="font-oswald text-white text-3xl font-bold my-10">
-            {{ theme.titulo }}
+            {{ theme.titulo }} {{ theme.lessons }}
           </h3>
 
           <div
@@ -171,7 +171,7 @@ const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
           >
             <div v-if="video.is_free || course.price == null || course.price == 0" class="text-white w-full">
               <NuxtLink :to="`/video/${video.slug}`">
-                <div class="flex flex-row items-center gap-2 p-6">
+                <div class="flex flex-row items-center gap-2 p-6 font-inconsolata">
                   <!-- play icon -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -183,8 +183,8 @@ const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
                     />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <div class="">
-                    <p class="text-white font-inconsolata">
+                  <div>
+                    <p class="text-white">
                       {{ video.titlevideo }}
                     </p>
                   </div>
