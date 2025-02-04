@@ -57,7 +57,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full sm:px-6 py-5 px-8">
+  <div class="w-full py-8 p-16">
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-5 uppercase">
         Cursos de hacking ético
@@ -81,7 +81,7 @@ useSeoMeta({
           </div>
         </div>
       </div>
-      <div v-else class="max-w-sm bg-[#1A1D24] rounded-xl shadow-lg p-6 relative overflow-hidden">
+      <div v-else class="max-w-sm bg-bta-dark-blue rounded-xl shadow-lg p-6 relative overflow-hidden">
         <div class="flex items-center gap-4 mb-6">
           <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700">
             <img
@@ -91,10 +91,10 @@ useSeoMeta({
             >
           </div>
           <div>
-            <h2 class="text-lg font-bold text-white">
+            <h2 class="text-xl font-semibold text-white font-oswald">
               Mis Cursos
             </h2>
-            <div class="text-gray-400 text-sm">
+            <div class="text-gray-muted text-sm font-inconsolata">
               <span class="font-medium">{{ coursesHistory?.number_courses }} cursos</span> - Ruta Personalizada
             </div>
           </div>
