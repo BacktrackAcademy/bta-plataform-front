@@ -32,7 +32,7 @@ function formatTime(timeString: string | undefined): string {
 }
 // Función para obtener la URL del avatar
 function getAvatarUrl(name) {
-  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}`
+  return `https://ui-avatars.com/api/?background=141224&color=fff&name=${encodeURIComponent(name)}`
 }
 
 // const { data: courses, status } = await useAPI<Course[]>('/courses')
@@ -59,7 +59,7 @@ useSeoMeta({
 <template>
   <div class="w-full py-8 p-16">
     <div class="lg:h-full">
-      <h1 class="text-white text-3xl font-oswald mb-5 uppercase">
+      <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
         Cursos de hacking ético
       </h1>
       <!-- Sección de widget "mis cursos" -->
@@ -83,9 +83,9 @@ useSeoMeta({
       </div>
       <div v-else class="max-w-sm bg-bta-dark-blue rounded-xl shadow-lg p-6 relative overflow-hidden">
         <div class="flex items-center gap-4 mb-6">
-          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700">
+          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-bta-pink">
             <img
-              src="https://ui-avatars.com/api/?background=1A1D24&color=fff"
+              src="https://ui-avatars.com/api/?background=141224&color=fff"
               alt="Profile"
               class="w-full h-full object-cover"
             >
@@ -128,17 +128,16 @@ useSeoMeta({
       <!-- Descubre las escuelas -->
       <section className="space-y-4">
         <h2 class="text-white text-lg font-oswald my-4">
-          Descubre las escuelas
+          Descubre nuestras especialidades
         </h2>
         <div class="flex items-center gap-y-4 gap-4">
           <div
             v-for="(degree, i) in Degree" :key="i"
-            class="flex flex-col items-center gap-y-4 gap-4 justify-center rounded-md border border-[#1A1D24] hover:bg-[#1A1D24] p-4 space-y-2"
+            class="flex flex-col items-center gap-y-4 gap-4 justify-center rounded-md p-4 space-y-2"
           >
-            <div class="flex items-center gap-2">
-              <img :src="getAvatarUrl(degree.name)" alt="Avatar" class="w-12 h-12 rounded-full">
-              <div class="text-sm font-oswald text-left break-words">
-                {{ degree.name }}
+            <div class="items-center">
+              <div class="rounded-full overflow-hidden border-2 border-bta-pink hover:bg-bta-dark-blue w-14 h-14">
+                <img :src="getAvatarUrl(degree.name)">
               </div>
             </div>
           </div>
