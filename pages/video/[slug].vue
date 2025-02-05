@@ -154,7 +154,6 @@ useSeoMeta({
               </h1>
               <span class="text-[#cacaca] ml-3">1/20</span>
             </div>
-            <div>soy bandera</div>
           </div>
 
           <div class="text-white">
