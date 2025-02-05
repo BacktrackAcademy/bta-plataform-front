@@ -157,8 +157,8 @@ const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
     <!-- Temario -->
     <section class="bg-bta-section">
       <div class="px-4">
-        <h2 class="font-oswald font-bold text-white text-4xl text-center mb-14">
-          Temario del Curso de {{ course.titulo }}
+        <h2 class="font-oswald font-bold text-white text-4xl my-14 mx-auto max-w-5xl">
+          Temario
         </h2>
         <div v-for="(theme, i) in course.syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
           <h3 class="font-oswald text-white text-3xl font-bold my-4">
