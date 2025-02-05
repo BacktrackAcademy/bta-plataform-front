@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import ArrowToRight from '../../components/icons/arrow-to-right.vue'
 
+definePageMeta({
+  layout: 'custom',
+  middleware: 'auth', // Asociar el middleware de autenticación
+})
+
 interface Teacher {
   id: number
   name: string
