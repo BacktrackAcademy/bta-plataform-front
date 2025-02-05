@@ -4,7 +4,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
   layout: 'custom',
-  middleware: 'auth', // Asociar el middleware de autenticación
+  auth: false,
 })
 
 interface CoursesHistory {

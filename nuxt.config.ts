@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-18',
 
   modules: [
+    '@sidebase/nuxt-auth',
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
     '@nuxt/fonts',
@@ -12,16 +13,16 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/eslint',
   ],
-
+  auth: {
+    baseURL: `${process.env.AUTH_ORIGIN}/api/v1`,
+    provider: {
+      type: 'authjs',
+    },
+  },
   shadcn: {
     prefix: '',
     componentDir: './components/ui',
   },
-
-  pages: {
-    '/dashboard': { middleware: 'auth' },
-  },
-
   runtimeConfig: {
     public: {
       apiBaseUrl: '',

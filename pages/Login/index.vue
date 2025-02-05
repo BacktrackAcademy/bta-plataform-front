@@ -1,53 +1,32 @@
-<script setup lang="ts">
-import { useCookie, useFetch, useRouter, useRuntimeConfig, useState } from '#app'
-import UserAuthForm from '@/components/auth/UserAuthForm'
+<!-- <script setup lang="ts">
+// import UserAuthForm from '@/components/auth/UserAuthForm'
 import { ref } from 'vue'
 
 definePageMeta({
   layout: 'default',
-  middleware: 'guest', // Evita el acceso si ya tienes sesión
+  middleware: 'guest',
 })
-// Estado de error
+
 const error = ref<string | null>(null)
-
-// Router para la redirección
 const router = useRouter()
+const { signIn } = useAuth()
 
-// Función para iniciar sesión
-async function loginUser(loginInfo: Record<string, any>) {
-  error.value = null // Resetear error antes de iniciar sesión
+// Nueva función de login usando Nuxt Auth
+async function loginUser(credentials: Record<string, any>) {
+  error.value = null
 
   try {
-    // Obtener configuración de runtime
-    const config = useRuntimeConfig()
+    const result = await signIn('credentials', credentials)
 
-    // Llamada al backend
-    const { data, error: fetchError } = await useFetch(`${config.public.apiBaseUrl}/tokens`, {
-      method: 'POST',
-      body: loginInfo,
-    })
-
-    if (fetchError.value) {
-      throw new Error(fetchError.value.message || 'Error al iniciar sesión')
+    if (result?.error) {
+      throw new Error(result.error)
     }
 
-    const token = data.value?.token
-    const user = data.value?.user
-
-    if (token && user) {
-      // Guardar token en cookies y usuario en estado global
-      useCookie('auth_token').value = token
-      useState('user', () => user)
-
-      // Redirigir al dashboard
-      router.push('/dashboard')
-    }
-    else {
-      throw new Error('Respuesta inválida del servidor')
-    }
+    // Redirigir al dashboard después de un login exitoso
+    router.push('/dashboard')
   }
   catch (err: any) {
-    error.value = err.message
+    error.value = err.message || 'Error al iniciar sesión'
   }
 }
 </script>
@@ -78,4 +57,56 @@ async function loginUser(loginInfo: Record<string, any>) {
       </div>
     </div>
   </div>
+</template> -->
+<script lang="ts" setup>
+definePageMeta({
+  middleware: 'guest',
+})
+
+const form = ref({
+  username: '',
+  password: '',
+})
+
+const { signIn } = useAuth()
+
+async function handleLogin() {
+  try {
+    await signIn('credentials', form.value)
+    useRouter().push({
+      name: 'index',
+    })
+  }
+  catch (e) {}
+}
+</script>
+
+<template>
+  <div>
+    <h1 class="mb-4 text-xl font-bold">
+      Login
+    </h1>
+    <form @submit.prevent="handleLogin">
+      <input
+        v-model="form.username"
+        class="w-full border p-2 rounded-lg mb-4"
+        type="text"
+        placeholder="Username"
+      >
+      <input
+        v-model="form.password"
+        class="w-full border p-2 rounded-lg mb-4"
+        type="password"
+        placeholder="Password"
+      >
+      <button
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-600 transition-all duration-200 w-full text-blue-50 rounded-lg p-2"
+      >
+        Login
+      </button>
+    </form>
+  </div>
 </template>
+
+<style></style>

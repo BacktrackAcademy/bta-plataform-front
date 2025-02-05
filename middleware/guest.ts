@@ -1,7 +1,9 @@
-export default defineNuxtRouteMiddleware(() => {
-  const authToken = useCookie('auth_token').value
+export default defineNuxtRouteMiddleware((_to, _from) => {
+  const { status } = useAuth()
 
-  if (authToken) {
-    return navigateTo('/dashboard') // Redirigir si ya está autenticado
+  if (status.value === 'authenticated') {
+    return navigateTo({
+      name: 'index',
+    })
   }
 })
