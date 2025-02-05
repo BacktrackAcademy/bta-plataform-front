@@ -6,7 +6,7 @@ import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
 
-const route = useRoute('')
+const route = useRoute()
 
 const course = ref<Course>()
 const teacher = ref<Teacher>()

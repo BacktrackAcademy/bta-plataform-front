@@ -41,48 +41,36 @@ interface Course {
 const route = useRoute()
 
 // Estados reactivos
-const video = ref<Video | null>(null)
+const video = ref<Video>()
 const course = ref<Course | null>(null)
 const teacher = ref<Teacher | null>(null)
 const syllabus = ref<Theme[]>([])
 
 // Cargar datos del video
-async function loadVideoData() {
-  try {
-    const { data } = await useFetch<any>(`/api/v1/video/${route.params.slug}`)
-    if (data.value) {
-      video.value = data.value
-      course.value = data.value.course
-      teacher.value = data.value.course.teacher
-      syllabus.value = data.value.course.syllabus
-    }
-  }
-  catch (error) {
-    console.error('Error al cargar el video:', error)
-  }
+const { data } = await useAPI<Video>(`video/${route.params.slug}`)
+
+if (data.value) {
+  video.value = data.value
+  course.value = data.value.course
+  teacher.value = data.value.teacher
+  syllabus.value = data.value.course.syllabus
 }
-
-// Cargar datos al montar el componente
-onMounted(() => {
-  loadVideoData()
-})
-
 // SEO Metadata
-useSeoMeta({
-  title: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy',
-  description: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
-  keywords: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informática, Seguridad, Academy, Online, Cursos, JavaScript',
-  ogType: 'website',
-  ogUrl: () => `https://backtrackacademy.com/video/${route.params.slug}`,
-  ogTitle: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy - Videos de Hacking Ético',
-  ogDescription: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
-  ogImage: 'https://backtrack-academy-01.s3.amazonaws.com/OpenGraph+Facebook.png',
-  twitterCard: 'summary_large_image',
-})
+// useSeoMeta({
+//   title: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy',
+//   description: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
+//   keywords: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informática, Seguridad, Academy, Online, Cursos, JavaScript',
+//   ogType: 'website',
+//   ogUrl: () => `https://backtrackacademy.com/video/${route.params.slug}`,
+//   ogTitle: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy - Videos de Hacking Ético',
+//   ogDescription: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
+//   ogImage: 'https://backtrack-academy-01.s3.amazonaws.com/OpenGraph+Facebook.png',
+//   twitterCard: 'summary_large_image',
+// })
 </script>
 
 <template>
-  <section class="bg-bta-dark-blue px-4 sm:px-6 xl:px-8">
+  <section class="px-4 sm:px-6 xl:px-8">
     <div class="lg:flex mt-2 gap-6 xl:gap-8">
       <div class="lg:w-[70%]">
         <!-- Video player -->
