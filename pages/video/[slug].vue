@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import ArrowToRight from '../../components/icons/arrow-to-right.vue'
 
+definePageMeta({
+  layout: 'custom',
+  middleware: 'auth', // Asociar el middleware de autenticación
+})
+
 interface Teacher {
   id: number
   name: string
@@ -149,7 +154,6 @@ useSeoMeta({
               </h1>
               <span class="text-[#cacaca] ml-3">1/20</span>
             </div>
-            <div>soy bandera</div>
           </div>
 
           <div class="text-white">

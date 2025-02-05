@@ -17,7 +17,7 @@ defineProps<{ course: Course }>()
       :to="`/curso/${course?.slug}`"
       class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
     >
-      <div class="flex flex-col h-full bg-[#1A1D24]  hover:bg-[#1e2229] rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
+      <div class="flex flex-col h-full bg-bta-dark-blue rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
         <!-- Image -->
         <figure class="relative h-0 pb-[56.25%] overflow-hidden">
           <img
@@ -41,15 +41,15 @@ defineProps<{ course: Course }>()
                 </h3>
               </div>
               <div class="mt-2">
-                <!-- <p class="text-gray-300 font-inconsolata">
-                          {{ course.teacher.name }} {{ course.teacher.lastname }}
-                        </p> -->
+                <p class="text-gray-300 font-inconsolata">
+                  {{ course.teacher.name }} {{ course.teacher.lastname }}
+                </p>
               </div>
             </header>
             <!-- Content -->
             <div class="mt-2 h-1 w-12 bg-bta-pink group-hover:animate-pulse" />
-            <div class="mb-8 text-gray-400 font-inconsolata">
-              <p class="py-2">
+            <div class="mb-6 font-inconsolata">
+              <p class="py-2 text-gray-muted">
                 {{ course.shortdes }}
               </p>
             </div>

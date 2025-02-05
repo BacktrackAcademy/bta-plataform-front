@@ -1,96 +1,62 @@
-<script>
-export default {
-  name: 'CourseIndvPage',
-  async asyncData({ $axios, params }) {
-    const { data } = await $axios.get(`/api/v1/course/${params.slug}`)
-    return {
-      course: data,
-      teacher: data.teacher,
-      syllabus: data.syllabus,
-    }
-  },
+<script setup lang="ts">
+// import { useSeoMeta } from '#app'
+import { useRoute } from 'vue-router'
 
-  data() {
-    return {
-      course: {},
-      teacher: {},
-      syllabus: [],
-      stars_blank: 0,
-    }
-  },
-  head() {
-    return {
-      title: `${this.course.titulo} - Bactrack Academy`,
-      htmlAttrs: {
-        lang: 'es',
-      },
-      meta: [
-        // open graph
-        { hid: 'og-site_name', property: 'og:site_name', content: 'Backtrack Academy' },
-        { hid: 'og-type', property: 'og:type', content: 'website' },
-        {
-          hid: 'og-title',
-          property: 'og:title',
-          content: this.course.titulo,
-        },
-        {
-          hid: 'og-desc',
-          property: 'og:description',
-          content: this.course.descripcion,
-        },
-        {
-          hid: 'og-image',
-          property: 'og:image',
-          content: this.course.wallpaper_thumb,
-        },
-        // description
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.course.descripcion,
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: this.course.metatag,
-        },
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'format-detection', content: 'telephone=no' },
-      ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    }
-  },
-  created() {
-    this.calcStars(this.course.stars_evaluation)
-  },
-  methods: {
-    calcStars(stars) {
-      this.stars_blank = 5 - stars
-    },
-  },
+definePageMeta({
+  layout: 'custom',
+  middleware: 'auth', // Asociar el middleware de autenticación
+})
+
+interface Teacher {
+  id: number
+  name: string
+  avatar?: string
 }
+
+interface SyllabusItem {
+  id: number
+  title: string
+  description: string
+}
+
+interface Course {
+  id: number
+  titulo: string
+  descripcion: string
+  wallpaper_thumb: string
+  metatag: string
+  stars_evaluation: number
+  teacher: Teacher
+  syllabus: SyllabusItem[]
+}
+
+const route = useRoute()
+const { data: course } = await useAPI<Course>(`/course/${route.params.slug}`)
+
+// const starsBlank = computed(() => 5 - (course.value?.stars_evaluation || 0))
+
+// SEO Metadata
+// useSeoMeta({
+//   title: () => `${course.value?.titulo} - Backtrack Academy`,
+//   description: () => course.value?.descripcion || '',
+//   keywords: () => course.value?.metatag || '',
+//   ogType: 'website',
+//   ogUrl: 'https://backtrackacademy.com/',
+//   ogTitle: () => course.value?.titulo || 'Backtrack Academy',
+//   ogDescription: () => course.value?.descripcion || '',
+//   ogImage: () => course.value?.wallpaper_thumb || '',
+// })
 </script>
 
 <template>
   <div>
-    <div class="hero bg-bta-dark-blue relative">
-      <!-- Hero background -->
-
+    <div class="bg-bta-dark-blue">
       <!-- Hero base -->
       <div
-        class="hero-base bg-bta-dark-blue min-h-[300px] mx-auto p-5 text-white rounded grid max-w-[1280px] relative w-full"
+        class="flex gap-32 py-8 bg-bta-dark-blue min-h-[400px] mx-auto p-5 text-white rounded max-w-[1280px] w-full"
       >
-        <!-- hero teacher -->
-        <figure class=" h-full py-[53px] px-2">
-          <img :src="teacher.avatar_url" class="">
-        </figure>
-        <!-- hero content -->
-        <div class="hero-content">
-          <NuxtLink to="/cursos" class="hover:text-sky-500 hover:underline underline-offset-2 duration-300 font-inconsolata">
-            Regresar a cursos
-          </NuxtLink>
-          <h1 class="font-oswald font-bold text-3xl lg:text-5xl mb-3">
+        <div class="w-2/3">
+          <h1 class="font-oswald font-bold text-4xl lg:text-5xl mb-8 uppercase">
             {{ course.titulo }}
           </h1>
           <div class="extra-info flex items-center flex-wrap gap-3">
@@ -121,7 +87,7 @@ export default {
                   </svg>
                 </div>
                 <div class="sm:mx-4">
-                  <p class="text-cyan-400 group-hover:underline underline-offset-2 font-inconsolata">
+                  <p class="text-cyan-300 group-hover:underline underline-offset-2 font-inconsolata">
                     {{ course.count_evaluation }} Opiniones
                   </p>
                 </div>
@@ -155,17 +121,17 @@ export default {
                   <rect x="0.5" y="0.5" width="4" height="20" fill="none" />
                 </g>
               </svg>
-              <p class="font-medium uppercase pt-[2px] ml-2 text-sm xl:text-base">
+              <p class="font-medium uppercase ml-2 text-xs xl:text-base font-inconsolata">
                 {{ course.level_name }}
               </p>
             </div>
           </div>
-          <p>{{ teacher.name }}</p>
+          <!-- <p>{{ teacher.name }}</p> -->
           <p class="mt-4 text-base font-inconsolata mb-3">
             {{ course.descripcion }}
           </p>
         </div>
-        <div class="pt-[53px]">
+        <div class="w-1/3">
           <p class="font-inconsolata text-sm">
             Consíguelo
           </p>
@@ -175,9 +141,9 @@ export default {
           <p v-else class="font-oswald text-4xl font-medium mb-3">
             GRATIS
           </p>
-          <NuxtLink to="/" class="btn-bta">
+          <Button to="/" class="bg-bta-pink text-white font-inconsolata">
             Comprar suscripción mensual
-          </NuxtLink>
+          </Button>
           <p v-if="course.price" class="font-inconsolata text-white text-sm pt-3">
             Puedes comprar el curso por: {{ course.price }} USD
           </p>
@@ -191,13 +157,19 @@ export default {
     <!-- Temario -->
     <section class="bg-bta-section">
       <div class="px-4">
-        <h2 class="font-oswald font-bold text-white text-4xl text-center mb-14">
-          Temario del Curso de {{ course.titulo }}
+        <h2 class="font-oswald font-bold text-white text-4xl my-14 mx-auto max-w-5xl">
+          Temario
         </h2>
-        <div v-for="(theme, i) in syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
-          <h3 class="font-oswald text-white text-3xl font-bold my-10">
+        <div v-for="(theme, i) in course.syllabus" :key="i + 1000" class="bg-bta-section mx-auto max-w-5xl">
+          <h3 class="font-oswald text-white text-3xl font-bold my-4">
             {{ theme.titulo }}
           </h3>
+          <p class="flex gap-2 font-inconsolata text-gray-muted my-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+            </svg>
+            {{ theme.lessons }} lecciones
+          </p>
 
           <div
             v-for="(video, i) in theme.videos" :key="i + 2000"
@@ -205,7 +177,7 @@ export default {
           >
             <div v-if="video.is_free || course.price == null || course.price == 0" class="text-white w-full">
               <NuxtLink :to="`/video/${video.slug}`">
-                <div class="flex flex-row items-center gap-2 p-6">
+                <div class="flex flex-row items-center gap-2 p-6 font-inconsolata">
                   <!-- play icon -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -217,8 +189,8 @@ export default {
                     />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <div class="">
-                    <p class="text-white font-inconsolata">
+                  <div>
+                    <p class="text-white">
                       {{ video.titlevideo }}
                     </p>
                   </div>
@@ -287,31 +259,5 @@ export default {
 </template>
 
 <style>
-.btn-bta {
-  @apply text-base px-5 py-4 font-oswald uppercase text-white bg-bta-pink border border-bta-pink inline-block mb-0 font-normal text-center align-middle whitespace-nowrap duration-200
-}
 
-.hero-base {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 28px 16px;
-  position: relative;
-  width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .hero-base {
-    background: 0 0;
-    grid-template-columns: 3fr 7fr 1fr;
-    margin-top: 0;
-    padding: 0;
-  }
-
-  .hero-content {
-    padding: 53px 8px 53px 5rem;
-    width: calc(70% - -8rem);
-  }
-}
 </style>
