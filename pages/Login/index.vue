@@ -1,65 +1,54 @@
-<script>
-import { useFetch, useRuntimeConfig } from '#app'
+<script setup lang="ts">
+import { useCookie, useFetch, useRouter, useRuntimeConfig, useState } from '#app'
 import UserAuthForm from '@/components/auth/UserAuthForm'
+import { ref } from 'vue'
 
-export default {
-  name: 'Login',
-  components: {
-    UserAuthForm,
-  },
-  data() {
-    return {
-      error: null,
+definePageMeta({
+  layout: 'default',
+  middleware: 'guest', // Evita el acceso si ya tienes sesión
+})
+// Estado de error
+const error = ref<string | null>(null)
+
+// Router para la redirección
+const router = useRouter()
+
+// Función para iniciar sesión
+async function loginUser(loginInfo: Record<string, any>) {
+  error.value = null // Resetear error antes de iniciar sesión
+
+  try {
+    // Obtener configuración de runtime
+    const config = useRuntimeConfig()
+
+    // Llamada al backend
+    const { data, error: fetchError } = await useFetch(`${config.public.apiBaseUrl}/tokens`, {
+      method: 'POST',
+      body: loginInfo,
+    })
+
+    if (fetchError.value) {
+      throw new Error(fetchError.value.message || 'Error al iniciar sesión')
     }
-  },
 
-  head: {
-    title: 'Cursos online de Hacking ético - Backtrack Academy',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Diversos cursos esperan por ti. No esperes más, regístrate y comienza a adquirir una nueva habilidad de inmediato.',
-      },
-    ],
-  },
-  methods: {
-    async loginUser(loginInfo) {
-      this.error = null // Resetear error antes de iniciar sesión
+    const token = data.value?.token
+    const user = data.value?.user
 
-      try {
-        // Obtener la configuración de runtime
-        const config = useRuntimeConfig()
-        // Llamada al backend usando useFetch
-        const { data, error } = await useFetch(`${config.public.apiBaseUrl}/tokens`, {
-          method: 'POST',
-          body: loginInfo,
-        })
+    if (token && user) {
+      // Guardar token en cookies y usuario en estado global
+      useCookie('auth_token').value = token
+      useState('user', () => user)
 
-        if (error?.value) {
-          throw new Error(error.value.message || 'Error al iniciar sesión')
-        }
-
-        const token = data.value?.token
-        const user = data.value?.user
-
-        if (token && user) {
-          // Guardar token en cookies y usuario en estado global
-          useCookie('auth_token').value = token
-          useState('user', () => user)
-
-          // Redirigir después del login
-          this.$router.push('/dashboard')
-        }
-        else {
-          throw new Error('Respuesta inválida del servidor')
-        }
-      }
-      catch (err) {
-        this.error = err.message
-      }
-    },
-  },
+      // Redirigir al dashboard
+      router.push('/dashboard')
+    }
+    else {
+      throw new Error('Respuesta inválida del servidor')
+    }
+  }
+  catch (err: any) {
+    error.value = err.message
+  }
 }
 </script>
 
