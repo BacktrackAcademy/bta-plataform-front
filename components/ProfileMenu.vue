@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { Current } from '@/interfaces/user'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -7,16 +6,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { logout } from '@/services/auth'
 
-const { data: current } = await useAPI<Current>('/users/current')
+const { data: session, signOut } = useAuth()
 
 async function handleLogout() {
-  await logout()
+  await signOut()
   navigateTo('/')
 }
-
-// Lógica específica para el layout de listado de cursos
 </script>
 
 <template>
@@ -31,10 +27,10 @@ async function handleLogout() {
           <div class="hidden md:flex items-center text-left gap-2">
             <div>
               <p class="text-sm font-medium text-white">
-                {{ current?.user?.name }} {{ current?.user?.lastname }}
+                {{ session?.user?.name }}
               </p>
               <p class="text-xs text-[#c4c8ce] w-32 truncate">
-                {{ current?.user?.email }}
+                {{ session?.user?.email }}
               </p>
             </div>
             <Icon
