@@ -14,7 +14,7 @@ export default NuxtAuthHandler({
       credentials: {},
       async authorize(credentials: { email: string, password: string }) {
         try {
-          const response = await fetch(`http://localhost:3000/api/v1/tokens`, {
+          const response = await fetch(`${process.env.NUXT_PUBLIC_API_BASE_URL}/tokens`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
