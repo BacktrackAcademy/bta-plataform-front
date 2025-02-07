@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 
 definePageMeta({
   layout: 'custom',
-  middleware: 'auth', // Asociar el middleware de autenticación
+  auth: true,
 })
 
 interface Teacher {

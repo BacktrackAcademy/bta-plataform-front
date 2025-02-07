@@ -4,7 +4,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
   layout: 'custom',
-  auth: false,
+  auth: true,
 })
 
 interface CoursesHistory {
