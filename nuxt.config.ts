@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
   ],
   auth: {
-    baseURL: process.env.NUXT_PUBLIC_API_BASE_URL,
+    origin: process.env.AUTH_ORIGIN,
     provider: {
       type: 'authjs',
     },

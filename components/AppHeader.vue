@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { HamburgerAnimatedButton } from '#components'
 
+const { status } = useAuth()
 const hamburgerMenuIsOpen = ref(false)
 const links = [
   { name: 'Cursos', url: '/cursos' },
@@ -54,7 +55,12 @@ function toggleBurgerMenu() {
             Vuélvete Pro!
           </NuxtLink>
           <NuxtLink to="/login" class="nav__link">
-            Iniciar sesión
+            <span v-if="status.toLowerCase() === 'authenticated'">
+              Dashboard
+            </span>
+            <span v-else>
+              Iniciar sesión
+            </span>
           </NuxtLink>
         </div>
         <HamburgerAnimatedButton

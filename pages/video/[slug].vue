@@ -3,7 +3,7 @@ import ArrowToRight from '../../components/icons/arrow-to-right.vue'
 
 definePageMeta({
   layout: 'custom',
-  middleware: 'auth', // Asociar el middleware de autenticación
+  auth: true,
 })
 
 interface Teacher {
