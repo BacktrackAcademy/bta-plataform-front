@@ -36,10 +36,11 @@ jobs:
           sed -i '/NUXT_PUBLIC_API_BASE_URL=/d' .env
           sed -i '/NUXT_PUBLIC_AUTH_COOKIE_NAME=/d' .env
           sed -i '/NUXT_PUBLIC_AUTH_TOKEN_NAME=/d' .env
+          sed -i '/AUTH_ORIGIN=/d' .env
           echo "NUXT_PUBLIC_API_BASE_URL=${{ secrets.NUXT_PUBLIC_API_BASE_URL }}" >> .env
           echo "NUXT_PUBLIC_AUTH_COOKIE_NAME=${{ secrets.NUXT_PUBLIC_AUTH_COOKIE_NAME }}" >> .env
           echo "NUXT_PUBLIC_AUTH_TOKEN_NAME=${{ secrets.NUXT_PUBLIC_AUTH_TOKEN_NAME }}" >> .env
-          echo "NUXT_PUBLIC_AUTH_ORIGIN=${{ secrets.NUXT_PUBLIC_AUTH_ORIGIN }}" >> .env
+          echo "AUTH_ORIGIN=${{ secrets.AUTH_ORIGIN }}" >> .env
 
       - name: Build
         run: npm run build
