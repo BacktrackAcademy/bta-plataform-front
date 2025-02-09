@@ -42,6 +42,9 @@ jobs:
           echo "NUXT_PUBLIC_AUTH_TOKEN_NAME=${{ secrets.NUXT_PUBLIC_AUTH_TOKEN_NAME }}" >> .env
           echo "AUTH_ORIGIN=${{ secrets.AUTH_ORIGIN }}" >> .env
 
+      - name: Debug .env file
+        run: cat .env
+
       - name: Build
         run: npm run build
 
