@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   ],
   auth: {
     origin: process.env.NUXT_AUTH_ORIGIN,
+    basePath: '/api/v1', // 🔥 Cambiado de `/api/auth` a `/api/v1`
     enableSessionStorage: true, // ✅ Habilita almacenamiento de sesión
     cookies: {
       secure: true, // ✅ Usa cookies seguras en producción
