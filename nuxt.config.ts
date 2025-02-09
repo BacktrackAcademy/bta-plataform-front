@@ -36,6 +36,17 @@ export default defineNuxtConfig({
     provider: {
       type: 'authjs',
     },
+    globalMiddleware: false, // Importante: deshabilita el middleware global
+    session: {
+      enableSessionRefresh: true,
+      strategies: {
+        session: {
+          endpoints: {
+            session: '/api/auth/session',
+          },
+        },
+      },
+    },
   },
   shadcn: {
     prefix: '',
