@@ -16,9 +16,17 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
   ],
   auth: {
+    isEnabled: true,
+    disableServerSideAuth: true,
+    originEnvKey: 'NUXT_AUTH_ORIGIN',
+    baseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
     origin: process.env.NUXT_AUTH_ORIGIN,
     basePath: '/api/v1', // 🔥 Cambiado de `/api/auth` a `/api/v1`
     enableSessionStorage: true, // ✅ Habilita almacenamiento de sesión
+    sessionRefresh: {
+      enablePeriodically: true,
+      enableOnWindowFocus: true,
+    },
     cookies: {
       secure: true, // ✅ Usa cookies seguras en producción
       sameSite: 'none', // ✅ Permite cookies entre dominios
