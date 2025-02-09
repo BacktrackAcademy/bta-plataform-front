@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
+      apiBaseUrl: process.env.NUXT_AUTH_ORIGIN,
       authCookieName: process.env.NUXT_PUBLIC_AUTH_COOKIE_NAME,
       authTokenName: process.env.NUXT_PUBLIC_AUTH_TOKEN_NAME,
       // web3forms_access_key: '',
