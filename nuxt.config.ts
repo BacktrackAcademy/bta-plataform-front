@@ -62,6 +62,9 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'node-server', // 🔥 Esto cambia el build para generar solo archivos estáticos
+    output: {
+      publicDir: 'dist',
+    },
     serverHandlers: [
       {
         route: '/api/auth/**', // 👈 Asegurar que las rutas de auth pasan por NuxtAuthHandler
