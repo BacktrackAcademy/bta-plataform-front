@@ -17,7 +17,7 @@
       <ul class="space-y-1 m-0 flex flex-nowrap justify-center items-center lg:flex-col lg:items-start">
         <li class="px-4 lg:w-full">
           <NuxtLink
-            to="/cursos"
+            to="/dashboard"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:home" class="size-6" />
@@ -27,11 +27,11 @@
 
         <li class="px-4 lg:w-full">
           <NuxtLink
-            to="/mis-rutas"
+            to="/cursos"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:card-stack" class="size-6" />
-            <span class="text-sm hidden md:inline-block">Mis Rutas</span>
+            <span class="text-sm hidden md:inline-block">Mis cursos</span>
           </NuxtLink>
         </li>
 
