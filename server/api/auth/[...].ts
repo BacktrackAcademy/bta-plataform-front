@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
@@ -22,19 +23,23 @@ export default NuxtAuthHandler({
             },
             body: JSON.stringify(credentials),
           })
-          if (response.ok) {
-            const data = await response.json()
-            return {
-              id: data.user.id,
-              name: data.user.name,
-              email: data.user.email,
-              token: data.token,
-            }
+
+          if (!response.ok) {
+            console.error('Auth failed:', response.status, await response.text())
+            throw new Error('Invalid credentials')
+          }
+
+          const data = await response.json()
+          return {
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            token: data.token,
           }
         }
         catch (error) {
           console.error('Authentication error:', error)
-          return null
+          throw new Error('Server error')
         }
       },
     }),
