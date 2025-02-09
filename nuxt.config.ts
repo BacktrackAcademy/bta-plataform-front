@@ -16,7 +16,13 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
   ],
   auth: {
-    origin: process.env.AUTH_ORIGIN,
+    origin: process.env.NUXT_AUTH_ORIGIN,
+    enableSessionStorage: true, // ✅ Habilita almacenamiento de sesión
+    cookies: {
+      secure: true, // ✅ Usa cookies seguras en producción
+      sameSite: 'none', // ✅ Permite cookies entre dominios
+      httpOnly: true, // ✅ Solo accesible por el backend
+    },
     provider: {
       type: 'authjs',
     },
