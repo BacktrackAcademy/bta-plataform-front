@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     origin: process.env.NUXT_AUTH_ORIGIN,
     basePath: '/api/v1', // 🔥 Cambiado de `/api/auth` a `/api/v1`
     enableSessionStorage: true, // ✅ Habilita almacenamiento de sesión
+    enableGlobalAppMiddleware: true, // 👈 Activa el middleware de auth
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: true,
@@ -61,6 +62,12 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'static', // 🔥 Esto cambia el build para generar solo archivos estáticos
+    serverHandlers: [
+      {
+        route: '/api/auth/**', // 👈 Asegurar que las rutas de auth pasan por NuxtAuthHandler
+        handler: '~/server/api/auth/[...].ts',
+      },
+    ],
     prerender: {
       failOnError: false, // No detiene la compilación si hay errores en prerender
       ignore: ['/cursos', '/noticias', '/debates'], // Ignorar rutas problemáticas
