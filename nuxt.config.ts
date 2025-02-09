@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import process from 'node:process'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   compatibilityDate: '2025-01-18',
@@ -25,7 +27,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBaseUrl: '',
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
+      authCookieName: process.env.NUXT_PUBLIC_AUTH_COOKIE_NAME,
+      authTokenName: process.env.NUXT_PUBLIC_AUTH_TOKEN_NAME,
       // web3forms_access_key: '',
     },
   },
