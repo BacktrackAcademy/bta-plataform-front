@@ -4,10 +4,11 @@ interface Props {
 }
 
 defineProps<Props>()
-
 const emit = defineEmits<{
   register: [userInfo: { email: string, password: string }]
 }>()
+
+const showPassword = ref(false)
 
 const userInfo = ref({
   email: '',
@@ -47,15 +48,43 @@ function handleSubmit() {
           Contraseña
         </label>
         <div class="flex items-center border-2 py-2 px-3 rounded-2xl w-full">
-          <Icon name="lucide:lock" class="h-5 w-5 text-gray-400" />
-          <input
-            id="password"
-            v-model="userInfo.password"
-            class="pl-2 outline-none border-none w-full"
-            type="password"
-            placeholder="Ingresar contraseña"
-            required
-          >
+          <div class="relative w-full items-center">
+            <div class="flex items-center">
+              <Icon name="lucide:lock" class="h-5 w-5 text-gray-400" />
+              <input
+                id="password"
+                v-model="userInfo.password"
+                class="pl-2 outline-none border-none w-full"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="Ingresar contraseña"
+                required
+              >
+            </div>
+            <span
+              class="absolute end-0 inset-y-0 flex items-center justify-center px-2"
+              @click="showPassword = !showPassword"
+            >
+              <Icon
+                :name="showPassword ? 'ph:eye-bold' : 'ph:eye-closed-bold'"
+                class="size-6 text-muted-foreground"
+              />
+            </span>
+          </div>
+        </div>
+        <div class="mt-2">
+          <div class="text-xs justify-between flex">
+            <RouterLink to="/registro" class="hover:text-primary">
+              Registrarse
+            </RouterLink>
+            <RouterLink to="/reenviar-email" class="hover:text-primary">
+              ¿No recibió mensaje de confirmación?
+            </RouterLink>
+          </div>
+          <div class="text-xs my-2">
+            <RouterLink to="/olvide-contrasena" class="hover:text-primary">
+              ¿Olvidaste tu contraseña?
+            </RouterLink>
+          </div>
         </div>
       </div>
 
