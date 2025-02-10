@@ -17,10 +17,9 @@ export default defineNuxtConfig({
   ],
   auth: {
     isEnabled: true,
-    disableServerSideAuth: true,
     originEnvKey: 'NUXT_AUTH_ORIGIN',
-    baseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
-    origin: process.env.NUXT_AUTH_ORIGIN || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
+    baseUrl: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:4321',
+    origin: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:4321',
     basePath: '/api/auth',
     enableSessionStorage: true,
     enableGlobalAppMiddleware: true,
@@ -48,7 +47,7 @@ export default defineNuxtConfig({
       },
     },
     defaultProvider: 'credentials',
-    baseURL: process.env.NUXT_PUBLIC_API_BASE_URL,
+    baseURL: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:4321',
   },
   shadcn: {
     prefix: '',
