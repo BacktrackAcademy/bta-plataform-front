@@ -17,26 +17,25 @@ export default defineNuxtConfig({
   ],
   auth: {
     isEnabled: true,
-    disableServerSideAuth: true,
     originEnvKey: 'NUXT_AUTH_ORIGIN',
-    baseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
-    origin: process.env.NUXT_AUTH_ORIGIN,
-    basePath: '/api/v1', // 🔥 Cambiado de `/api/auth` a `/api/v1`
-    enableSessionStorage: true, // ✅ Habilita almacenamiento de sesión
-    enableGlobalAppMiddleware: true, // 👈 Activa el middleware de auth
+    baseUrl: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:4321',
+    origin: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:4321',
+    basePath: '/api/auth',
+    enableSessionStorage: true,
+    enableGlobalAppMiddleware: true,
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: true,
     },
     cookies: {
-      secure: true, // ✅ Usa cookies seguras en producción
-      sameSite: 'none', // ✅ Permite cookies entre dominios
-      httpOnly: true, // ✅ Solo accesible por el backend
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none',
+      httpOnly: true,
     },
     provider: {
       type: 'authjs',
     },
-    globalMiddleware: false, // Importante: deshabilita el middleware global
+    globalMiddleware: false,
     session: {
       enableSessionRefresh: true,
       strategies: {
@@ -47,6 +46,8 @@ export default defineNuxtConfig({
         },
       },
     },
+    defaultProvider: 'credentials',
+    baseURL: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:4321',
   },
   shadcn: {
     prefix: '',
@@ -68,20 +69,6 @@ export default defineNuxtConfig({
   eslint: {
     config: {
       standalone: false,
-    },
-  },
-
-  nitro: {
-    preset: 'static', // 🔥 Esto cambia el build para generar solo archivos estáticos
-    serverHandlers: [
-      {
-        route: '/api/auth/**', // 👈 Asegurar que las rutas de auth pasan por NuxtAuthHandler
-        handler: '~/server/api/auth/[...].ts',
-      },
-    ],
-    prerender: {
-      failOnError: false, // No detiene la compilación si hay errores en prerender
-      ignore: ['/cursos', '/noticias', '/debates'], // Ignorar rutas problemáticas
     },
   },
 })
