@@ -71,6 +71,21 @@ function handleSubmit() {
             </span>
           </div>
         </div>
+        <div class="mt-2">
+          <div class="text-xs justify-between flex">
+            <RouterLink to="/registro" class="hover:text-primary">
+              Registrarse
+            </RouterLink>
+            <RouterLink to="/reenviar-email" class="hover:text-primary">
+              ¿No recibió mensaje de confirmación?
+            </RouterLink>
+          </div>
+          <div class="text-xs my-2">
+            <RouterLink to="/olvide-contrasena" class="hover:text-primary">
+              ¿Olvidaste tu contraseña?
+            </RouterLink>
+          </div>
+        </div>
       </div>
 
       <button
