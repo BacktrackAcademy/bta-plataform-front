@@ -35,11 +35,6 @@ function getAvatarUrl(name) {
   return `https://ui-avatars.com/api/?background=141224&color=fff&name=${encodeURIComponent(name)}`
 }
 
-// const { data: courses, status } = await useAPI<Course[]>('/courses')
-
-// const { data: teachers, status: teachersStatus } = await useAPI<Teacher[]>('/teacher')
-// const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
-// const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
 const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses/history')
 const { data: Degree, status: DegreeStatus } = await useAPI<Degree>('/degrees')
 
@@ -66,7 +61,8 @@ useSeoMeta({
       <h2 class="text-white text-lg font-oswald mb-4">
         Resumen avances
       </h2>
-      <div v-if="status === 'pending'" class="max-w-sm bg-bta-dark-blue rounded-xl shadow-lg p-6 relative overflow-hidden">
+
+      <div v-if="coursesHistoryStatus === 'pending'" class="max-w-sm bg-bta-dark-blue rounded-xl shadow-lg p-6 relative overflow-hidden">
         <div class="flex items-center gap-4 mb-6">
           <Skeleton class="w-12 h-12 rounded-full" />
           <div class="space-y-2">
@@ -144,7 +140,7 @@ useSeoMeta({
         </div>
       </section>
       <!-- Sección de cursos -->
-      <template v-if="status === 'pending'">
+      <template v-if="coursesHistoryStatus === 'pending'">
         <div class="grid place-items-center min-h-[calc(100vh-400px)]">
           <div class="flex flex-col items-center">
             <IconsSpinner class="text-white" />
@@ -169,41 +165,6 @@ useSeoMeta({
 </template>
 
 <style scoped>
-.glitch {
-  position: relative;
-  cursor: pointer;
-}
-
-.glitch:hover::before,
-.glitch:hover::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch:hover::before {
-  animation: glitch-effect 3s infinite linear alternate-reverse;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-  text-shadow: -2px 0 #ff00c1;
-}
-
-.glitch:hover::after {
-  animation: glitch-effect 2s infinite linear alternate-reverse;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  text-shadow: 2px 0 #00fff9;
-}
-
-@keyframes glitch-effect {
-  0% { transform: translateX(-2px); }
-  25% { transform: translateX(2px); }
-  50% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
-  100% { transform: translateX(-2px); }
-}
-
 .searcher__input{
     transition: .5s;
   }

@@ -71,3 +71,39 @@ defineProps<{ course: Course }>()
     </NuxtLink>
   </div>
 </template>
+
+<style scoped>
+@keyframes glitch-effect {
+  0% { transform: translateX(-2px); }
+  25% { transform: translateX(2px); }
+  50% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
+}
+.glitch {
+  position: relative;
+  cursor: pointer;
+}
+
+.glitch:hover::before,
+.glitch:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch:hover::before {
+  animation: glitch-effect 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  text-shadow: -2px 0 #ff00c1;
+}
+
+.glitch:hover::after {
+  animation: glitch-effect 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  text-shadow: 2px 0 #00fff9;
+}
+</style>
