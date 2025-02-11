@@ -2,6 +2,7 @@
 useHead({
   htmlAttrs: {
     lang: 'es',
+    class: 'dark',
   },
   link: [
     {
