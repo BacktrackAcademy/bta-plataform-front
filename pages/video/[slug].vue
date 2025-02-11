@@ -47,38 +47,15 @@ const teacher = ref<Teacher | null>(null)
 const syllabus = ref<Theme[]>([])
 
 // Cargar datos del video
-async function loadVideoData() {
-  try {
-    const { data } = await useFetch<any>(`/api/v1/video/${route.params.slug}`)
-    if (data.value) {
-      video.value = data.value
-      course.value = data.value.course
-      teacher.value = data.value.course.teacher
-      syllabus.value = data.value.course.syllabus
-    }
-  }
-  catch (error) {
-    console.error('Error al cargar el video:', error)
-  }
+const { data: Video, status: VideoStatus } = await useAPI<Video>(`/video/${route.params.slug}`)
+
+// Cargar datos del curso
+if (Video) {
+  video.value = Video.value
+  course.value = Video.value.course
+  teacher.value = Video.value.course.teacher
+  syllabus.value = Video.value.course.syllabus
 }
-
-// Cargar datos al montar el componente
-onMounted(() => {
-  loadVideoData()
-})
-
-// SEO Metadata
-useSeoMeta({
-  title: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy',
-  description: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
-  keywords: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informática, Seguridad, Academy, Online, Cursos, JavaScript',
-  ogType: 'website',
-  ogUrl: () => `https://backtrackacademy.com/video/${route.params.slug}`,
-  ogTitle: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy - Videos de Hacking Ético',
-  ogDescription: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
-  ogImage: 'https://backtrack-academy-01.s3.amazonaws.com/OpenGraph+Facebook.png',
-  twitterCard: 'summary_large_image',
-})
 </script>
 
 <template>
@@ -140,7 +117,7 @@ useSeoMeta({
                   class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
                   title="Definición y características de Cobalt Strike"
                 >
-                  Definición y características de Cobalt Strike
+                  {{ course?.shortdes }}
                 </span>
               </button>
             </div>
@@ -162,10 +139,18 @@ useSeoMeta({
             </h3>
             <div class="flex flex-wrap gap-3 font-inconsolata mb-2">
               <strong>01:40 hrs</strong>
-              <div>84 personas han estudiado este curso.</div>
+              <div v-if="course?.students > 1">
+                {{ course?.students }} personas han estudiado este curso.
+              </div>
+              <div v-else-if="course?.students === 1">
+                {{ course?.students }} persona ha estudiado este curso.
+              </div>
+              <div v-else>
+                Sé el primero en estudiar este curso.
+              </div>
             </div>
             <p class="font-inconsolata">
-              Los ciberdelincuentes son cada vez más astutos y capaces de evadir los sistemas de defensa más sofisticados. Por eso debemos ser proactivos a través de nuestras redes para detectar y aislar amenazas avanzadas que puedan evadir nuestros sistemas de defensa.
+              {{ course?.descripcion }}
             </p>
           </div>
         </div>
@@ -181,7 +166,7 @@ useSeoMeta({
             0%
           </p>
           <p class="font-inconsolata">
-            del curso <span class="text-white">Threat Hunting</span>
+            del curso <span class="text-white">{{ course?.titulo }}</span>
           </p>
           <br>
           <p class="font-inconsolata">
