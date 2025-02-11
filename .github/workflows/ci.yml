@@ -13,7 +13,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v1
         with:
-          node-version: 22.10.0
+          node-version: 22.14.0
       - name: Install Dependencies
         run: |
           npm cache clean --force
