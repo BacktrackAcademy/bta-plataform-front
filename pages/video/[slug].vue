@@ -201,6 +201,7 @@ const data = [
             :data="data"
             index="name"
             :categories="['total', 'predicted']"
+            :colors="['#EC1075', '#141224']"
             :y-formatter="(tick, i) => {
               return typeof tick === 'number'
                 ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
