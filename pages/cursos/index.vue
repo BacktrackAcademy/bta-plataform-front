@@ -14,34 +14,61 @@ interface CoursesHistory {
   total_viewed: string
 }
 
-interface Degree {
-  id: number
-  name: string
-  description: string
-}
-
-// Función para formatear las horas de manera redondeada
-function formatTime(timeString: string | undefined): string {
-  if (!timeString)
-    return '0'
-
-  const [hours, minutes] = timeString.split(':')
-  const totalHours = Math.round(Number.parseInt(hours) + Number.parseInt(minutes) / 60)
-
-  return `${totalHours}`
-}
-// Función para obtener la URL del avatar
-function getAvatarUrl(name) {
-  return `https://ui-avatars.com/api/?background=141224&color=fff&name=${encodeURIComponent(name)}`
-}
+// interface Degree {
+//   id: number
+//   name: string
+//   description: string
+// }
 
 // const { data: courses, status } = await useAPI<Course[]>('/courses')
+const teacherSelected = ref<string[]>([])
 
 const { data: teachers, status: teachersStatus } = await useAPI<Teacher[]>('/teacher')
 const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
 const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
-const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses')
-const { data: Degree, status: DegreeStatus } = await useAPI<Degree>('/degrees')
+const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses', {
+  params: {
+    teacher_id: teacherSelected.value, // assuming you are using the selected teacher ID as a parameter
+  },
+})
+const { data: degree, status: degreeStatus } = await useAPI<Degree>('/degrees')
+
+// Transformar la lista de teachers al formato esperado por el componente
+const formattedTeachers = teachers.value?.map(teacher => ({
+  value: teacher.id,
+  label: `${teacher.name} ${teacher.lastname}`,
+}))
+
+function handleTeacherSelected(newSelected: string[]) {
+  teacherSelected.value = newSelected
+}
+
+const categorySelected = ref<string[]>([])
+const formattedCategories = categories.value?.map(category => ({
+  value: category.id,
+  label: category.name,
+}))
+function handleCategorySelected(newSelected: string[]) {
+  categorySelected.value = newSelected
+}
+
+const formattedLevels = levels.value?.map(level => ({
+  value: level.id,
+  label: level.name,
+}))
+const levelSelected = ref<string[]>([])
+function handleLevelSelected(newSelected: string[]) {
+  levelSelected.value = newSelected
+}
+
+const formattedDegree = degree.value?.map(degree => ({
+  value: degree.id,
+  label: degree.name,
+}))
+const degreeSelected = ref<string[]>([])
+function handleDegreeSelected(newSelected: string[]) {
+  degreeSelected.value = newSelected
+}
 
 // SEO Metadata
 useSeoMeta({
@@ -59,11 +86,47 @@ useSeoMeta({
 <template>
   <div class="w-full py-8 p-16">
     <div class="lg:h-full">
-      <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
-        Cursos de hacking ético
-      </h1>
+      <div>
+        <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
+          Cursos de hacking ético
+        </h1>
+        <!-- Filters -->
+        <div class="flex flex-col lg:flex-row items-center justify-normal gap-4 mb-7">
+          <MultiSelect
+            :options="formattedTeachers || []"
+            :selected="teacherSelected"
+            placeholder="Docente"
+            search-placeholder="Buscar docentes..."
+            @change="handleTeacherSelected"
+          />
+
+          <MultiSelect
+            :options="formattedCategories || []"
+            :selected="categorySelected"
+            placeholder="Categorías"
+            search-placeholder="Buscar categorías..."
+            @change="handleCategorySelected"
+          />
+
+          <MultiSelect
+            :options="formattedLevels || []"
+            :selected="levelSelected"
+            placeholder="Niveles"
+            search-placeholder="Buscar niveles..."
+            @change="handleLevelSelected"
+          />
+
+          <MultiSelect
+            :options="formattedDegree || []"
+            :selected="degreeSelected"
+            placeholder="Grados"
+            search-placeholder="Buscar grados..."
+            @change="handleDegreeSelected"
+          />
+        </div>
+      </div>
       <!-- Sección de cursos -->
-      <template v-if="status === 'pending'">
+      <!-- <template v-if="status === 'pending'">
         <div class="grid place-items-center min-h-[calc(100vh-400px)]">
           <div class="flex flex-col items-center">
             <IconsSpinner class="text-white" />
@@ -72,11 +135,8 @@ useSeoMeta({
             </p>
           </div>
         </div>
-      </template>
-      <div v-else>
-        <h2 class="text-white text-lg font-oswald my-4 mt-8">
-          Continuar estudiando...
-        </h2>
+      </template> -->
+      <div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div v-for="(course, i) in coursesHistory" :key="i" class="flex">
             <Course :course="course" />
