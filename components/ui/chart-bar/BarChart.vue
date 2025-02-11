@@ -1,12 +1,13 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import type { BulletLegendItemInterface } from '@unovis/ts'
+import type { Component } from 'vue'
 import type { BaseChartProps } from '.'
 import { ChartCrosshair, ChartLegend, defaultColors } from '@/components/ui/chart'
 import { cn } from '@/lib/utils'
 import { Axis, GroupedBar, StackedBar } from '@unovis/ts'
 import { VisAxis, VisGroupedBar, VisStackedBar, VisXYContainer } from '@unovis/vue'
 import { useMounted } from '@vueuse/core'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = withDefaults(defineProps<BaseChartProps<T> & {
   /**
@@ -91,14 +92,16 @@ const selectorsBar = computed(() => props.type === 'grouped' ? GroupedBar.select
         type="x"
         :tick-format="xFormatter ?? ((v: number) => data[v]?.[index])"
         :grid-line="false"
+        :color="colors"
         :tick-line="false"
-        tick-text-color="hsl(var(--vis-text-color))"
+        tick-text-color="white"
       />
       <VisAxis
         v-if="showYAxis"
         type="y"
         :tick-line="false"
         :tick-format="yFormatter"
+        :color="colors"
         :domain-line="false"
         :grid-line="showGridLine"
         :attributes="{
@@ -106,7 +109,7 @@ const selectorsBar = computed(() => props.type === 'grouped' ? GroupedBar.select
             class: 'text-muted',
           },
         }"
-        tick-text-color="hsl(var(--vis-text-color))"
+        tick-text-color="white"
       />
 
       <slot />
