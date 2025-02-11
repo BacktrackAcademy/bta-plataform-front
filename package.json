@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/color-mode": "3.5.2",
     "@sidebase/nuxt-auth": "^0.6.7",
+    "@types/vimeo__player": "^2.18.3",
     "@vimeo/player": "^2.25.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
