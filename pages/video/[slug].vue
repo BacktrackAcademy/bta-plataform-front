@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { BarChart } from '@/components/ui/chart-bar'
 import Player from '@vimeo/player'
 import ArrowToRight from '../../components/icons/arrow-to-right.vue'
 
@@ -88,11 +89,19 @@ function addPercentage(percentage: number) {
     },
   })
 }
+const data = [
+  { name: 'Jan', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+  { name: 'Feb', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+  { name: 'Mar', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+  { name: 'Apr', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+  { name: 'May', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+  { name: 'Jun', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+  { name: 'Jul', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
+]
 </script>
 
 <template>
   <section class="bg-bta-dark-blue px-4 sm:px-6 xl:px-8">
-    {{ videoDuration }}
     <div class="lg:flex mt-2 gap-6 xl:gap-8">
       <div class="lg:w-[70%]">
         <!-- Video player -->
@@ -187,6 +196,17 @@ function addPercentage(percentage: number) {
               {{ course?.descripcion }}
             </p>
           </div>
+          {{ videoDuration }}
+          <BarChart
+            :data="data"
+            index="name"
+            :categories="['total', 'predicted']"
+            :y-formatter="(tick, i) => {
+              return typeof tick === 'number'
+                ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
+                : ''
+            }"
+          />
         </div>
       </div>
 
