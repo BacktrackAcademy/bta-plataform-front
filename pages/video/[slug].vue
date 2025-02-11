@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Player from '@vimeo/player'
 import ArrowToRight from '../../components/icons/arrow-to-right.vue'
 
 definePageMeta({
@@ -36,6 +37,31 @@ interface Course {
   teacher: Teacher
   syllabus: Theme[]
 }
+const vimeoPlayer = ref<HTMLIFrameElement | null>(null)
+// let player: Player | null = null
+// const currentTime = ref<number>(0)
+// const duration = ref<number>(0)
+
+// Me gustaria documentar con console.log
+function initVimeoPlayer() {
+  console.log('initVimeoPlayer', vimeoPlayer.value)
+  if (!vimeoPlayer.value)
+    return
+  player = new Player(vimeoPlayer.value)
+  console.log('player', player)
+  // Obtener duración total del video
+  player.getDuration().then((dur) => {
+    console.log('time', dur)
+    duration.value = dur
+  })
+  // Escuchar cambios en el tiempo de reproducción
+  player.on('timeupdate', (data) => {
+    currentTime.value = data.seconds
+    // saveProgress()
+    console.log('timeupdate', data.seconds)
+  })
+}
+initVimeoPlayer()
 
 // Route
 const route = useRoute()
@@ -67,6 +93,7 @@ if (Video) {
           <div style="padding: 56.25% 0 0 0; position: relative">
             <iframe
               v-if="video?.url"
+              ref="vimeoPlayer"
               :src="`https://player.vimeo.com/video/${video.url}?h=0eb117b38a&title=0&byline=0&portrait=0&badge=0`"
               class="absolute top-0 left-0 w-full h-full"
               frameborder="0"
