@@ -38,30 +38,27 @@ interface Course {
   syllabus: Theme[]
 }
 const vimeoPlayer = ref<HTMLIFrameElement | null>(null)
-// let player: Player | null = null
-// const currentTime = ref<number>(0)
-// const duration = ref<number>(0)
+let player: Player | null = null
+const videoDuration = ref<number>(0)
 
-// Me gustaria documentar con console.log
 function initVimeoPlayer() {
-  console.log('initVimeoPlayer', vimeoPlayer.value)
   if (!vimeoPlayer.value)
     return
   player = new Player(vimeoPlayer.value)
-  console.log('player', player)
-  // Obtener duración total del video
-  player.getDuration().then((dur) => {
-    console.log('time', dur)
-    duration.value = dur
+  player.getDuration().then((duration: number) => {
+    videoDuration.value = duration
+  }).catch((error: any) => {
+    console.error('Error getting video duration:', error)
   })
-  // Escuchar cambios en el tiempo de reproducción
-  player.on('timeupdate', (data) => {
-    currentTime.value = data.seconds
-    // saveProgress()
-    console.log('timeupdate', data.seconds)
+  player.on('progress', (data: any) => {
+    addPercentage(data.percent)
   })
 }
-initVimeoPlayer()
+
+// Initialize player after component is mounted
+onMounted(() => {
+  initVimeoPlayer()
+})
 
 // Route
 const route = useRoute()
@@ -82,10 +79,20 @@ if (Video) {
   teacher.value = Video.value.course.teacher
   syllabus.value = Video.value.course.syllabus
 }
+function addPercentage(percentage: number) {
+  useAPI('/details/add_percentage', {
+    method: 'POST',
+    body: {
+      detail_id: video.value?.id,
+      percent: percentage * 100,
+    },
+  })
+}
 </script>
 
 <template>
   <section class="bg-bta-dark-blue px-4 sm:px-6 xl:px-8">
+    {{ videoDuration }}
     <div class="lg:flex mt-2 gap-6 xl:gap-8">
       <div class="lg:w-[70%]">
         <!-- Video player -->
