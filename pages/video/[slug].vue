@@ -69,6 +69,7 @@ const video = ref<Video | null>(null)
 const course = ref<Course | null>(null)
 const teacher = ref<Teacher | null>(null)
 const syllabus = ref<Theme[]>([])
+const data = ref<any>([])
 
 // Cargar datos del video
 const { data: Video, status: VideoStatus } = await useAPI<Video>(`/video/${route.params.slug}`)
@@ -76,6 +77,7 @@ const { data: Video, status: VideoStatus } = await useAPI<Video>(`/video/${route
 // Cargar datos del curso
 if (Video) {
   video.value = Video.value
+  data.value = Video.value.video_details_in_seconds
   course.value = Video.value.course
   teacher.value = Video.value.course.teacher
   syllabus.value = Video.value.course.syllabus
@@ -89,20 +91,11 @@ function addPercentage(percentage: number) {
     },
   })
 }
-const data = [
-  { name: 'Jan', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  { name: 'Feb', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  { name: 'Mar', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  { name: 'Apr', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  { name: 'May', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  { name: 'Jun', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  { name: 'Jul', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-]
 </script>
 
 <template>
   <section class="bg-bta-dark-blue px-4 sm:px-6 xl:px-8">
-    <div class="lg:flex mt-2 gap-6 xl:gap-8">
+    <div class="lg:flex gap-6 xl:gap-8">
       <div class="lg:w-[70%]">
         <!-- Video player -->
         <div class="relative top-0 max-h-[calc(100vh - 52px)] mx-auto">
@@ -137,7 +130,7 @@ const data = [
                   :to="`/curso/${course.slug}`"
                   class="block w-full"
                 >
-                  <h2 class="text-white font-normal text-base">
+                  <h2 class="text-white text-2xl font-oswald font-bold">
                     {{ course?.titulo }}
                   </h2>
                 </NuxtLink>
@@ -147,29 +140,47 @@ const data = [
                   alt=""
                   class="w-6 h-6 rounded-full mr-1"
                 >
-                <p class="text-gray-muted">
+                <p class="text-gray-muted font-inconsolata">
                   {{ teacher?.name }} {{ teacher?.lastname }}
                 </p>
               </div>
             </div>
 
-            <div>
-              <button class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2">
+            <div class="flex items-center">
+              <NuxtLink
+                v-if="video?.next"
+                :to="`/video/${video.next.slug}`"
+                class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
+              >
                 <ArrowToRight class="mr-3" />
                 <span
                   class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
                   title="Definición y características de Cobalt Strike"
                 >
-                  {{ course?.shortdes }}
+                  {{ video?.next.titlevideo }}
                 </span>
-              </button>
+              </NuxtLink>
+
+              <NuxtLink
+                v-if="video?.prev"
+                :to="`/video/${video.prev.slug}`"
+                class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
+              >
+                <ArrowToRight class="mr-3" />
+                <span
+                  class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
+                  title="Definición y características de Cobalt Strike"
+                >
+                  {{ video?.prev.titlevideo }}
+                </span>
+              </NuxtLink>
             </div>
           </div>
 
           <div class="pt-2 flex justify-between">
             <!-- header class -->
             <div class="flex items-center">
-              <h1 class="text-2xl text-white font-bold leading-9 my-4 font-oswald">
+              <h1 class="text-2xl text-white leading-9 my-4 font-oswald">
                 {{ video?.titlevideo }}
               </h1>
               <span class="text-[#cacaca] ml-3">1/20</span>
@@ -201,11 +212,14 @@ const data = [
             :data="data"
             index="name"
             :categories="['total', 'predicted']"
-            :colors="['#EC1075', '#141224']"
-            :y-formatter="(tick, i) => {
-              return typeof tick === 'number'
-                ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
-                : ''
+            :colors="['#141224', '#EC1075']"
+            :y-formatter="(tick) => {
+              if (typeof tick === 'number') {
+                const minutes = Math.floor(tick / 60);
+                const seconds = tick % 60;
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+              }
+              return '';
             }"
           />
         </div>
@@ -213,7 +227,7 @@ const data = [
 
       <div class="lg:w-[30%]">
         <!-- badge -->
-        <div class="text-[#cacaca] text-center mb-5">
+        <div class="text-[#cacaca] text-center my-8">
           <p class="font-inconsolata">
             Has estudiado
           </p>
