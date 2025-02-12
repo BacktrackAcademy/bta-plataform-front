@@ -1,12 +1,5 @@
 <script setup lang="ts">
-interface Course {
-  slug: string
-  image_thumb: string
-  titulo: string
-  shortdes: string
-  total_duration_text: string
-  price: number | null
-}
+import type { Course } from '~/interfaces/courses.response'
 
 defineProps<{ course: Course }>()
 </script>
@@ -30,7 +23,7 @@ defineProps<{ course: Course }>()
           >
         </figure>
         <!-- Card Content -->
-        <div class="flex-grow flex flex-col p-5">
+        <div class="flex-grow flex flex-col p-4">
           <!-- Card body -->
           <div class="flex-grow">
             <!-- Header -->
