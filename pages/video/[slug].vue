@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { BarChart } from '@/components/ui/chart-bar'
+import Player from '@vimeo/player'
 import ArrowToRight from '../../components/icons/arrow-to-right.vue'
 
 definePageMeta({
@@ -36,6 +38,43 @@ interface Course {
   teacher: Teacher
   syllabus: Theme[]
 }
+const vimeoPlayer = ref<HTMLIFrameElement | null>(null)
+let player: Player | null = null
+const videoDuration = ref<number>(0)
+
+function formatTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const remainingSeconds = seconds % 60
+
+  return [
+    hours > 0 ? String(hours).padStart(2, '0') : '00',
+    String(minutes).padStart(2, '0'),
+    String(remainingSeconds).padStart(2, '0'),
+  ].join(':')
+}
+
+function formatNumber(value: number): string {
+  return new Intl.NumberFormat('en-US').format(value)
+}
+function initVimeoPlayer() {
+  if (!vimeoPlayer.value)
+    return
+  player = new Player(vimeoPlayer.value)
+  player.getDuration().then((duration: number) => {
+    videoDuration.value = duration
+  }).catch((error: any) => {
+    console.error('Error getting video duration:', error)
+  })
+  player.on('progress', (data: any) => {
+    addPercentage(data.percent)
+  })
+}
+
+// Initialize player after component is mounted
+onMounted(() => {
+  initVimeoPlayer()
+})
 
 // Route
 const route = useRoute()
@@ -45,51 +84,40 @@ const video = ref<Video | null>(null)
 const course = ref<Course | null>(null)
 const teacher = ref<Teacher | null>(null)
 const syllabus = ref<Theme[]>([])
+const data = ref<any>([])
 
 // Cargar datos del video
-async function loadVideoData() {
-  try {
-    const { data } = await useFetch<any>(`/api/v1/video/${route.params.slug}`)
-    if (data.value) {
-      video.value = data.value
-      course.value = data.value.course
-      teacher.value = data.value.course.teacher
-      syllabus.value = data.value.course.syllabus
-    }
-  }
-  catch (error) {
-    console.error('Error al cargar el video:', error)
-  }
+const { data: Video, status: VideoStatus } = await useAPI<Video>(`/video/${route.params.slug}`)
+
+// Cargar datos del curso
+if (Video) {
+  video.value = Video.value
+  data.value = Video.value.video_details_in_seconds
+  course.value = Video.value.course
+  teacher.value = Video.value.course.teacher
+  syllabus.value = Video.value.course.syllabus
 }
-
-// Cargar datos al montar el componente
-onMounted(() => {
-  loadVideoData()
-})
-
-// SEO Metadata
-useSeoMeta({
-  title: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy',
-  description: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
-  keywords: 'Gratis, Hacking, Wireshark, Hacker, Python, Android, Informática, Seguridad, Academy, Online, Cursos, JavaScript',
-  ogType: 'website',
-  ogUrl: () => `https://backtrackacademy.com/video/${route.params.slug}`,
-  ogTitle: () => course.value?.titulo ? `${course.value.titulo} - Backtrack Academy` : 'Backtrack Academy - Videos de Hacking Ético',
-  ogDescription: () => course.value?.descripcion || 'Únete gratis y comienza a aprender seguridad informática desde cero con los mejores hackers.',
-  ogImage: 'https://backtrack-academy-01.s3.amazonaws.com/OpenGraph+Facebook.png',
-  twitterCard: 'summary_large_image',
-})
+function addPercentage(percentage: number) {
+  useAPI('/details/add_percentage', {
+    method: 'POST',
+    body: {
+      detail_id: video.value?.id,
+      percent: percentage * 100,
+    },
+  })
+}
 </script>
 
 <template>
   <section class="bg-bta-dark-blue px-4 sm:px-6 xl:px-8">
-    <div class="lg:flex mt-2 gap-6 xl:gap-8">
+    <div class="lg:flex gap-6 xl:gap-8">
       <div class="lg:w-[70%]">
         <!-- Video player -->
         <div class="relative top-0 max-h-[calc(100vh - 52px)] mx-auto">
           <div style="padding: 56.25% 0 0 0; position: relative">
             <iframe
               v-if="video?.url"
+              ref="vimeoPlayer"
               :src="`https://player.vimeo.com/video/${video.url}?h=0eb117b38a&title=0&byline=0&portrait=0&badge=0`"
               class="absolute top-0 left-0 w-full h-full"
               frameborder="0"
@@ -98,7 +126,6 @@ useSeoMeta({
             />
           </div>
         </div>
-
         <div>
           <!-- curso Header -->
           <div class="flex items-center justify-between">
@@ -113,12 +140,12 @@ useSeoMeta({
               <!-- header content -->
               <div class="flex flex-wrap">
                 <NuxtLink
-                  v-if="course?.slug"
-                  :to="`/curso/${course.slug}`"
+                  v-if="video?.slug"
+                  :to="`/curso/${video.slug}`"
                   class="block w-full"
                 >
-                  <h2 class="text-white font-normal text-base">
-                    {{ course?.titulo }}
+                  <h2 class="text-white text-2xl font-oswald font-bold">
+                    {{ video?.titlevideo }}
                   </h2>
                 </NuxtLink>
                 <img
@@ -127,65 +154,108 @@ useSeoMeta({
                   alt=""
                   class="w-6 h-6 rounded-full mr-1"
                 >
-                <p class="text-gray-muted">
+                <p class="text-gray-muted font-inconsolata">
                   {{ teacher?.name }} {{ teacher?.lastname }}
                 </p>
               </div>
             </div>
 
-            <div>
-              <button class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2">
-                <ArrowToRight class="mr-3" />
+            <div class="flex items-center">
+              <NuxtLink
+                v-if="video?.prev"
+                :to="`/video/${video.prev.slug}`"
+                class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
+              >
+                <ArrowToRight class="mr-3 rotate-180" />
                 <span
                   class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
                   title="Definición y características de Cobalt Strike"
                 >
-                  Definición y características de Cobalt Strike
+                  {{ video?.prev.titlevideo }}
                 </span>
-              </button>
+              </NuxtLink>
+
+              <NuxtLink
+                v-if="video?.next"
+                :to="`/video/${video.next.slug}`"
+                class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
+              >
+                <span
+                  class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
+                  title="Definición y características de Cobalt Strike"
+                >
+                  {{ video?.next.titlevideo }}
+                </span>
+                <ArrowToRight class="mr-3" />
+              </NuxtLink>
             </div>
           </div>
 
-          <div class="pt-2 flex justify-between">
-            <!-- header class -->
-            <div class="flex items-center">
-              <h1 class="text-2xl text-white font-bold leading-9 my-4 font-oswald">
-                {{ video?.titlevideo }}
-              </h1>
-              <span class="text-[#cacaca] ml-3">1/20</span>
-            </div>
-          </div>
-
-          <div class="text-white">
-            <h3 class="mb-1 font-inconsolata font-semibold">
+          <div class="text-white font-inconsolata">
+            <h3 class="text-xl text-white leading-9 my-4 font-oswald">
               Resumen del curso
             </h3>
-            <div class="flex flex-wrap gap-3 font-inconsolata mb-2">
-              <strong>01:40 hrs</strong>
-              <div>84 personas han estudiado este curso.</div>
+            <div>
+              <p>
+                {{ course?.descripcion }}
+              </p>
+              <div class="flex flex-1 gap-4 mt-2">
+                <p>
+                  Duración del curso {{ formatTime(course?.total_duration_seconds) }}
+                </p>
+                <p>
+                  Tiempo estudiado {{ video?.time_studied_text }}
+                </p>
+                <p>{{ video?.videos_finish }} / {{ video?.number_videos }} videos completados</p>
+                <div>
+                  <p v-if="course?.students > 1">
+                    {{ formatNumber(course?.students) }} personas han estudiado este curso.
+                  </p>
+                  <p v-else-if="course?.students === 1">
+                    {{ course?.students }} persona ha estudiado este curso.
+                  </p>
+                  <p v-else>
+                    Sé el primero en estudiar este curso.
+                  </p>
+                </div>
+              </div>
             </div>
-            <p class="font-inconsolata">
-              Los ciberdelincuentes son cada vez más astutos y capaces de evadir los sistemas de defensa más sofisticados. Por eso debemos ser proactivos a través de nuestras redes para detectar y aislar amenazas avanzadas que puedan evadir nuestros sistemas de defensa.
-            </p>
           </div>
+          <h3 class="text-xl text-white leading-9 my-4 font-oswald">
+            Tu avance
+          </h3>
+          <BarChart
+            :data="data"
+            index="name"
+            :categories="['total', 'predicted']"
+            :colors="['#141224', '#EC1075']"
+            :y-formatter="(tick) => {
+              if (typeof tick === 'number') {
+                const minutes = Math.floor(tick / 60);
+                const seconds = tick % 60;
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+              }
+              return '';
+            }"
+          />
         </div>
       </div>
 
       <div class="lg:w-[30%]">
         <!-- badge -->
-        <div class="text-[#cacaca] text-center mb-5">
+        <div class="text-white text-center my-8">
           <p class="font-inconsolata">
             Has estudiado
           </p>
           <p class="font-oswald font-medium text-6xl mb-3">
-            0%
+            {{ video?.course_advance }} %
           </p>
           <p class="font-inconsolata">
-            del curso <span class="text-white">Threat Hunting</span>
+            del curso <span class="text-white">{{ course?.titulo }}</span>
           </p>
           <br>
           <p class="font-inconsolata">
-            Tienes 3 oportunidades
+            Tienes 0 oportunidades
           </p>
         </div>
         <!-- Temario -->
@@ -198,7 +268,7 @@ useSeoMeta({
             :key="theme.titulo + i"
             class="mb-3"
           >
-            <h3 class="text-gray-100 font-inconsolata py-2">
+            <h3 class="text-gray-muted font-inconsolata py-2">
               {{ theme.titulo }}
             </h3>
             <div v-for="(video, i) in theme.videos" :key="video.slug + i">
