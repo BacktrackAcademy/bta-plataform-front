@@ -2,6 +2,8 @@
 import type { Course } from '~/interfaces/courses.response'
 
 defineProps<{ course: Course }>()
+
+const { convertToHours } = useFormatter()
 </script>
 
 <template>
@@ -50,12 +52,18 @@ defineProps<{ course: Course }>()
           <!-- Card footer -->
           <div class="flex justify-between items-center">
             <p class="font-inconsolata text-sm text-gray-400">
-              {{ course.total_duration_text }}
+              {{ convertToHours(course.total_duration_text) }}
             </p>
-            <div v-if="course.price === 0 || course.price === null" class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
+            <div
+              v-if="course.price === 0 || course.price === null"
+              class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
+            >
               Gratis
             </div>
-            <div v-else class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out bg-bta-pink/95 hover:bg-bta-pink text-white">
+            <div
+              v-else
+              class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
+            >
               $ {{ course.price }}
             </div>
           </div>
@@ -98,5 +106,16 @@ defineProps<{ course: Course }>()
   animation: glitch-effect 2s infinite linear alternate-reverse;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
   text-shadow: 2px 0 #00fff9;
+}
+
+/* Animación suave para el precio */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05) translateY(-0.25rem);
 }
 </style>
