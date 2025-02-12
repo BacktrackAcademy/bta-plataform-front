@@ -148,31 +148,31 @@ function addPercentage(percentage: number) {
 
             <div class="flex items-center">
               <NuxtLink
-                v-if="video?.next"
-                :to="`/video/${video.next.slug}`"
-                class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
-              >
-                <ArrowToRight class="mr-3" />
-                <span
-                  class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
-                  title="Definición y características de Cobalt Strike"
-                >
-                  {{ video?.next.titlevideo }}
-                </span>
-              </NuxtLink>
-
-              <NuxtLink
                 v-if="video?.prev"
                 :to="`/video/${video.prev.slug}`"
                 class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
               >
-                <ArrowToRight class="mr-3" />
+                <ArrowToRight class="mr-3 rotate-180" />
                 <span
                   class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
                   title="Definición y características de Cobalt Strike"
                 >
                   {{ video?.prev.titlevideo }}
                 </span>
+              </NuxtLink>
+
+              <NuxtLink
+                v-if="video?.next"
+                :to="`/video/${video.next.slug}`"
+                class="flex items-center bg-bta-pink text-white hover:bg-bta-pink/90 px-3 py-2 w-[144px] rounded-[8px] mr-2"
+              >
+                <span
+                  class="uppercase text-left text-sm font-bold w-[137px] text-ellipsis whitespace-nowrap overflow-hidden"
+                  title="Definición y características de Cobalt Strike"
+                >
+                  {{ video?.next.titlevideo }}
+                </span>
+                <ArrowToRight class="mr-3" />
               </NuxtLink>
             </div>
           </div>
