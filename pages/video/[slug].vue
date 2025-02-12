@@ -140,12 +140,12 @@ function addPercentage(percentage: number) {
               <!-- header content -->
               <div class="flex flex-wrap">
                 <NuxtLink
-                  v-if="course?.slug"
-                  :to="`/curso/${course.slug}`"
+                  v-if="video?.slug"
+                  :to="`/curso/${video.slug}`"
                   class="block w-full"
                 >
                   <h2 class="text-white text-2xl font-oswald font-bold">
-                    {{ course?.titulo }}
+                    {{ video?.titlevideo }}
                   </h2>
                 </NuxtLink>
                 <img
@@ -188,15 +188,6 @@ function addPercentage(percentage: number) {
                 </span>
                 <ArrowToRight class="mr-3" />
               </NuxtLink>
-            </div>
-          </div>
-
-          <div class="pt-2 flex justify-between">
-            <!-- header class -->
-            <div class="flex items-center">
-              <h1 class="text-2xl text-white leading-9 my-4 font-oswald">
-                {{ video?.titlevideo }}
-              </h1>
             </div>
           </div>
 
@@ -252,7 +243,7 @@ function addPercentage(percentage: number) {
 
       <div class="lg:w-[30%]">
         <!-- badge -->
-        <div class="text-[#cacaca] text-center my-8">
+        <div class="text-white text-center my-8">
           <p class="font-inconsolata">
             Has estudiado
           </p>
