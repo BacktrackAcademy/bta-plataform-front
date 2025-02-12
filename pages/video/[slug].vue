@@ -42,6 +42,21 @@ const vimeoPlayer = ref<HTMLIFrameElement | null>(null)
 let player: Player | null = null
 const videoDuration = ref<number>(0)
 
+function formatTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const remainingSeconds = seconds % 60
+
+  return [
+    hours > 0 ? String(hours).padStart(2, '0') : '00',
+    String(minutes).padStart(2, '0'),
+    String(remainingSeconds).padStart(2, '0'),
+  ].join(':')
+}
+
+function formatNumber(value: number): string {
+  return new Intl.NumberFormat('en-US').format(value)
+}
 function initVimeoPlayer() {
   if (!vimeoPlayer.value)
     return
@@ -111,7 +126,6 @@ function addPercentage(percentage: number) {
             />
           </div>
         </div>
-
         <div>
           <!-- curso Header -->
           <div class="flex items-center justify-between">
@@ -183,31 +197,42 @@ function addPercentage(percentage: number) {
               <h1 class="text-2xl text-white leading-9 my-4 font-oswald">
                 {{ video?.titlevideo }}
               </h1>
-              <span class="text-[#cacaca] ml-3">1/20</span>
             </div>
           </div>
 
-          <div class="text-white">
-            <h3 class="mb-1 font-inconsolata font-semibold">
+          <div class="text-white font-inconsolata">
+            <h3 class="text-xl text-white leading-9 my-4 font-oswald">
               Resumen del curso
             </h3>
-            <div class="flex flex-wrap gap-3 font-inconsolata mb-2">
-              <strong>01:40 hrs</strong>
-              <div v-if="course?.students > 1">
-                {{ course?.students }} personas han estudiado este curso.
-              </div>
-              <div v-else-if="course?.students === 1">
-                {{ course?.students }} persona ha estudiado este curso.
-              </div>
-              <div v-else>
-                Sé el primero en estudiar este curso.
+            <div>
+              <p>
+                {{ course?.descripcion }}
+              </p>
+              <div class="flex flex-1 gap-4 mt-2">
+                <p>
+                  Duración del curso {{ formatTime(course?.total_duration_seconds) }}
+                </p>
+                <p>
+                  Tiempo estudiado {{ video?.time_studied_text }}
+                </p>
+                <p>{{ video?.videos_finish }} / {{ video?.number_videos }} videos completados</p>
+                <div>
+                  <p v-if="course?.students > 1">
+                    {{ formatNumber(course?.students) }} personas han estudiado este curso.
+                  </p>
+                  <p v-else-if="course?.students === 1">
+                    {{ course?.students }} persona ha estudiado este curso.
+                  </p>
+                  <p v-else>
+                    Sé el primero en estudiar este curso.
+                  </p>
+                </div>
               </div>
             </div>
-            <p class="font-inconsolata">
-              {{ course?.descripcion }}
-            </p>
           </div>
-          {{ videoDuration }}
+          <h3 class="text-xl text-white leading-9 my-4 font-oswald">
+            Tu avance
+          </h3>
           <BarChart
             :data="data"
             index="name"
@@ -232,14 +257,14 @@ function addPercentage(percentage: number) {
             Has estudiado
           </p>
           <p class="font-oswald font-medium text-6xl mb-3">
-            0%
+            {{ video?.course_advance }} %
           </p>
           <p class="font-inconsolata">
             del curso <span class="text-white">{{ course?.titulo }}</span>
           </p>
           <br>
           <p class="font-inconsolata">
-            Tienes 3 oportunidades
+            Tienes 0 oportunidades
           </p>
         </div>
         <!-- Temario -->
@@ -252,7 +277,7 @@ function addPercentage(percentage: number) {
             :key="theme.titulo + i"
             class="mb-3"
           >
-            <h3 class="text-gray-100 font-inconsolata py-2">
+            <h3 class="text-gray-muted font-inconsolata py-2">
               {{ theme.titulo }}
             </h3>
             <div v-for="(video, i) in theme.videos" :key="video.slug + i">
