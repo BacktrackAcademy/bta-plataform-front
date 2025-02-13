@@ -220,7 +220,7 @@ useSeoMeta({
   >
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-6 uppercase font-semibold">
-        Cursos de hacking ético {{ categorySelected }}
+        Cursos de hacking ético
       </h1>
       <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6 ">
         <!-- Sección de cursos -->
