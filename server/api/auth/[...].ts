@@ -62,16 +62,44 @@ export default NuxtAuthHandler({
     strategy: 'jwt',
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account }) {
+      if (account?.provider === 'github') {
+        try {
+          const response = await fetch(`${process.env.NUXT_PUBLIC_API_BASE_URL}/api/v1/auth/github/callback|`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${account.access_token}`,
+            },
+            body: JSON.stringify({ provider: 'github', access_token: account.access_token }),
+          })
+
+          if (!response.ok) {
+            console.error('Failed to authenticate with backend:', response.status, await response.text())
+            return false
+          }
+
+          const data = await response.json()
+          user.backendToken = data.token // Token del backend
+        }
+        catch (error) {
+          console.error('Backend authentication error:', error)
+          return false
+        }
+      }
       return true
     },
+
     async session({ session, token }) {
       session.user = token.user
+      session.backendToken = token.backendToken
       return session
     },
+
     async jwt({ token, user }) {
       if (user) {
         token.user = user
+        token.backendToken = user.backendToken
       }
       return token
     },
