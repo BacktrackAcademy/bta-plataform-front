@@ -9,7 +9,7 @@ definePageMeta({
 })
 
 const searchQuery = ref('')
-const teacherSelected = ref<string[]>([])
+const selectedTeachers = ref<string[]>([])
 const levelSelected = ref<string[]>([])
 const categorySelected = ref<string[]>([])
 
@@ -46,9 +46,9 @@ async function loadMoreCourses() {
         page: currentPage.value,
         per_page: perPage.value,
         query: searchQuery.value,
-        users_ids: teacherSelected.value,
-        category_ids: categorySelected.value,
-        level_ids: levelSelected.value,
+        users_ids: selectedTeachers.value.join(','),
+        category_ids: categorySelected.value.join(','),
+        level_ids: levelSelected.value.join(','),
       },
     })
 
@@ -108,7 +108,7 @@ function handleScroll(event: Event) {
 }
 
 // Usar watch para reaccionar a cambios en los filtros
-watch([searchQuery, teacherSelected, levelSelected, categorySelected], () => {
+watch([searchQuery, selectedTeachers, levelSelected, categorySelected], () => {
   handleSearch()
 })
 
@@ -125,8 +125,28 @@ onUnmounted(() => {
   }
 })
 
-function handleTeacherSelected(newSelected: string[]) {
-  teacherSelected.value = newSelected
+function handleTeacherClick(teacherId: string) {
+  if (!teacherId) {
+    console.warn('El ID del profesor es inválido:', teacherId)
+    return
+  }
+
+  const isTeacherSelected = selectedTeachers.value.includes(teacherId)
+
+  if (isTeacherSelected) {
+    selectedTeachers.value = selectedTeachers.value.filter(id => id !== teacherId)
+  }
+  else {
+    selectedTeachers.value = [...selectedTeachers.value, teacherId]
+  }
+
+  applyFilters()
+}
+
+function applyFilters() {
+  // Aquí puedes agregar cualquier lógica adicional necesaria después de cambiar los filtros
+  // Por ejemplo, disparar una nueva búsqueda o actualizar la interfaz
+  handleSearch()
 }
 
 function handleCategorySelected(newSelected: string[]) {
@@ -201,7 +221,7 @@ useSeoMeta({
       <h1 class="text-white text-3xl font-oswald mb-6 uppercase font-semibold">
         Cursos de hacking ético
       </h1>
-      <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6">
+      <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6 ">
         <!-- Sección de cursos -->
         <div
           v-if="isLoading && !courses.courses.length"
@@ -210,6 +230,14 @@ useSeoMeta({
           <div class="text-center">
             <Icon name="mingcute:loading-fill" class="text-bta-pink animate-spin size-6" />
             <p>Cargando cursos...</p>
+          </div>
+        </div>
+        <div
+          v-else-if="!isLoading && courses.courses.length === 0 && (searchQuery || selectedTeachers.length || levelSelected.length || categorySelected.length)"
+          class="w-full flex-1 min-h-[calc(100vh-200px)] grid place-items-center"
+        >
+          <div class="text-center">
+            <p>No se encontraron cursos que coincidan con los filtros</p>
           </div>
         </div>
 
@@ -226,45 +254,68 @@ useSeoMeta({
         </div>
 
         <!-- Filtros -->
-        <div class="space-y-4 max-w-[290px] w-full">
-          <div class="relative flex-1">
-            <label class="text-sm font-medium mb-2 block">Cursos</label>
-            <Input
-              v-model="searchQuery"
-              class="placeholder:font-inconsolata"
-              placeholder="Buscar cursos..."
-            />
-          </div>
+        <div class="h-[200px]">
+          <div class="space-y-4 max-w-[290px] w-full sticky top-10">
+            <div class="relative flex-1">
+              <label class="text-sm font-medium mb-2 block">Cursos</label>
+              <Input
+                v-model="searchQuery"
+                class="placeholder:font-inconsolata"
+                placeholder="Buscar cursos..."
+              />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium mb-2 block">Categorías</label>
-            <MultiSelect
-              class-name="font-inconsolata"
-              :options="formattedCategories || []"
-              :selected="categorySelected"
-              placeholder="Categorías"
-              search-placeholder="Buscar categorías..."
-              @change="handleCategorySelected"
-            />
-          </div>
-          <div>
-            <label class="text-sm font-medium mb-2 block">Niveles</label>
-            <MultiSelect
-              class-name="font-inconsolata"
-              :options="formattedLevels || []"
-              :selected="levelSelected"
-              placeholder="Niveles"
-              search-placeholder="Buscar niveles..."
-              @change="handleLevelSelected"
-            />
-          </div>
+            <div>
+              <label class="text-sm font-medium mb-2 block">Categorías</label>
+              <MultiSelect
+                class-name="font-inconsolata"
+                :options="formattedCategories || []"
+                :selected="categorySelected"
+                placeholder="Categorías"
+                search-placeholder="Buscar categorías..."
+                @change="handleCategorySelected"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium mb-2 block">Niveles</label>
+              <MultiSelect
+                class-name="font-inconsolata"
+                :options="formattedLevels || []"
+                :selected="levelSelected"
+                placeholder="Niveles"
+                search-placeholder="Buscar niveles..."
+                @change="handleLevelSelected"
+              />
+            </div>
 
-          <Button
-            class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
-            @click="handleSearch"
-          >
-            Buscar
-          </Button>
+            <Button
+              class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
+              @click="handleSearch"
+            >
+              Buscar
+            </Button>
+            <!-- Profesores -->
+            <div class="space-y-2">
+              <h3 class="font-medium mb-4">
+                Profesores
+              </h3>
+              <div class="space-y-1">
+                {{ selectedTeachers.value }}
+                <button
+                  v-for="teacher in formattedTeachers"
+                  :key="teacher.value"
+                  class="w-full text-left px-3 py-2 rounded-md text-sm transition-colors" :class="[
+                    selectedTeachers.includes(teacher.value)
+                      ? 'bg-primary text-primary-foreground'
+                      : 'hover:bg-secondary',
+                  ]"
+                  @click="handleTeacherClick(teacher.value)"
+                >
+                  {{ teacher.label }} {{ teacher.value }}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
