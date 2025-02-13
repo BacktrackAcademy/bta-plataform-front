@@ -117,9 +117,9 @@ async function handleSubmit() {
           </div>
         </div>
         <div class="mt-2">
-          <p class="px-8 text-center text-xs">
+          <p class="px-8 text-center text-xs text-secondary">
             ¿Ya tienes una Cuenta?
-            <RouterLink to="/login" class="hover:underline underline-offset-4 hover:text-primary">
+            <RouterLink to="/login" class="hover:underline underline-offset-4 hover:text-blue-500">
               Conectarse
             </RouterLink>
           </p>
