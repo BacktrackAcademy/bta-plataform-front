@@ -35,6 +35,7 @@ const isLoading = ref(false)
 const scrollContainer = ref<HTMLElement | null>(null)
 
 async function loadMoreCourses() {
+  console.log(categorySelected.value)
   if (isLoading.value || !hasMore.value)
     return
 
@@ -43,12 +44,12 @@ async function loadMoreCourses() {
   try {
     const { data: coursesData } = await useAPI<CoursesResponse>('/courses', {
       params: {
-        page: currentPage.value,
-        per_page: perPage.value,
-        query: searchQuery.value,
-        users_ids: selectedTeachers.value.join(','),
-        category_ids: categorySelected.value.join(','),
-        level_ids: levelSelected.value.join(','),
+        'page': currentPage.value,
+        'per_page': perPage.value,
+        'query': searchQuery.value,
+        'users_ids[]': selectedTeachers.value,
+        'category_ids[]': categorySelected.value,
+        'level_ids[]': levelSelected.value,
       },
     })
 
@@ -219,7 +220,7 @@ useSeoMeta({
   >
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-6 uppercase font-semibold">
-        Cursos de hacking ético
+        Cursos de hacking ético {{ categorySelected }}
       </h1>
       <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6 ">
         <!-- Sección de cursos -->
