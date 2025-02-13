@@ -6,6 +6,7 @@ interface Props {
 defineProps<Props>()
 const emit = defineEmits<{
   register: [userInfo: { email: string, password: string }]
+  socialLogin: [provider: 'github' | 'linkedin']
 }>()
 
 const showPassword = ref(false)
@@ -17,6 +18,10 @@ const userInfo = ref({
 
 function handleSubmit() {
   emit('register', userInfo.value)
+}
+
+function handleSocialLogin(provider: 'github' | 'linkedin') {
+  emit('socialLogin', provider)
 }
 </script>
 
@@ -71,17 +76,17 @@ function handleSubmit() {
             </span>
           </div>
         </div>
-        <div class="mt-2">
+        <div class="mt-2 text-gray-500">
           <div class="text-xs justify-between flex">
-            <RouterLink to="/registro" class="hover:text-primary">
+            <RouterLink to="/registro" class="text-gray-500 hover:text-blue-500">
               Registrarse
             </RouterLink>
-            <RouterLink to="/reenviar-email" class="hover:text-primary">
+            <RouterLink to="/reenviar-email" class="text-gray-500 hover:text-blue-500">
               ¿No recibió mensaje de confirmación?
             </RouterLink>
           </div>
           <div class="text-xs my-2">
-            <RouterLink to="/olvide-contrasena" class="hover:text-primary">
+            <RouterLink to="/olvide-contrasena" class="text-gray-500 hover:text-blue-500">
               ¿Olvidaste tu contraseña?
             </RouterLink>
           </div>
@@ -94,6 +99,36 @@ function handleSubmit() {
       >
         {{ buttonText }}
       </button>
+
+      <div class="relative w-full">
+        <div class="absolute inset-0 flex items-center">
+          <span class="w-full border-t" />
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-white px-2 text-muted-foreground">
+            O continuar con
+          </span>
+        </div>
+      </div>
+
+      <div class="flex gap-4 w-full">
+        <button
+          type="button"
+          class="flex-1 flex items-center justify-center gap-2 py-2 border rounded-xl bg-gray-50 text-secondary hover:bg-gray-100"
+          @click="handleSocialLogin('github')"
+        >
+          <Icon name="mdi:github" class="size-5 text-black" />
+          GitHub
+        </button>
+        <button
+          type="button"
+          class="flex-1 flex items-center justify-center gap-2 py-2 border rounded-xl bg-gray-50 text-secondary hover:bg-gray-100"
+          @click="handleSocialLogin('linkedin')"
+        >
+          <Icon name="mdi:linkedin" class="size-5 text-[#0A66C2]" />
+          LinkedIn
+        </button>
+      </div>
     </form>
   </div>
 </template>

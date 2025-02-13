@@ -1,6 +1,8 @@
 import process from 'node:process'
 import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GithubProvider from 'next-auth/providers/github'
+import LinkedInProvider from 'next-auth/providers/linkedin'
 
 export default NuxtAuthHandler({
   // Replace the weak default secret with a strong environment variable
@@ -43,6 +45,16 @@ export default NuxtAuthHandler({
           throw new Error('Server error')
         }
       },
+    }),
+    // @ts-expect-error You need to use .default here for it to work during SSR
+    GithubProvider.default({
+      clientId: process.env.NUXT_PUBLIC_GITHUB_ID,
+      clientSecret: process.env.NUXT_PUBLIC_GITHUB_SECRET,
+    }),
+    // @ts-expect-error You need to use .default here for it to work during SSR
+    LinkedInProvider.default({
+      clientId: process.env.NUXT_PUBLIC_LINKEDIN_KEY,
+      clientSecret: process.env.NUXT_PUBLIC_LINKEDIN_SECRET,
     }),
   ],
   // Add session configuration if needed
