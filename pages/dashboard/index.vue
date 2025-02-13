@@ -39,11 +39,7 @@ function getAvatarUrl(name: string): string {
 }
 
 const { data: coursesHistory, status: coursesHistoryStatus } = useAPI<CoursesHistory>('/courses/history')
-const { data: degrees, status: _degreeStatus, error } = useAPI<Degree[]>('/degrees')
-
-if (error) {
-  console.error('Error al cargar los grados:', error)
-}
+const { data: degrees, status: _degreeStatus } = useAPI<Degree[]>('/degrees')
 
 // SEO Metadata
 useSeoMeta({
