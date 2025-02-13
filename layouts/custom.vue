@@ -57,7 +57,7 @@
       </ul>
       <!-- Info Area (Cuéntanos tu opinión) -->
       <div class="absolute bottom-0">
-        <section class="bg-[#1e2229] rounded-lg h-fit layout-info m-6 hidden lg:block">
+        <section class="bg-[#0E1224] rounded-lg h-fit layout-info m-6 hidden lg:block">
           <div class="p-4">
             <div class="flex items-center gap-3 text-white mb-2">
               <Icon name="radix-icons:chat-bubble" class="w-5 h-5" />
