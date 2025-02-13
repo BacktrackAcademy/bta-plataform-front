@@ -26,6 +26,22 @@ async function loginUser(credentials: Record<string, any>) {
     error.value = err.message || 'Error al iniciar sesión'
   }
 }
+
+async function handleSocialLogin(provider: 'github' | 'linkedin') {
+  error.value = null
+  try {
+    const result = await signIn(provider, {
+      callbackUrl: '/dashboard',
+    })
+
+    if (result?.error) {
+      throw new Error(result.error)
+    }
+  }
+  catch (err: any) {
+    error.value = err.message || `Error al iniciar sesión con ${provider}`
+  }
+}
 </script>
 
 <template>
@@ -49,7 +65,11 @@ async function loginUser(credentials: Record<string, any>) {
           <p v-if="error" class="text-red-500 lg:mb-3 mb-1">
             {{ error }}
           </p>
-          <UserAuthForm button-text="Iniciar sesión" @register="loginUser" />
+          <UserAuthForm
+            button-text="Iniciar sesión"
+            @register="loginUser"
+            @social-login="handleSocialLogin"
+          />
         </div>
       </div>
     </div>
