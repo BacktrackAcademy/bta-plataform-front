@@ -35,7 +35,7 @@ function handleSubmit() {
           <input
             id="email"
             v-model="userInfo.email"
-            class="pl-2 outline-none border-none w-full"
+            class="pl-2 outline-none border-none w-full text-secondary"
             type="email"
             placeholder="mail@example.com"
             required
@@ -54,7 +54,7 @@ function handleSubmit() {
               <input
                 id="password"
                 v-model="userInfo.password"
-                class="pl-2 outline-none border-none w-full"
+                class="pl-2 outline-none border-none w-full text-secondary"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="Ingresar contraseña"
                 required

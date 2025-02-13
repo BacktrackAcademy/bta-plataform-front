@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Course from '@/components/courses/Course.vue'
+import CourseCard from '@/components/courses/CourseCard.vue'
 import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
@@ -156,7 +156,7 @@ useSeoMeta({
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex">
-            <Course :course="course" />
+            <CourseCard :course="course" />
           </div>
         </div>
       </div>

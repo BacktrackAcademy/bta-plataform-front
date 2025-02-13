@@ -6,9 +6,14 @@ import { cn } from '@/lib/utils'
 import { X } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 
+interface Option {
+  value: string
+  label: string
+}
+
 // Definición de las props
 const props = defineProps<{
-  options: { value: string, label: string }[]
+  options: Option[]
   selected: string[]
   placeholder?: string
   searchPlaceholder?: string

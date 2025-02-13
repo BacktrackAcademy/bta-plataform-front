@@ -1,74 +1,203 @@
 <script setup lang="ts">
-import Course from '@/components/courses/Course.vue'
-import { Skeleton } from '~/components/ui/skeleton'
+import type { CoursesResponse } from '~/interfaces/courses.response'
+import CourseCard from '@/components/courses/CourseCard.vue'
+import { Input } from '@/components/ui/input'
 
 definePageMeta({
   layout: 'custom',
   auth: true,
 })
 
-interface CoursesHistory {
-  number_courses: number
-  progress_percentage: number
-  total_length: string
-  total_viewed: string
-}
+const searchQuery = ref('')
+const selectedTeachers = ref<string[]>([])
+const levelSelected = ref<string[]>([])
+const categorySelected = ref<string[]>([])
 
-// interface Degree {
-//   id: number
-//   name: string
-//   description: string
-// }
+const perPage = ref(6)
 
-// const { data: courses, status } = await useAPI<Course[]>('/courses')
-const teacherSelected = ref<string[]>([])
+const { data: teachers, status: _teachersStatus } = useAPI('/teacher')
+const { data: levels, status: _levelsStatus } = useAPI('/level')
+const { data: categories, status: _categoriesStatus } = useAPI('/category')
 
-const { data: teachers, status: teachersStatus } = await useAPI<Teacher[]>('/teacher')
-const { data: levels, status: levelsStatus } = await useAPI<Level[]>('/level')
-const { data: categories, status: categoriesStatus } = await useAPI<Category[]>('/category')
-const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses', {
-  params: {
-    teacher_id: teacherSelected.value, // assuming you are using the selected teacher ID as a parameter
+const courses = ref<CoursesResponse>({
+  courses: [],
+  pagination: {
+    current_page: 1,
+    per_page: 10,
+    total_entries: 0,
+    total_pages: 0,
   },
 })
-const { data: degree, status: degreeStatus } = await useAPI<Degree>('/degrees')
 
-// Transformar la lista de teachers al formato esperado por el componente
-const formattedTeachers = teachers.value?.map(teacher => ({
-  value: teacher.id,
-  label: `${teacher.name} ${teacher.lastname}`,
-}))
+const currentPage = ref(1)
+const hasMore = ref(true)
+const isLoading = ref(false)
+const scrollContainer = ref<HTMLElement | null>(null)
 
-function handleTeacherSelected(newSelected: string[]) {
-  teacherSelected.value = newSelected
+async function loadMoreCourses() {
+  if (isLoading.value || !hasMore.value)
+    return
+
+  isLoading.value = true
+
+  try {
+    const { data: coursesData } = await useAPI<CoursesResponse>('/courses', {
+      params: {
+        page: currentPage.value,
+        per_page: perPage.value,
+        query: searchQuery.value,
+        users_ids: selectedTeachers.value.join(','),
+        category_ids: categorySelected.value.join(','),
+        level_ids: levelSelected.value.join(','),
+      },
+    })
+
+    if (coursesData.value) {
+      courses.value = {
+        courses: [...courses.value.courses, ...coursesData.value.courses],
+        pagination: coursesData.value.pagination,
+      }
+
+      const { current_page, total_pages } = coursesData.value.pagination
+      hasMore.value = current_page < total_pages
+      currentPage.value++
+    }
+  }
+  catch (err) {
+    console.error('Error cargando cursos:', err)
+  }
+  finally {
+    isLoading.value = false
+  }
 }
 
-const categorySelected = ref<string[]>([])
-const formattedCategories = categories.value?.map(category => ({
-  value: category.id,
-  label: category.name,
-}))
+async function handleSearch() {
+  if (isLoading.value)
+    return
+
+  courses.value = {
+    courses: [],
+    pagination: {
+      current_page: 1,
+      per_page: perPage.value,
+      total_entries: 0,
+      total_pages: 0,
+    },
+  }
+  currentPage.value = 1
+  hasMore.value = true
+
+  // Scroll al inicio
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = 0
+  }
+
+  await loadMoreCourses()
+}
+
+function handleScroll(event: Event) {
+  if (!hasMore.value || isLoading.value)
+    return
+
+  const container = event.target as HTMLElement
+  const { scrollTop, scrollHeight, clientHeight } = container
+
+  if (scrollTop + clientHeight >= scrollHeight - 100) {
+    loadMoreCourses()
+  }
+}
+
+// Usar watch para reaccionar a cambios en los filtros
+watch([searchQuery, selectedTeachers, levelSelected, categorySelected], () => {
+  handleSearch()
+})
+
+onMounted(() => {
+  loadMoreCourses()
+  if (scrollContainer.value) {
+    scrollContainer.value.addEventListener('scroll', handleScroll)
+  }
+})
+
+onUnmounted(() => {
+  if (scrollContainer.value) {
+    scrollContainer.value.removeEventListener('scroll', handleScroll)
+  }
+})
+
+function handleTeacherClick(teacherId: string) {
+  if (!teacherId) {
+    console.warn('El ID del profesor es inválido:', teacherId)
+    return
+  }
+
+  const isTeacherSelected = selectedTeachers.value.includes(teacherId)
+
+  if (isTeacherSelected) {
+    selectedTeachers.value = selectedTeachers.value.filter(id => id !== teacherId)
+  }
+  else {
+    selectedTeachers.value = [...selectedTeachers.value, teacherId]
+  }
+
+  applyFilters()
+}
+
+function applyFilters() {
+  // Aquí puedes agregar cualquier lógica adicional necesaria después de cambiar los filtros
+  // Por ejemplo, disparar una nueva búsqueda o actualizar la interfaz
+  handleSearch()
+}
+
 function handleCategorySelected(newSelected: string[]) {
   categorySelected.value = newSelected
 }
 
-const formattedLevels = levels.value?.map(level => ({
-  value: level.id,
-  label: level.name,
-}))
-const levelSelected = ref<string[]>([])
 function handleLevelSelected(newSelected: string[]) {
   levelSelected.value = newSelected
 }
 
-const formattedDegree = degree.value?.map(degree => ({
-  value: degree.id,
-  label: degree.name,
-}))
-const degreeSelected = ref<string[]>([])
-function handleDegreeSelected(newSelected: string[]) {
-  degreeSelected.value = newSelected
+interface Option {
+  value: string
+  label: string
 }
+
+interface Teacher {
+  id: string
+  name: string
+  lastname: string
+}
+
+interface Category {
+  id: string
+  name: string
+}
+
+interface Level {
+  id: string
+  name: string
+}
+
+const formattedTeachers = computed<Option[]>(() =>
+  (teachers.value as Teacher[] || []).map(teacher => ({
+    value: teacher.id,
+    label: `${teacher.name} ${teacher.lastname}`,
+  })),
+)
+
+const formattedCategories = computed<Option[]>(() =>
+  (categories.value as Category[] || []).map(category => ({
+    value: category.id,
+    label: category.name,
+  })),
+)
+
+const formattedLevels = computed<Option[]>(() =>
+  (levels.value as Level[] || []).map(level => ({
+    value: level.id,
+    label: level.name,
+  })),
+)
 
 // SEO Metadata
 useSeoMeta({
@@ -84,149 +213,111 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full py-8 p-16">
+  <div
+    ref="scrollContainer"
+    class="w-full py-8 px-4 h-[calc(100vh-64px)] overflow-y-auto"
+  >
     <div class="lg:h-full">
-      <div>
-        <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
-          Cursos de hacking ético
-        </h1>
-        <!-- Filters -->
-        <div class="flex flex-col lg:flex-row items-center justify-normal gap-4 mb-7">
-          <MultiSelect
-            :options="formattedTeachers || []"
-            :selected="teacherSelected"
-            placeholder="Docente"
-            search-placeholder="Buscar docentes..."
-            @change="handleTeacherSelected"
-          />
-
-          <MultiSelect
-            :options="formattedCategories || []"
-            :selected="categorySelected"
-            placeholder="Categorías"
-            search-placeholder="Buscar categorías..."
-            @change="handleCategorySelected"
-          />
-
-          <MultiSelect
-            :options="formattedLevels || []"
-            :selected="levelSelected"
-            placeholder="Niveles"
-            search-placeholder="Buscar niveles..."
-            @change="handleLevelSelected"
-          />
-
-          <MultiSelect
-            :options="formattedDegree || []"
-            :selected="degreeSelected"
-            placeholder="Grados"
-            search-placeholder="Buscar grados..."
-            @change="handleDegreeSelected"
-          />
-        </div>
-      </div>
-      <!-- Sección de cursos -->
-      <!-- <template v-if="status === 'pending'">
-        <div class="grid place-items-center min-h-[calc(100vh-400px)]">
-          <div class="flex flex-col items-center">
-            <IconsSpinner class="text-white" />
-            <p class="text-white font-inconsolata text-center mt-2">
-              Cargando cursos...
-            </p>
+      <h1 class="text-white text-3xl font-oswald mb-6 uppercase font-semibold">
+        Cursos de hacking ético
+      </h1>
+      <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6 ">
+        <!-- Sección de cursos -->
+        <div
+          v-if="isLoading && !courses.courses.length"
+          class="w-full flex-1 min-h-[calc(100vh-200px)] grid place-items-center"
+        >
+          <div class="text-center">
+            <Icon name="mingcute:loading-fill" class="text-bta-pink animate-spin size-6" />
+            <p>Cargando cursos...</p>
           </div>
         </div>
-      </template> -->
-      <div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div v-for="(course, i) in coursesHistory" :key="i" class="flex">
-            <Course :course="course" />
+        <div
+          v-else-if="!isLoading && courses.courses.length === 0 && (searchQuery || selectedTeachers.length || levelSelected.length || categorySelected.length)"
+          class="w-full flex-1 min-h-[calc(100vh-200px)] grid place-items-center"
+        >
+          <div class="text-center">
+            <p>No se encontraron cursos que coincidan con los filtros</p>
+          </div>
+        </div>
+
+        <div v-else class="flex-1 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 mb-40">
+          <div v-for="course in courses.courses" :key="course.id" class="flex">
+            <CourseCard :course="course" />
+          </div>
+
+          <!-- Indicador de carga al final -->
+          <div v-if="isLoading" class="col-span-full py-4 text-center">
+            <Icon name="mingcute:loading-fill" class="text-bta-pink animate-spin size-6" />
+            <p>Cargando más cursos...</p>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="h-[200px]">
+          <div class="space-y-4 max-w-[290px] w-full sticky top-10">
+            <div class="relative flex-1">
+              <label class="text-sm font-medium mb-2 block">Cursos</label>
+              <Input
+                v-model="searchQuery"
+                class="placeholder:font-inconsolata"
+                placeholder="Buscar cursos..."
+              />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium mb-2 block">Categorías</label>
+              <MultiSelect
+                class-name="font-inconsolata"
+                :options="formattedCategories || []"
+                :selected="categorySelected"
+                placeholder="Categorías"
+                search-placeholder="Buscar categorías..."
+                @change="handleCategorySelected"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium mb-2 block">Niveles</label>
+              <MultiSelect
+                class-name="font-inconsolata"
+                :options="formattedLevels || []"
+                :selected="levelSelected"
+                placeholder="Niveles"
+                search-placeholder="Buscar niveles..."
+                @change="handleLevelSelected"
+              />
+            </div>
+
+            <Button
+              class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
+              @click="handleSearch"
+            >
+              Buscar
+            </Button>
+            <!-- Profesores -->
+            <div class="space-y-2">
+              <h3 class="font-medium mb-4">
+                Profesores
+              </h3>
+              <div class="space-y-1">
+                {{ selectedTeachers.value }}
+                <button
+                  v-for="teacher in formattedTeachers"
+                  :key="teacher.value"
+                  class="w-full text-left px-3 py-2 rounded-md text-sm transition-colors" :class="[
+                    selectedTeachers.includes(teacher.value)
+                      ? 'bg-primary text-primary-foreground'
+                      : 'hover:bg-secondary',
+                  ]"
+                  @click="handleTeacherClick(teacher.value)"
+                >
+                  {{ teacher.label }} {{ teacher.value }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.glitch {
-  position: relative;
-  cursor: pointer;
-}
-
-.glitch:hover::before,
-.glitch:hover::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch:hover::before {
-  animation: glitch-effect 3s infinite linear alternate-reverse;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-  text-shadow: -2px 0 #ff00c1;
-}
-
-.glitch:hover::after {
-  animation: glitch-effect 2s infinite linear alternate-reverse;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  text-shadow: 2px 0 #00fff9;
-}
-
-@keyframes glitch-effect {
-  0% { transform: translateX(-2px); }
-  25% { transform: translateX(2px); }
-  50% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
-  100% { transform: translateX(-2px); }
-}
-
-.searcher__input{
-    transition: .5s;
-  }
-.searcher__input:focus{
-  transform: translateX(-25px);
-}
-
-@media (min-width: 1440px) {
-  .searcher__input:focus{
-    transform: translateX(-34px);
-  }
-}
-.searcher__icon{
-  transition: .5s;
-}
-.searcher__input:focus ~ .searcher__icon{
-  transform: translateX(-50px);
-  opacity: 0;
-}
-
-.main-label {
-  @apply text-[1em] cursor-pointer;
-}
-.main-label span{
-  @apply inline-block relative h-[1.2em] w-[1.2em] bg-gray-muted rounded-full transition-all duration-700;
-}
-.main-label input {
-  opacity: 0;
-}
-.main-label input:checked ~ span {
-  box-shadow: 0px 0px 30px 0px #EC1075;
-}
-
-.main-label input:checked ~ span:before {
-  content: "";
-  position: absolute;
-  background-color: #EC1075;
-  width: 1.2em;
-  height: 1.2em;
-  overflow: hidden;
-  border-radius: 50%;
-  transition: .3s ease;
-}
-.main-label input:checked ~ span:after {
-  opacity: 1;
-}
-</style>
