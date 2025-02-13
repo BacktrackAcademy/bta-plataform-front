@@ -18,6 +18,9 @@ interface Degree {
   id: number
   name: string
   description: string
+  level: string
+  count_courses: string
+  all_time: string
 }
 
 // Función para formatear las horas de manera redondeada
@@ -31,12 +34,12 @@ function formatTime(timeString: string | undefined): string {
   return `${totalHours}`
 }
 // Función para obtener la URL del avatar
-function getAvatarUrl(name) {
+function getAvatarUrl(name: string): string {
   return `https://ui-avatars.com/api/?background=141224&color=fff&name=${encodeURIComponent(name)}`
 }
 
-const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses/history')
-const { data: Degree, status: DegreeStatus } = await useAPI<Degree>('/degrees')
+const { data: coursesHistory, status: coursesHistoryStatus } = useAPI<CoursesHistory>('/courses/history')
+const { data: degrees, status: _degreeStatus } = useAPI<Degree[]>('/degrees')
 
 // SEO Metadata
 useSeoMeta({
@@ -52,7 +55,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full py-8 p-16">
+  <div class="w-full py-8 px-8">
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
         Cursos de hacking ético
@@ -123,17 +126,52 @@ useSeoMeta({
       </div>
       <!-- Descubre las escuelas -->
       <section className="space-y-4">
-        <h2 class="text-white text-lg font-oswald my-4">
+        <h2 class="text-white text-lg font-oswald tracking-normal my-4">
           Descubre nuestras especialidades
         </h2>
-        <div class="flex items-center gap-y-4 gap-4">
+        <div class="flex items-center gap-y-4 gap-4 rounded-md overflow-x-auto flex-nowrap pb-4">
           <div
-            v-for="(degree, i) in Degree" :key="i"
-            class="flex flex-col items-center gap-y-4 gap-4 justify-center rounded-md p-4 space-y-2"
+            v-for="(degree, i) in degrees"
+            :key="i"
+            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl px-5 py-3 shadow-lg transition-all duration-200 ease-in-out transform hover:shadow-lg hover:-translate-y-1 min-w-64 group"
           >
-            <div class="items-center">
-              <div class="rounded-full overflow-hidden border-2 border-bta-pink hover:bg-bta-dark-blue w-14 h-14">
-                <img :src="getAvatarUrl(degree.name)">
+            <!-- Avatar -->
+            <div class="rounded-full overflow-hidden border-2 border-bta-pink w-12 h-12 shrink-0 transition-transform hover:scale-105">
+              <img
+                :src="getAvatarUrl(degree?.name)"
+                :alt="`Avatar for ${degree?.name}`"
+                class="w-full h-full object-cover"
+              >
+            </div>
+
+            <!-- Content -->
+            <div class="flex flex-col justify-center space-y-1">
+              <!-- Title -->
+              <span class="font-oswald font-semibold text-base uppercase text-white">
+                {{ degree?.name }}
+              </span>
+
+              <!-- Badge for Level -->
+              <span
+                class="px-2.5 py-0.5 bg-bta-pink text-white tracking-tighter font-inconsolata text-sm rounded-full max-w-fit transition-colors group-hover:bg-gradient-to-r from-bta-pink to-rose-500"
+              >
+                {{ degree?.level }}
+              </span>
+
+              <!-- Details -->
+              <div class="flex flex-col space-y-1">
+                <div class="flex items-center">
+                  <Icon name="lucide:book-audio" class="size-4 mr-1 text-gray-muted" />
+                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
+                    {{ degree?.count_courses }} cursos
+                  </span>
+                </div>
+                <div class="flex items-center">
+                  <Icon name="lucide:clock" class="size-4 mr-1 text-gray-muted" />
+                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
+                    {{ degree?.all_time }} horas
+                  </span>
+                </div>
               </div>
             </div>
           </div>
