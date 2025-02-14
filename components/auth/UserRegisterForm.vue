@@ -50,7 +50,7 @@ async function handleSubmit() {
           <input
             id="email"
             v-model="userInfo.email"
-            class="pl-2 outline-none border-none w-full"
+            class="pl-2 outline-none border-none w-full text-secondary"
             type="email"
             placeholder="mail@example.com"
             required
@@ -69,7 +69,7 @@ async function handleSubmit() {
               <input
                 id="password"
                 v-model="userInfo.password"
-                class="pl-2 outline-none border-none w-full"
+                class="pl-2 outline-none border-none w-full text-secondary"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="Ingresar contraseña"
                 required
@@ -99,7 +99,7 @@ async function handleSubmit() {
               <input
                 id="password_confirmation"
                 v-model="userInfo.password_confirmation"
-                class="pl-2 outline-none border-none w-full"
+                class="pl-2 outline-none border-none w-full text-secondary"
                 :type="showPasswordConfirmation ? 'text' : 'password'"
                 placeholder="Reingresar contraseña"
                 required
