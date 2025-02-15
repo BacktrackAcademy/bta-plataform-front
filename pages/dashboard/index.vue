@@ -176,23 +176,13 @@ useSeoMeta({
         </div>
       </section>
       <!-- Sección de cursos -->
-      <template v-if="coursesHistoryStatus === 'pending'">
-        <div class="grid place-items-center min-h-[calc(100vh-400px)]">
-          <div class="flex flex-col items-center">
-            <IconsSpinner class="text-white" />
-            <p class="text-white font-inconsolata text-center mt-2">
-              Cargando cursos...
-            </p>
-          </div>
-        </div>
-      </template>
-      <div v-else>
+      <div>
         <h2 class="text-white text-lg font-oswald my-4 mt-8">
           Continuar estudiando...
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex">
-            <CourseCard :course="course" />
+            <CourseCard :course="course" :course-pending="true" :status="coursesHistoryStatus === 'pending'" />
           </div>
         </div>
       </div>

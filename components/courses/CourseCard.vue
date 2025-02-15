@@ -1,73 +1,108 @@
 <script setup lang="ts">
 import type { Course } from '~/interfaces/courses.response'
+import { Skeleton } from '~/components/ui/skeleton'
 
-defineProps<{ course: Course }>()
+defineProps<{ course: Course, status: CoursePending }>()
 
 const { convertToHours } = useFormatter()
 </script>
 
 <template>
   <div class="w-full max-w-[300px] h-full shadow-lg shadow-bta-dark-blue/50 hover:shadow-xl transition-shadow duration-300 ease-in-out">
-    <NuxtLink
-      :to="`/curso/${course?.slug}`"
-      class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
+    <div v-if="status" class="flex flex-col h-full bg-bta-dark-blue rounded-lg overflow-hidden p-4">
+      <!-- Skeleton para la imagen -->
+      <div class="relative h-0 pb-[56.25%] overflow-hidden rounded-lg bg-gray-700">
+        <Skeleton class="absolute inset-0 w-full h-full" />
+      </div>
+
+      <!-- Contenido de la tarjeta -->
+      <div class="flex-grow flex flex-col p-4">
+        <!-- Título y profesor -->
+        <div class="mb-4">
+          <Skeleton class="h-6 w-3/4 mb-2" />
+          <Skeleton class="h-4 w-1/2" />
+        </div>
+
+        <!-- Separador -->
+        <div class="mt-2 h-1 w-12 bg-bta-pink animate-pulse" />
+
+        <!-- Descripción -->
+        <div class="mt-3 space-y-2">
+          <Skeleton class="h-4 w-full" />
+          <Skeleton class="h-4 w-2/3" />
+        </div>
+
+        <!-- Precio -->
+        <div class="mt-auto flex justify-end">
+          <Skeleton class="h-10 w-16 rounded-lg" />
+        </div>
+      </div>
+    </div>
+    <div
+      v-else
+      class=""
     >
-      <div class="flex flex-col h-full bg-bta-dark-blue rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
-        <!-- Image -->
-        <figure class="relative h-0 pb-[56.25%] overflow-hidden">
-          <img
-            class="absolute inset-0 w-full h-full object-cover transform hover:scale-110 transition-transform duration-700 ease-out"
-            :src="course.image_thumb"
-            width="320"
-            height="180"
-            :alt="course.titulo"
-            loading="lazy"
-          >
-        </figure>
-        <!-- Card Content -->
-        <div class="flex-grow flex flex-col p-4">
-          <!-- Card body -->
-          <div class="flex-grow">
-            <!-- Header -->
-            <header class="mb-1">
-              <div class="glitch-parent">
-                <h3 class="text-2xl font-bold leading-tight font-oswald text-white glitch" :data-text="course.titulo">
-                  {{ course.titulo }}
-                </h3>
-              </div>
-              <div class="mt-2">
-                <p class="text-white font-inconsolata">
-                  {{ course.teacher.name }} {{ course.teacher.lastname }}
+      <NuxtLink
+        :to="`/curso/${course?.slug}`"
+        class="focus-visible:outline-2 focus-visible:outline-bta-pink focus-visible:outline-offset-2 group"
+      >
+        <div class="flex flex-col h-full bg-bta-dark-blue rounded-lg overflow-hidden transition-colors duration-300 ease-in-out">
+          <!-- Image -->
+          <figure class="relative h-0 pb-[56.25%] overflow-hidden">
+            <img
+              class="absolute inset-0 w-full h-full object-cover transform hover:scale-110 transition-transform duration-700 ease-out"
+              :src="course.image_thumb"
+              width="320"
+              height="180"
+              :alt="course.titulo"
+              loading="lazy"
+            >
+          </figure>
+          <!-- Card Content -->
+          <div class="flex-grow flex flex-col p-4">
+            <!-- Card body -->
+            <div class="flex-grow">
+              <!-- Header -->
+              <header class="mb-1">
+                <div class="glitch-parent">
+                  <h3 class="text-2xl font-bold leading-tight font-oswald text-white glitch" :data-text="course.titulo">
+                    {{ course.titulo }}
+                  </h3>
+                </div>
+                <div class="mt-2">
+                  <p class="text-white font-inconsolata">
+                    {{ course.teacher.name }} {{ course.teacher.lastname }}
+                  </p>
+                </div>
+              </header>
+              <!-- Content -->
+              <div class="mt-2 h-1 w-12 bg-bta-pink group-hover:animate-pulse" />
+              <div class="mb-6 font-inconsolata">
+                <p class="py-2 text-gray-muted">
+                  {{ course.shortdes }}
                 </p>
               </div>
-            </header>
-            <!-- Content -->
-            <div class="mt-2 h-1 w-12 bg-bta-pink group-hover:animate-pulse" />
-            <div class="mb-6 font-inconsolata">
-              <p class="py-2 text-gray-muted">
-                {{ course.shortdes }}
-              </p>
             </div>
-          </div>
-          <!-- Card footer -->
-          <div class="flex justify-between items-center">
-            <p class="text-sm text-gray-400" />
-            <div
-              v-if="course.price === 0 || course.price === null"
-              class="font-owsald text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
-            >
-              Gratis
-            </div>
-            <div
-              v-else
-              class="font-owsald text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
-            >
-              $ {{ course.price }}
+            <!-- Card footer -->
+            <div class="flex justify-between items-center">
+              <p class="text-sm text-gray-400" />
+              <div
+                v-if="course.price === 0 || course.price === null"
+                class="font-owsald text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
+              >
+                Gratis
+              </div>
+              <div
+                v-else
+                class="font-owsald text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
+              >
+                $ {{ course.price }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </NuxtLink>
+      </NuxtLink>
+    </div>
   </div>
 </template>
 
