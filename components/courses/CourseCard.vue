@@ -36,7 +36,7 @@ const { convertToHours } = useFormatter()
                 </h3>
               </div>
               <div class="mt-2">
-                <p class="text-gray-300 font-inconsolata">
+                <p class="text-white font-inconsolata">
                   {{ course.teacher.name }} {{ course.teacher.lastname }}
                 </p>
               </div>
@@ -51,18 +51,16 @@ const { convertToHours } = useFormatter()
           </div>
           <!-- Card footer -->
           <div class="flex justify-between items-center">
-            <p class="font-inconsolata text-sm text-gray-400">
-              {{ convertToHours(course.total_duration_text) }}
-            </p>
+            <p class="text-sm text-gray-400" />
             <div
               v-if="course.price === 0 || course.price === null"
-              class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
+              class="font-owsald text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
             >
               Gratis
             </div>
             <div
               v-else
-              class="font-semibold text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
+              class="font-owsald text-sm inline-flex items-center justify-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out bg-bta-pink/95 hover:bg-bta-pink hover:scale-105 hover:-translate-y-1 text-white"
             >
               $ {{ course.price }}
             </div>
