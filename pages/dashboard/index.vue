@@ -133,10 +133,10 @@ useSeoMeta({
           <div
             v-for="(degree, i) in degrees"
             :key="i"
-            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl px-5 py-3 shadow-lg transition-all duration-200 ease-in-out transform hover:shadow-lg hover:-translate-y-1 min-w-64 group"
+            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl p-6 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group"
           >
             <!-- Avatar -->
-            <div class="rounded-full overflow-hidden border-2 border-bta-pink w-12 h-12 shrink-0 transition-transform hover:scale-105">
+            <div class="rounded-full overflow-hidden border-2 border-bta-pink w-12 h-12 shrink-0 transition-transform">
               <img
                 :src="getAvatarUrl(degree?.name)"
                 :alt="`Avatar for ${degree?.name}`"
@@ -157,16 +157,16 @@ useSeoMeta({
               </div>
 
               <!-- Details -->
-              <div class="flex gap-1 space-y-1">
-                <div class="flex items-center">
-                  <Icon name="lucide:book-audio" class="size-4 mr-1 text-gray-muted" />
-                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
+              <div class="space-y-1">
+                <div class="inline-block align-middle mr-4">
+                  <Icon name="lucide:book-audio" class="size-3.5 mr-1 text-gray-muted align-middle" />
+                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter align-middle">
                     {{ degree?.count_courses }} cursos
                   </span>
                 </div>
-                <div class="flex items-center">
-                  <Icon name="lucide:clock" class="size-4 mr-1 text-gray-muted" />
-                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
+                <div class="inline-block align-middle">
+                  <Icon name="lucide:clock" class="size-3.5 mr-1 text-gray-muted align-middle" />
+                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter align-middle">
                     {{ degree?.all_time }} horas
                   </span>
                 </div>
