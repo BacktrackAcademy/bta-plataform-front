@@ -37,7 +37,7 @@
 
         <li class="px-4 lg:w-full">
           <NuxtLink
-            to="/dashboard"
+            to="/mi-progreso"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:bar-chart" class="size-6" />
