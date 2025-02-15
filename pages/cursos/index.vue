@@ -215,7 +215,7 @@ useSeoMeta({
 <template>
   <div
     ref="scrollContainer"
-    class="w-full py-8 px-4 h-[calc(100vh-64px)] overflow-y-auto"
+    class="w-full py-8 px-16 h-[calc(100vh-64px)] overflow-y-auto"
   >
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-6 uppercase font-semibold">
@@ -243,7 +243,7 @@ useSeoMeta({
           </div>
         </div>
 
-        <div v-else class="flex-1 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 mb-40">
+        <div v-else class="flex-1 grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-4 mb-80">
           <div v-for="course in courses.courses" :key="course.id" class="flex">
             <CourseCard :course="course" />
           </div>
