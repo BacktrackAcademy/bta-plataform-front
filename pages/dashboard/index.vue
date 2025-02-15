@@ -142,7 +142,7 @@ useSeoMeta({
       </section>
       <!-- Sección de cursos -->
       <div>
-        <h2 class="text-white text-lg font-oswald my-4 mt-8">
+        <h2 class="text-white text-lg font-oswald my-4">
           Continuar estudiando...
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
