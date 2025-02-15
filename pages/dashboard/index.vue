@@ -147,19 +147,17 @@ useSeoMeta({
             <!-- Content -->
             <div class="flex flex-col justify-center space-y-1">
               <!-- Title -->
-              <span class="font-oswald font-semibold text-base uppercase text-white">
-                {{ degree?.name }}
-              </span>
-
-              <!-- Badge for Level -->
-              <span
-                class="px-2.5 py-0.5 bg-bta-pink text-white tracking-tighter font-inconsolata text-sm rounded-full max-w-fit transition-colors group-hover:bg-gradient-to-r from-bta-pink to-rose-500"
-              >
-                {{ degree?.level }}
-              </span>
+              <div class="items-center">
+                <span class="font-oswald font-semibold text-xl text-white block">  {{ degree?.name }}</span>
+                <span
+                  class="px-2.5 py-0.5 bg-bta-pink text-white tracking-tighter font-inconsolata text-sm rounded-full max-w-fit transition-colors group-hover:bg-gradient-to-r from-bta-pink to-rose-500"
+                >
+                  {{ degree?.level }}
+                </span>
+              </div>
 
               <!-- Details -->
-              <div class="flex flex-col space-y-1">
+              <div class="flex gap-1 space-y-1">
                 <div class="flex items-center">
                   <Icon name="lucide:book-audio" class="size-4 mr-1 text-gray-muted" />
                   <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
