@@ -40,7 +40,7 @@ function getAvatarUrl(name: string): string {
 }
 
 const { data: coursesHistory, status: coursesHistoryStatus } = useAPI<CoursesHistory>('/courses/history')
-const { data: degrees, status: _degreeStatus } = useAPI<Degree[]>('/degrees')
+const { data: degrees, status: degreeStatus } = useAPI<Degree[]>('/degrees')
 
 // SEO Metadata
 useSeoMeta({
@@ -136,7 +136,7 @@ useSeoMeta({
             :key="i"
             class="bg-bta-dark-blue flex items-center gap-3 rounded-xl p-2 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group"
           >
-            <DegreeCard :degree="degree" :status="_degreeStatus === 'pending'" />
+            <DegreeCard :degree="degree" :status="degreeStatus === 'pending'" />
           </div>
         </div>
       </section>

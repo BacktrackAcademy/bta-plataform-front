@@ -7,7 +7,24 @@ function getAvatarUrl(name: string): string {
 </script>
 
 <template>
-  <div class="bg-bta-dark-blue flex items-start gap-4 rounded-xl px-3 py-3 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group">
+  <div v-if="status" class="w-full max-w-md bg-bta-dark-blue rounded-xl shadow-lg p-6 flex items-center gap-4 relative overflow-hidden">
+    <!-- Avatar Skeleton -->
+    <div class="w-12 h-12 rounded-full border-2 border-bta-pink flex items-cestnter justify-center bg-bta-dark-blue" />
+
+    <!-- Texto Skeleton -->
+    <div class="flex-1">
+      <div class="mb-2">
+        <Skeleton class="h-6 w-4/4" />
+      </div>
+
+      <!-- Indicadores de cursos y tiempo -->
+      <div class="flex items-center gap-4 mt-3">
+        <Skeleton class="h-5 w-16" />
+        <Skeleton class="h-5 w-24" />
+      </div>
+    </div>
+  </div>
+  <div v-else class="bg-bta-dark-blue flex items-start gap-4 rounded-xl px-3 py-3 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group">
     <!-- Avatar -->
     <div class="rounded-full overflow-hidden border-2 border-bta-pink w-12 h-12 shrink-0 transition-transform mt-1">
       <img
