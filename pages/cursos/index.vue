@@ -259,7 +259,7 @@ useSeoMeta({
         <div class="h-[200px]">
           <div class="space-y-4 max-w-[290px] w-full sticky top-10">
             <div class="relative flex-1">
-              <label class="text-sm font-medium mb-2 block">Cursos</label>
+              <label class="text-sm font-medium mb-2 font-oswald block">Cursos</label>
               <Input
                 v-model="searchQuery"
                 class="placeholder:font-inconsolata"
@@ -268,7 +268,7 @@ useSeoMeta({
             </div>
 
             <div>
-              <label class="text-sm font-medium mb-2 block">Categorías</label>
+              <label class="text-sm font-medium mb-2 font-oswald block">Categorías</label>
               <MultiSelect
                 class-name="font-inconsolata"
                 :options="formattedCategories || []"
@@ -279,7 +279,7 @@ useSeoMeta({
               />
             </div>
             <div>
-              <label class="text-sm font-medium mb-2 block">Niveles</label>
+              <label class="text-sm font-medium mb-2 font-oswald block">Niveles</label>
               <MultiSelect
                 class-name="font-inconsolata"
                 :options="formattedLevels || []"
@@ -290,15 +290,9 @@ useSeoMeta({
               />
             </div>
 
-            <Button
-              class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
-              @click="handleSearch"
-            >
-              Buscar
-            </Button>
             <!-- Profesores -->
             <div class="space-y-2">
-              <h3 class="font-medium mb-4">
+              <h3 class="text-sm font-medium mb-2 font-oswald">
                 Profesores
               </h3>
               <div class="space-y-1 font-inconsolata">
@@ -317,6 +311,13 @@ useSeoMeta({
                 </button>
               </div>
             </div>
+
+            <Button
+              class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
+              @click="handleSearch"
+            >
+              Buscar
+            </Button>
           </div>
         </div>
       </div>
