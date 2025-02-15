@@ -35,7 +35,6 @@ const isLoading = ref(false)
 const scrollContainer = ref<HTMLElement | null>(null)
 
 async function loadMoreCourses() {
-  console.log(categorySelected.value)
   if (isLoading.value || !hasMore.value)
     return
 
@@ -230,7 +229,9 @@ useSeoMeta({
         >
           <div class="text-center">
             <Icon name="mingcute:loading-fill" class="text-bta-pink animate-spin size-6" />
-            <p>Cargando cursos...</p>
+            <p class="text-inconsolata">
+              Cargando cursos...
+            </p>
           </div>
         </div>
         <div
@@ -300,7 +301,7 @@ useSeoMeta({
               <h3 class="font-medium mb-4">
                 Profesores
               </h3>
-              <div class="space-y-1">
+              <div class="space-y-1 font-inconsolata">
                 {{ selectedTeachers.value }}
                 <button
                   v-for="teacher in formattedTeachers"
@@ -312,7 +313,7 @@ useSeoMeta({
                   ]"
                   @click="handleTeacherClick(teacher.value)"
                 >
-                  {{ teacher.label }} {{ teacher.value }}
+                  {{ teacher.label }}
                 </button>
               </div>
             </div>
