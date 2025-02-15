@@ -6,7 +6,7 @@ const { timeAgo } = useFormatter()
 </script>
 
 <template>
-  <article class="max-w-3xl rounded-xl bg-bta-dark-blue p-8 drop-shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-800 mx-auto">
+  <article class="max-w-3xl rounded-xl bg-bta-dark-blue p-8 drop-shadow-xl hover:shadow-2xl transition-all duration-300">
     <!-- Header -->
     <header class="flex items-center mb-4">
       <picture class="rounded-full overflow-hidden h-12 w-12 mr-3 border-2 border-bta-pink">
@@ -36,7 +36,7 @@ const { timeAgo } = useFormatter()
     </h2>
     <div class="text-gray-300 font-inconsolata prose-sm max-w-none leading-relaxed" v-html="discussion.body" />
     <!-- footer -->
-    <footer class="mt-8 pt-4 border-t border-gray-800">
+    <footer class="mt-8 pt-4">
       <NuxtLink
         class="text-gray-400 font-inconsolata text-sm hover:text-bta-pink transition-colors flex items-center gap-2"
         :to="`/debates/${discussion.slug}`"

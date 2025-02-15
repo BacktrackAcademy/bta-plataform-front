@@ -35,7 +35,6 @@ const isLoading = ref(false)
 const scrollContainer = ref<HTMLElement | null>(null)
 
 async function loadMoreCourses() {
-  console.log(categorySelected.value)
   if (isLoading.value || !hasMore.value)
     return
 
@@ -216,7 +215,7 @@ useSeoMeta({
 <template>
   <div
     ref="scrollContainer"
-    class="w-full py-8 px-4 h-[calc(100vh-64px)] overflow-y-auto"
+    class="w-full py-8 px-16 h-[calc(100vh-64px)] overflow-y-auto"
   >
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-6 uppercase font-semibold">
@@ -230,7 +229,9 @@ useSeoMeta({
         >
           <div class="text-center">
             <Icon name="mingcute:loading-fill" class="text-bta-pink animate-spin size-6" />
-            <p>Cargando cursos...</p>
+            <p class="text-inconsolata">
+              Cargando cursos...
+            </p>
           </div>
         </div>
         <div
@@ -242,7 +243,7 @@ useSeoMeta({
           </div>
         </div>
 
-        <div v-else class="flex-1 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 mb-40">
+        <div v-else class="flex-1 grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-4 mb-80">
           <div v-for="course in courses.courses" :key="course.id" class="flex">
             <CourseCard :course="course" />
           </div>
@@ -258,7 +259,7 @@ useSeoMeta({
         <div class="h-[200px]">
           <div class="space-y-4 max-w-[290px] w-full sticky top-10">
             <div class="relative flex-1">
-              <label class="text-sm font-medium mb-2 block">Cursos</label>
+              <label class="text-sm font-medium mb-2 font-oswald block">Cursos</label>
               <Input
                 v-model="searchQuery"
                 class="placeholder:font-inconsolata"
@@ -267,7 +268,7 @@ useSeoMeta({
             </div>
 
             <div>
-              <label class="text-sm font-medium mb-2 block">Categorías</label>
+              <label class="text-sm font-medium mb-2 font-oswald block">Categorías</label>
               <MultiSelect
                 class-name="font-inconsolata"
                 :options="formattedCategories || []"
@@ -278,7 +279,7 @@ useSeoMeta({
               />
             </div>
             <div>
-              <label class="text-sm font-medium mb-2 block">Niveles</label>
+              <label class="text-sm font-medium mb-2 font-oswald block">Niveles</label>
               <MultiSelect
                 class-name="font-inconsolata"
                 :options="formattedLevels || []"
@@ -289,18 +290,12 @@ useSeoMeta({
               />
             </div>
 
-            <Button
-              class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
-              @click="handleSearch"
-            >
-              Buscar
-            </Button>
             <!-- Profesores -->
             <div class="space-y-2">
-              <h3 class="font-medium mb-4">
+              <h3 class="text-sm font-medium mb-2 font-oswald">
                 Profesores
               </h3>
-              <div class="space-y-1">
+              <div class="space-y-1 font-inconsolata">
                 {{ selectedTeachers.value }}
                 <button
                   v-for="teacher in formattedTeachers"
@@ -312,10 +307,17 @@ useSeoMeta({
                   ]"
                   @click="handleTeacherClick(teacher.value)"
                 >
-                  {{ teacher.label }} {{ teacher.value }}
+                  {{ teacher.label }}
                 </button>
               </div>
             </div>
+
+            <Button
+              class="rounded-md bg-bta-pink px-8 py-2 text-primary hover:bg-bta-pink/90"
+              @click="handleSearch"
+            >
+              Buscar
+            </Button>
           </div>
         </div>
       </div>

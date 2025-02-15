@@ -18,7 +18,7 @@
         <li class="px-4 lg:w-full">
           <NuxtLink
             to="/dashboard"
-            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
+            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:home" class="size-6" />
             <span class="text-sm hidden md:inline-block">Inicio</span>
@@ -28,7 +28,7 @@
         <li class="px-4 lg:w-full">
           <NuxtLink
             to="/cursos"
-            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
+            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:card-stack" class="size-6" />
             <span class="text-sm hidden md:inline-block">Mis cursos</span>
@@ -37,8 +37,8 @@
 
         <li class="px-4 lg:w-full">
           <NuxtLink
-            to="/dashboard"
-            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
+            to="/mi-progreso"
+            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:bar-chart" class="size-6" />
             <span class="text-sm hidden md:inline-block">Mi progreso</span>
@@ -47,17 +47,17 @@
 
         <li class="px-4 lg:w-full">
           <NuxtLink
-            to="/dashboard"
-            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
+            to="/articulos"
+            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:bell" class="size-6" />
-            <span class="text-sm hidden md:inline-block">Notificaciones</span>
+            <span class="text-sm hidden md:inline-block">Artículos</span>
           </NuxtLink>
         </li>
         <li class="px-4 lg:w-full">
           <NuxtLink
             to="/debates"
-            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-[#c4c8ce] hover:text-white transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
+            class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
             <Icon name="radix-icons:chat-bubble" class="size-6" />
             <span class="text-sm hidden md:inline-block">Debates</span>

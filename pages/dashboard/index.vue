@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CourseCard from '@/components/courses/CourseCard.vue'
+import DegreeCard from '~/components/courses/DegreeCard.vue'
 import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
@@ -39,7 +40,7 @@ function getAvatarUrl(name: string): string {
 }
 
 const { data: coursesHistory, status: coursesHistoryStatus } = useAPI<CoursesHistory>('/courses/history')
-const { data: degrees, status: _degreeStatus } = useAPI<Degree[]>('/degrees')
+const { data: degrees, status: degreeStatus } = useAPI<Degree[]>('/degrees')
 
 // SEO Metadata
 useSeoMeta({
@@ -129,72 +130,24 @@ useSeoMeta({
         <h2 class="text-white text-lg font-oswald tracking-normal my-4">
           Descubre nuestras especialidades
         </h2>
-        <div class="flex items-center gap-y-4 gap-4 rounded-md overflow-x-auto flex-nowrap pb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full h-full">
           <div
             v-for="(degree, i) in degrees"
             :key="i"
-            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl px-5 py-3 shadow-lg transition-all duration-200 ease-in-out transform hover:shadow-lg hover:-translate-y-1 min-w-64 group"
+            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl p-2 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group"
           >
-            <!-- Avatar -->
-            <div class="rounded-full overflow-hidden border-2 border-bta-pink w-12 h-12 shrink-0 transition-transform hover:scale-105">
-              <img
-                :src="getAvatarUrl(degree?.name)"
-                :alt="`Avatar for ${degree?.name}`"
-                class="w-full h-full object-cover"
-              >
-            </div>
-
-            <!-- Content -->
-            <div class="flex flex-col justify-center space-y-1">
-              <!-- Title -->
-              <span class="font-oswald font-semibold text-base uppercase text-white">
-                {{ degree?.name }}
-              </span>
-
-              <!-- Badge for Level -->
-              <span
-                class="px-2.5 py-0.5 bg-bta-pink text-white tracking-tighter font-inconsolata text-sm rounded-full max-w-fit transition-colors group-hover:bg-gradient-to-r from-bta-pink to-rose-500"
-              >
-                {{ degree?.level }}
-              </span>
-
-              <!-- Details -->
-              <div class="flex flex-col space-y-1">
-                <div class="flex items-center">
-                  <Icon name="lucide:book-audio" class="size-4 mr-1 text-gray-muted" />
-                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
-                    {{ degree?.count_courses }} cursos
-                  </span>
-                </div>
-                <div class="flex items-center">
-                  <Icon name="lucide:clock" class="size-4 mr-1 text-gray-muted" />
-                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter">
-                    {{ degree?.all_time }} horas
-                  </span>
-                </div>
-              </div>
-            </div>
+            <DegreeCard :degree="degree" :status="degreeStatus === 'pending'" />
           </div>
         </div>
       </section>
       <!-- Sección de cursos -->
-      <template v-if="coursesHistoryStatus === 'pending'">
-        <div class="grid place-items-center min-h-[calc(100vh-400px)]">
-          <div class="flex flex-col items-center">
-            <IconsSpinner class="text-white" />
-            <p class="text-white font-inconsolata text-center mt-2">
-              Cargando cursos...
-            </p>
-          </div>
-        </div>
-      </template>
-      <div v-else>
-        <h2 class="text-white text-lg font-oswald my-4 mt-8">
+      <div>
+        <h2 class="text-white text-lg font-oswald my-4">
           Continuar estudiando...
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div v-for="(course, i) in coursesHistory?.courses" :key="i" class="flex">
-            <CourseCard :course="course" />
+            <CourseCard :course="course" :course-pending="true" :status="coursesHistoryStatus === 'pending'" />
           </div>
         </div>
       </div>
