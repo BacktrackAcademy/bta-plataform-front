@@ -3,12 +3,10 @@ import type { Course } from '~/interfaces/courses.response'
 import { Skeleton } from '~/components/ui/skeleton'
 
 defineProps<{ course: Course, status: CoursePending }>()
-
-const { convertToHours } = useFormatter()
 </script>
 
 <template>
-  <div class="w-full max-w-[300px] h-full shadow-lg shadow-bta-dark-blue/50 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+  <div class="w-full max-w-[300px] h-full transition-shadow duration-300 ease-in-out">
     <div v-if="status" class="flex flex-col h-full bg-bta-dark-blue rounded-lg overflow-hidden p-4">
       <!-- Skeleton para la imagen -->
       <div class="relative h-0 pb-[56.25%] overflow-hidden rounded-lg bg-gray-700">
