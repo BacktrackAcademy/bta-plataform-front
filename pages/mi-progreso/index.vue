@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Course from '@/components/courses/Course.vue'
 import {
   Pagination,
   PaginationEllipsis,
@@ -10,7 +9,6 @@ import {
   PaginationNext,
   PaginationPrev,
 } from '@/components/ui/pagination'
-import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
   layout: 'custom',
@@ -24,19 +22,9 @@ interface CoursesHistory {
   total_viewed: string
 }
 
-interface Degree {
-  id: number
-  name: string
-  description: string
-}
-
+// Variables reactivas para la paginación
 const currentPage = ref(1)
 const itemsPerPage = ref(4)
-
-// Función para obtener la URL del avatar
-function getAvatarUrl(name) {
-  return `https://ui-avatars.com/api/?background=141224&color=fff&name=${encodeURIComponent(name)}`
-}
 
 const { data: coursesHistory, status: coursesHistoryStatus } = await useAPI<CoursesHistory>('/courses/progress', {
   query: computed(() => ({
@@ -53,7 +41,7 @@ const totalItems = computed(() => coursesHistory.value?.total_items)
   <div class="w-full py-8 p-16">
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
-        Cursos de hacking ético
+        Mi ruta de estudio
       </h1>
       <!-- Sección de widget "mis cursos" -->
       <h2 class="text-white text-lg font-oswald mb-4" />
@@ -162,50 +150,5 @@ const totalItems = computed(() => coursesHistory.value?.total_items)
 </template>
 
 <style scoped>
-.searcher__input{
-    transition: .5s;
-  }
-.searcher__input:focus{
-  transform: translateX(-25px);
-}
 
-@media (min-width: 1440px) {
-  .searcher__input:focus{
-    transform: translateX(-34px);
-  }
-}
-.searcher__icon{
-  transition: .5s;
-}
-.searcher__input:focus ~ .searcher__icon{
-  transform: translateX(-50px);
-  opacity: 0;
-}
-
-.main-label {
-  @apply text-[1em] cursor-pointer;
-}
-.main-label span{
-  @apply inline-block relative h-[1.2em] w-[1.2em] bg-gray-muted rounded-full transition-all duration-700;
-}
-.main-label input {
-  opacity: 0;
-}
-.main-label input:checked ~ span {
-  box-shadow: 0px 0px 30px 0px #EC1075;
-}
-
-.main-label input:checked ~ span:before {
-  content: "";
-  position: absolute;
-  background-color: #EC1075;
-  width: 1.2em;
-  height: 1.2em;
-  overflow: hidden;
-  border-radius: 50%;
-  transition: .3s ease;
-}
-.main-label input:checked ~ span:after {
-  opacity: 1;
-}
 </style>
