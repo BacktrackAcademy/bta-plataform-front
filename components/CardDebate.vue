@@ -6,7 +6,7 @@ const { timeAgo } = useFormatter()
 </script>
 
 <template>
-  <article class="max-w-3xl rounded-xl bg-bta-dark-blue p-8 drop-shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-800">
+  <article class="max-w-3xl rounded-xl bg-bta-dark-blue p-8 drop-shadow-xl hover:shadow-2xl transition-all duration-300">
     <!-- Header -->
     <header class="flex items-center mb-4">
       <picture class="rounded-full overflow-hidden h-12 w-12 mr-3 border-2 border-bta-pink">
