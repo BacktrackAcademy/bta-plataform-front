@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CourseCard from '@/components/courses/CourseCard.vue'
+import DegreeCard from '~/components/courses/DegreeCard.vue'
 import { Skeleton } from '~/components/ui/skeleton'
 
 definePageMeta({
@@ -133,45 +134,9 @@ useSeoMeta({
           <div
             v-for="(degree, i) in degrees"
             :key="i"
-            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl p-6 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group"
+            class="bg-bta-dark-blue flex items-center gap-3 rounded-xl p-2 shadow-lg transition-all duration-200 ease-in-out transform min-w-64 group"
           >
-            <!-- Avatar -->
-            <div class="rounded-full overflow-hidden border-2 border-bta-pink w-12 h-12 shrink-0 transition-transform">
-              <img
-                :src="getAvatarUrl(degree?.name)"
-                :alt="`Avatar for ${degree?.name}`"
-                class="w-full h-full object-cover"
-              >
-            </div>
-
-            <!-- Content -->
-            <div class="flex flex-col justify-center space-y-1">
-              <!-- Title -->
-              <div class="items-center">
-                <span class="font-oswald font-semibold text-xl text-white block">  {{ degree?.name }}</span>
-                <span
-                  class="px-2.5 py-0.5 bg-bta-pink text-white tracking-tighter font-inconsolata text-sm rounded-full max-w-fit transition-colors group-hover:bg-gradient-to-r from-bta-pink to-rose-500"
-                >
-                  {{ degree?.level }}
-                </span>
-              </div>
-
-              <!-- Details -->
-              <div class="space-y-1">
-                <div class="inline-block align-middle mr-4">
-                  <Icon name="lucide:book-audio" class="size-3.5 mr-1 text-gray-muted align-middle" />
-                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter align-middle">
-                    {{ degree?.count_courses }} cursos
-                  </span>
-                </div>
-                <div class="inline-block align-middle">
-                  <Icon name="lucide:clock" class="size-3.5 mr-1 text-gray-muted align-middle" />
-                  <span class="font-inconsolata text-sm text-gray-muted tracking-tighter align-middle">
-                    {{ degree?.all_time }} horas
-                  </span>
-                </div>
-              </div>
-            </div>
+            <DegreeCard :degree="degree" :status="_degreeStatus === 'pending'" />
           </div>
         </div>
       </section>
