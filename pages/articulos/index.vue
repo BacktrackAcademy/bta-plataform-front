@@ -35,10 +35,11 @@ const { data: articles, status } = useAPI<ArticlesResponse>('/articles', {
       <h1 class="text-3xl font-semibold font-oswald text-white my-7">
         Noticias sobre <span class="text-bta-pink">seguridad</span>
       </h1>
-      <div>
+      <div class="flex">
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 py-5">
           <CardArticle v-for="article in articles?.data" :key="article.id" :article="article" />
         </div>
+        <div class="h-[200px]" />
       </div>
     </div>
   </main>
