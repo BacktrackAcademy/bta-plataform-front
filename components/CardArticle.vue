@@ -1,10 +1,23 @@
+<script>
+export default {
+  name: 'CardArticle',
+  props: {
+    article: {
+      type: Object,
+      required: true,
+    },
+  },
+
+}
+</script>
+
 <template>
   <article>
     <div
       class="max-w-[300px] mx-auto h-full shadow-md shadow-bta-dark-blue transition-shadow duration-500"
     >
       <NuxtLink
-        :to="'/articulos/' + article.slug"
+        :to="`/articulos/${article.slug}`"
         class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bta-pink group"
       >
         <div
@@ -14,7 +27,7 @@
           <figure class="relative h-0 pb-[56.25%] overflow-hidden">
             <NuxtImg
               class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
-              :src="article.image_thumb_variant_310"
+              :src="article.image_thumb_service"
               width="320"
               height="180"
               alt="article"
@@ -29,10 +42,8 @@
               <header class="mb-3 site-heading">
                 <div class="glitch-parent">
                   <h3
-                    class="glitch text-[22px] font-extrabold leading-snug font-oswald text-white"
+                    class="font-bold leading-snug font-oswald text-white text-2xl"
                   >
-                    <span aria-hidden="true">{{ article.title }}</span>
-                    {{ article.title }}
                     <span aria-hidden="true">{{ article.title }}</span>
                   </h3>
                 </div>
@@ -54,19 +65,6 @@
     </div>
   </article>
 </template>
-
-<script>
-export default {
-  name : 'CardArticle',
-  props: {
-    article: {
-      type: Object,
-      required: true
-    }
-  },
-
-}
-</script>
 
 <style scoped>
 .glitch:hover{
@@ -126,5 +124,4 @@ export default {
       -0.04em -0.025em 0 #fffc00;
   }
 }
-
 </style>
