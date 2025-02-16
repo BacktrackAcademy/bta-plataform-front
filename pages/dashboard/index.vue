@@ -56,7 +56,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full py-8 px-8">
+  <div class="w-full py-8 px-16">
     <div class="lg:h-full">
       <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
         Cursos de hacking ético
