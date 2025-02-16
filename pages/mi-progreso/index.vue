@@ -10,6 +10,8 @@ import {
   PaginationPrev,
 } from '@/components/ui/pagination'
 
+const props = defineProps<{ course: { certificate_url: string } }>()
+
 definePageMeta({
   layout: 'custom',
   auth: true,
@@ -73,11 +75,11 @@ const totalItems = computed(() => coursesHistory.value?.total_items)
                 </h2>
                 <div class="text-gray-muted text-sm font-inconsolata">
                   <!-- <span class="font-medium">{{ course?.number_courses }} cursos</span> - Ruta Personalizada -->
+                  <span class="font-inconsolata text-bta-pink font-medium text-sm leading-2">{{ course?.last_video_viewed?.titlevideo }}</span>
                 </div>
               </div>
             </div>
             <div class="w-full">
-              <span class="font-inconsolata text-bta-pink font-medium text-sm leading-2">{{ course?.last_video_viewed?.titlevideo }}</span>
               <div class="w-full h-2 bg-bta-blue rounded-full overflow-hidden mt-4">
                 <div
                   class="h-full rounded-full bg-gradient-to-r from-bta-pink to-rose-500 transition-all duration-500 ease-out"
@@ -85,7 +87,7 @@ const totalItems = computed(() => coursesHistory.value?.total_items)
                 />
               </div>
               <div class="mt-4 flex justify-between items-center text-sm">
-                <span v-if="course?.percent" class="text-bta-pink font-medium font-inconsolata">
+                <span v-if="course?.percent" class="text-white font-medium font-inconsolata">
                   {{ Math.round(course.percent) }}%
                 </span>
                 <div class="flex gap-1 ml-auto font-inconsolata text-white">
@@ -98,6 +100,64 @@ const totalItems = computed(() => coursesHistory.value?.total_items)
                   <span>
                     {{ course?.number_videos }}
                   </span>
+                </div>
+              </div>
+              <!-- exam -->
+              <div v-if="course.approved_exam">
+                <div class="font-inconsolata text-gray-muted text-xs py-2">
+                  <span class="block">Respondiste {{ course.number_of_answer }} preguntas</span>
+                </div>
+                <div class="bg-slate-800 rounded-lg px-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <!-- Mensaje de felicitaciones -->
+                    <div class="flex items-center gap-2 p-4">
+                      <Icon name="lucide:trophy" class="w-6 h-6 text-pink-500" />
+                      <div>
+                        <div class="text-sm font-medium text-white font-inconsolata">
+                          ¡Felicitaciones!
+                        </div>
+                        <div class="text-xs text-slate-400 font-inconsolata">
+                          Tu certificado está listo
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Botón de descarga -->
+                    <button
+                      class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 gap-2 rounded-lg flex items-center justify-center transition"
+                    >
+                      <div class="flex items-center gap-2">
+                        <Icon name="lucide:download" class="w-4 h-4" />
+                        <a
+                          :href="`https://backtrackacademy.com${course.certificate_url}`"
+                          class="btn btn-bta btn-bta-black text-xs"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Descargar
+                        </a>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <!-- Exame no aprobado -->
+                <div class="border border-bta-blue rounded-lg px-2 mt-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <!-- Mensaje de felicitaciones -->
+                    <div class="flex items-center gap-2 p-4 font-inconsolata">
+                      <Icon name="lucide:clock" class="w-6 h-6 text-pink-500" />
+                      <div>
+                        <div class="text-sm font-medium text-white">
+                          Examen pendiente
+                        </div>
+                        <div class="text-xs text-slate-400">
+                          Duración estimada: 59 minutos
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
