@@ -30,10 +30,10 @@ const { data: articles, status } = useAPI<ArticlesResponse>('/articles', {
 </script>
 
 <template>
-  <main class="bg-bta-blue px-4 sm:px-6 lg:px-8 pb-12">
-    <div class="max-w-screen-xl mx-auto">
-      <h1 class="text-3xl font-semibold font-oswald text-white my-7">
-        Noticias sobre <span class="text-bta-pink">seguridad</span>
+  <div class="w-full py-8 px-16">
+    <div class="lg:h-full">
+      <h1 class="text-white text-3xl font-oswald mb-5 uppercase font-semibold">
+        Noticias sobre seguridad
       </h1>
       <div class="flex">
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 py-5">
@@ -42,5 +42,5 @@ const { data: articles, status } = useAPI<ArticlesResponse>('/articles', {
         <div class="h-[200px]" />
       </div>
     </div>
-  </main>
+  </div>
 </template>
