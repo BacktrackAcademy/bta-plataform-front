@@ -38,6 +38,18 @@ export default NuxtAuthHandler({
             email: data.user.email,
             opportunities: data.user.opportunities,
             token: data.token,
+            lastname: data.user.lastname,
+            aboutme: data.user.aboutme,
+            headline: data.user.headline,
+            username: data.user.username,
+            birthdate: data.user.birthdate,
+            country_id: data.user.country_id,
+            avatar_url: data.user.avatar_url,
+            ranking: data.user.ranking,
+            number_followers: data.user.number_followers,
+            number_followeds: data.user.number_followeds,
+
+            validate_pay: data.validate_pay,
           }
         }
         catch (error) {
