@@ -42,7 +42,7 @@ const { data: session } = useAuth()
           </div>
         </div>
       </div>
-      <div class="mt-6 font-medium text-lg text-white">
+      <div class="mt-6 font-medium text-lg text-white font-inconsolata">
         <div class="flex flex-wrap">
           <div class="px-3 pb-3 relative">
             <span>Ranking</span>
