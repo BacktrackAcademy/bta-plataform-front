@@ -52,7 +52,7 @@ const { data: subscriptions, status: subscriptionStatus } = useAPI<Subscription[
             {{ subscription.quantity }} {{ subscription.quantity > 1 ? 'meses' : 'mes' }} de acceso
           </p>
           <span
-            class="text-3xl font-bold mt-4"
+            class="text-4xl font-bold mt-4 font-oswald"
             :class="subscription.recommended === 1 ? 'text-bta-pink' : 'text-white'"
           >
             {{ subscription.price }} USD
@@ -109,7 +109,7 @@ const { data: subscriptions, status: subscriptionStatus } = useAPI<Subscription[
 
           <!-- Botón -->
           <button
-            class="mt-6 w-full py-3 text-white font-semibold rounded-lg transition-all"
+            class="mt-6 w-full py-3 text-white font-semibold rounded-lg transition-all font-inconsolata"
             :class="{
               'bg-bta-pink hover:bg-bta-pink/90': subscription.recommended === 1,
               'bg-bta-blue hover:bg-bta-blue/90': subscription.recommended === 0,
@@ -121,7 +121,7 @@ const { data: subscriptions, status: subscriptionStatus } = useAPI<Subscription[
       </div>
 
       <!-- Nota Importante -->
-      <p class="text-center text-sm text-gray-muted mt-8">
+      <p class="text-center text-sm text-gray-muted mt-8 font-inconsolata">
         IMPORTANTE: Si tu pago recurrente está activado, las suscripciones no tienen derecho a reembolso.
         Cualquier duda, contáctanos en <span class="text-bta-pink">contacto@backtrackacademy.com</span>.
       </p>
