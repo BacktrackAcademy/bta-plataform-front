@@ -7,80 +7,98 @@ const { data: session } = useAuth()
 </script>
 
 <template>
-  <section class="min-h-screen bg-bta-section">
-    <div class="container mx-auto px-2 md:px-10 xl:px-20 w-full">
-      <div class="w-full pt-7 pb-12">
-        <h3 class="text-4xl font-semibold text-white font-oswald">
-          Mi Perfil
-        </h3>
+  <section class="h-full bg-gradient-to-b from-bta-section to-black/95">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+      <!-- Header con imagen de perfil y datos principales -->
+      <div class="relative mb-16">
+        <!-- Banner decorativo -->
+        <div class="h-48 w-full bg-gradient-to-r from-bta-pink/20 to-purple-900/20 rounded-xl" />
+
+        <!-- Contenedor de imagen y datos principales -->
+        <div class="flex flex-col md:flex-row gap-6 items-start -mt-16 px-4">
+          <!-- Imagen de perfil -->
+          <div class="md:flex-shrink-0 relative w-fit mx-auto md:mx-0">
+            <img
+              :src="session?.user?.avatar_url"
+              :alt="session?.user?.name"
+              class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white object-cover shadow-xl"
+            >
+            <NuxtLink
+              to="/perfil/editar"
+              class="absolute bottom-2 right-2 bg-bta-pink p-2 rounded-full hover:bg-bta-pink/90 transition-colors"
+              title="Editar perfil"
+            >
+              <Icon mode="svg" name="radix-icons:pencil-2" class="size-5" />
+            </NuxtLink>
+          </div>
+
+          <!-- Información principal -->
+          <div class="flex-1 text-white">
+            <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+              <div>
+                <h1 class="text-3xl font-bold font-oswald">
+                  {{ session?.user?.name }} {{ session?.user?.lastname }}
+                </h1>
+                <p class="text-bta-pink font-medium mt-1">
+                  {{ session?.user?.headline }}
+                </p>
+              </div>
+            </div>
+
+            <p class="text-gray-300 max-w-2xl font-inconsolata">
+              {{ session?.user?.aboutme }}
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div class="flex-col flex md:flex-row gap-2 sm:gap-4 lg:gap-10">
-        <!-- profile image -->
-        <div class="rounded w-1/2 md:w-1/4 mx-auto ">
-          <div class="w-40 h-40 md:w-56 md:h-56 ">
-            <img :src="session?.user?.avatar_url" class="rounded-full object-contain" :alt="session?.user?.name">
+      <!-- Estadísticas -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 px-4">
+        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+          <div class="text-bta-pink text-2xl font-bold">
+            {{ session?.user?.ranking }}
+          </div>
+          <div class="text-gray-400 text-sm">
+            Ranking
           </div>
         </div>
-        <div class="md:w-3/4 mx-auto text-white flex items-center">
-          <div class="px-4">
-            <div class="flex items-center">
-              <!-- profile name -->
-              <h2 class="m-0 text-4xl font-semibold font-oswald mb-3 pr-4">
-                {{ session?.user?.name }} {{ session?.user?.lastname }}
-              </h2>
-              <nuxt-link to="/perfil/editar">
-                <button class="btn">
-                  Editar
-                </button>
-              </nuxt-link>
-            </div>
-            <!-- profile-description -->
-            <div class="text-base pt-3 text-gray-400 font-inconsolata">
-              {{ session?.user?.aboutme }}
-            </div>
+
+        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+          <div class="text-bta-pink text-2xl font-bold">
+            0
+          </div>
+          <div class="text-gray-400 text-sm">
+            Cursos
           </div>
         </div>
-      </div>
-      <div class="mt-6 font-medium text-lg text-white font-inconsolata">
-        <div class="flex flex-wrap">
-          <div class="px-3 pb-3 relative">
-            <span>Ranking</span>
-            <div>{{ session?.user?.ranking }}</div>
+
+        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+          <div class="text-bta-pink text-2xl font-bold">
+            0
           </div>
-          <div class="px-3 pb-3 relative">
-            <span>Cursos</span>
+          <div class="text-gray-400 text-sm">
+            Preguntas
           </div>
-          <div class="px-3 pb-3 relative">
-            <span>Preguntas</span>
+        </div>
+
+        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+          <div class="text-bta-pink text-2xl font-bold">
+            {{ session?.user?.number_followers }}
           </div>
-          <div class="px-3 pb-3 relative">
-            <span>Seguidores</span>
-            <div>{{ session?.user?.number_followers }}</div>
+          <div class="text-gray-400 text-sm">
+            Seguidores
           </div>
-          <div class="px-3 pb-3 relative">
-            <span>Siguiendo</span>
-            <div>{{ session?.user?.number_followeds }}</div>
+        </div>
+
+        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+          <div class="text-bta-pink text-2xl font-bold">
+            {{ session?.user?.number_followeds }}
+          </div>
+          <div class="text-gray-400 text-sm">
+            Siguiendo
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.btn {
-  @apply px-3 py-2 md:px-5 md:py-3 text-white bg-bta-pink font-oswald text-xs md:text-base font-normal  leading-snug hover:bg-bta-pink/75 active:scale-95;
-}
-span::after {
-  @apply bg-bta-pink/50;
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  opacity: 1;
-  width: 100%;
-}
-</style>
