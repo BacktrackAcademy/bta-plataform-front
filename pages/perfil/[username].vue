@@ -29,13 +29,6 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
               :alt="user?.name"
               class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white object-cover shadow-xl"
             >
-            <NuxtLink
-              to="/perfil/editar"
-              class="absolute bottom-2 right-2 bg-bta-pink p-2 rounded-full hover:bg-bta-pink/90 transition-colors"
-              title="Editar perfil"
-            >
-              <Icon mode="svg" name="radix-icons:pencil-2" class="size-5" />
-            </NuxtLink>
           </div>
 
           <!-- Información principal -->
