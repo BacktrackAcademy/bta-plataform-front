@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const { data: session } = useAuth()
 </script>
 
 <template>
@@ -85,7 +85,15 @@
         <div>
           <!-- <input type="text" placeholder="Buscar curso" class="w-full bg-[#1e2229] border border-[#2a2f3a] rounded-sm px-3 py-1 text-white text-sm"> -->
         </div>
-        <div class="h-full flex items-center justify-end">
+        <div class="h-full flex gap-4 items-center justify-end">
+          <NuxtLink
+            v-if="!session?.user?.validate_pay"
+            to="/suscripciones"
+            class="shadow-md shadow-bta-pink/50 text-white font-oswald border-bta-pink border px-3 py-1 flex-shrink-0 hover:bg-bta-pink hover:text-white cursor-pointer"
+          >
+            Vuélvete Pro!
+          </NuxtLink>
+
           <ProfileMenu />
         </div>
       </div>
