@@ -42,7 +42,7 @@ async function handleLogout() {
       </div>
     </DropdownMenuTrigger>
 
-    <DropdownMenuContent class="w-56 bg-[#1e2229] border-[#2a2f3a] mt-2">
+    <DropdownMenuContent class="w-56 mt-2">
       <DropdownMenuItem as-child>
         <NuxtLink to="/perfil" class="flex items-center gap-2 w-full text-white">
           <Icon name="radix-icons:person" class="w-4 h-4" />
