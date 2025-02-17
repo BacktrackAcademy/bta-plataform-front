@@ -1,24 +1,29 @@
-export interface Current {
-  user: User
-}
-
 export interface User {
   id: number
   name: string
-  email: string
   username: string
-  remember_created_at: null
-  sign_in_count: number
-  current_sign_in_at: Date
-  last_sign_in_at: Date
-  current_sign_in_ip: string
-  last_sign_in_ip: string
+  email: string
+  created_at: Date
+  updated_at: Date
   lastname: string
   role_id: number
+  avatar_file_name: string
+  avatar_content_type: string
+  avatar_file_size: number
+  avatar_updated_at: Date
+  provider: string
+  uid: string
+  authentication_token: string
+  cover_file_name: null
+  cover_content_type: null
+  cover_file_size: null
+  cover_updated_at: null
   aboutme: string
   points: null
+  token_channel: string
   photo_url: string
   wizard: boolean
+  change_password: boolean
   facebook_url: string
   twitter_url: string
   linkedin_url: string
@@ -44,6 +49,7 @@ export interface User {
   postal_code: null
   company_id: null
   courses_free: CoursesFree
+  discount_coupon_id: null
   allow_search: boolean
   segment: string
   permission_degrees: any[]
@@ -59,11 +65,8 @@ export interface User {
   headline: string
   number_post: number
   avatar_url: string
-  avatar_url_medium: string
-  avatar_url_sidebar: string
   avatar_url_small: string
-  avatar_url_thumb: string
-  avatar_url_mini: string
+  full_name: string
 }
 
 export interface CoursesFree {
