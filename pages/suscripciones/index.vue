@@ -108,15 +108,17 @@ const { data: subscriptions, status: subscriptionStatus } = useAPI<Subscription[
           </ul>
 
           <!-- Botón -->
-          <button
-            class="mt-6 w-full py-3 text-white font-semibold rounded-lg transition-all font-inconsolata"
-            :class="{
-              'bg-bta-pink hover:bg-bta-pink/90': subscription.recommended === 1,
-              'bg-bta-blue hover:bg-bta-blue/90': subscription.recommended === 0,
-            }"
-          >
-            Suscribirme
-          </button>
+          <NuxtLink to="/suscripciones/tarjeta" class="block w-full">
+            <button
+              class="mt-6 w-full py-3 text-white font-semibold rounded-lg transition-all font-inconsolata"
+              :class="{
+                'bg-bta-pink hover:bg-bta-pink/90': subscription.recommended === 1,
+                'bg-bta-blue hover:bg-bta-blue/90': subscription.recommended === 0,
+              }"
+            >
+              Suscribirme
+            </button>
+          </NuxtLink>
         </div>
       </div>
 
