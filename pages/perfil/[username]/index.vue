@@ -6,9 +6,9 @@ definePageMeta({
   auth: false,
 })
 
-const config = useRuntimeConfig()
 const route = useRoute('perfil-username')
-const username = route.params.username
+const { username } = route.params
+const config = useRuntimeConfig()
 
 const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${username}`)
 </script>
@@ -52,51 +52,56 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
       </div>
 
       <!-- Estadísticas -->
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 px-4">
-        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 px-4 mb-8">
+        <NuxtLink :to="`/perfil/${username}`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.ranking }}
           </div>
           <div class="text-gray-400 text-sm">
             Ranking
           </div>
-        </div>
+        </NuxtLink>
 
-        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
-          <div class="text-bta-pink text-2xl font-bold">
-            0
-          </div>
-          <div class="text-gray-400 text-sm">
-            Cursos
-          </div>
-        </div>
-
-        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
-          <div class="text-bta-pink text-2xl font-bold">
-            0
-          </div>
-          <div class="text-gray-400 text-sm">
-            Preguntas
-          </div>
-        </div>
-
-        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+        <NuxtLink :to="`/perfil/${username}/seguidores`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.number_followers }}
           </div>
           <div class="text-gray-400 text-sm">
             Seguidores
           </div>
-        </div>
+        </NuxtLink>
 
-        <div class="bg-bta-section rounded-lg p-4 backdrop-blur-sm">
+        <NuxtLink :to="`/perfil/${username}/siguiendo`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.number_followeds }}
           </div>
           <div class="text-gray-400 text-sm">
             Siguiendo
           </div>
-        </div>
+        </NuxtLink>
+
+        <NuxtLink :to="`/perfil/${username}/cursos`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+          <div class="text-bta-pink text-2xl font-bold">
+            0
+          </div>
+          <div class="text-gray-400 text-sm">
+            Cursos
+          </div>
+        </NuxtLink>
+
+        <NuxtLink :to="`/perfil/${username}/preguntas`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+          <div class="text-bta-pink text-2xl font-bold">
+            0
+          </div>
+          <div class="text-gray-400 text-sm">
+            Preguntas
+          </div>
+        </NuxtLink>
+      </div>
+
+      <!-- Contenedor para las rutas hijas -->
+      <div class="mt-8">
+        <NuxtPage />
       </div>
     </div>
   </section>
