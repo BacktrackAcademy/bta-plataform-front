@@ -14,12 +14,12 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
 </script>
 
 <template>
-  <section class="h-full bg-gradient-to-b from-bta-section to-black/95">
+  <section class="min-h-[calc(100vh-70px)] h-auto bg-gradient-to-b from-bta-section to-black/95">
     <div class="container mx-auto px-4 py-8 max-w-7xl">
       <!-- Header con imagen de perfil y datos principales -->
       <div class="relative mb-16">
         <!-- Banner decorativo -->
-        <div class="h-48 w-full bg-gradient-to-r from-bta-pink/20 to-purple-900/20 rounded-xl" />
+        <div class="h-32 w-full bg-gradient-to-r from-bta-pink/20 to-purple-900/20 rounded-xl" />
 
         <!-- Contenedor de imagen y datos principales -->
         <div class="flex flex-col md:flex-row gap-6 items-start -mt-16 px-4">
@@ -52,8 +52,8 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
       </div>
 
       <!-- Estadísticas -->
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 px-4 mb-8">
-        <NuxtLink :to="`/perfil/${username}`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <NuxtLink :to="`/perfil/${username}`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" exact-active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.ranking }}
           </div>
@@ -71,7 +71,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
           </div>
         </NuxtLink>
 
-        <NuxtLink :to="`/perfil/${username}/siguiendo`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+        <NuxtLink :to="`/perfil/${username}/siguiendo`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" exact-active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.number_followeds }}
           </div>
@@ -98,11 +98,11 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
           </div>
         </NuxtLink>
       </div>
+    </div>
 
-      <!-- Contenedor para las rutas hijas -->
-      <div class="mt-8">
-        <NuxtPage />
-      </div>
+    <!-- Contenedor para páginas hijas -->
+    <div class="container mx-auto px-4 max-w-7xl">
+      <NuxtPage />
     </div>
   </section>
 </template>
