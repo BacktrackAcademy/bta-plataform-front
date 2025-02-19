@@ -20,7 +20,7 @@ const { data: session } = useAuth()
             to="/dashboard"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
-            <Icon name="radix-icons:home" class="size-6" />
+            <Icon name="lucide:home" class="size-6" />
             <span class="text-sm hidden md:inline-block">Inicio</span>
           </NuxtLink>
         </li>
@@ -30,7 +30,7 @@ const { data: session } = useAuth()
             to="/cursos"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
-            <Icon name="radix-icons:card-stack" class="size-6" />
+            <Icon name="lucide:book-open" class="size-6" />
             <span class="text-sm hidden md:inline-block">Mis cursos</span>
           </NuxtLink>
         </li>
@@ -40,7 +40,7 @@ const { data: session } = useAuth()
             to="/mi-progreso"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
-            <Icon name="radix-icons:bar-chart" class="size-6" />
+            <Icon name="lucide:bar-chart" class="size-6" />
             <span class="text-sm hidden md:inline-block">Mi progreso</span>
           </NuxtLink>
         </li>
@@ -50,7 +50,7 @@ const { data: session } = useAuth()
             to="/articulos"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
-            <Icon name="radix-icons:bell" class="size-6" />
+            <Icon name="lucide:file-text" class="size-6" />
             <span class="text-sm hidden md:inline-block">Artículos</span>
           </NuxtLink>
         </li>
@@ -59,7 +59,7 @@ const { data: session } = useAuth()
             to="/debates"
             class="flex items-center font-medium gap-5 pl-3 py-3 pr-1 text-white font-inconsolata transition-colors duration-200 hover:bg-[#1e2229] group rounded-sm"
           >
-            <Icon name="radix-icons:chat-bubble" class="size-6" />
+            <Icon name="lucide:message-circle" class="size-6" />
             <span class="text-sm hidden md:inline-block">Debates</span>
           </NuxtLink>
         </li>
