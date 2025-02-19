@@ -1,4 +1,5 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 
 export { default as Avatar } from './Avatar.vue'
 export { default as AvatarFallback } from './AvatarFallback.vue'
@@ -10,6 +11,7 @@ export const avatarVariant = cva(
     variants: {
       size: {
         sm: 'h-10 w-10 text-xs',
+        md: 'h-10 w-10 text-base',
         base: 'h-16 w-16 text-2xl',
         lg: 'h-32 w-32 text-5xl',
       },
