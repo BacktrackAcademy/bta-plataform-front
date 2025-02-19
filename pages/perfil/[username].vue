@@ -14,7 +14,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
 </script>
 
 <template>
-  <section class="min-h-[calc(100vh-70px)] h-auto bg-gradient-to-b from-bta-section to-black/95">
+  <section class="min-h-[calc(100vh-70px)] h-auto bg-gradient-to-b from-bta-dark-blue">
     <div class="container mx-auto px-4 py-8 max-w-7xl">
       <!-- Header con imagen de perfil y datos principales -->
       <div class="relative mb-16">
@@ -53,7 +53,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
 
       <!-- Estadísticas -->
       <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        <NuxtLink :to="`/perfil/${username}`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" exact-active-class="ring-2 ring-bta-pink">
+        <NuxtLink :to="`/perfil/${username}`" class="bg-bta-dark-blue rounded-lg p-4 backdrop-blur-sm" exact-active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.ranking }}
           </div>
@@ -62,7 +62,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
           </div>
         </NuxtLink>
 
-        <NuxtLink :to="`/perfil/${username}/seguidores`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+        <NuxtLink :to="`/perfil/${username}/seguidores`" class="bg-bta-dark-blue rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.number_followers }}
           </div>
@@ -71,7 +71,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
           </div>
         </NuxtLink>
 
-        <NuxtLink :to="`/perfil/${username}/siguiendo`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" exact-active-class="ring-2 ring-bta-pink">
+        <NuxtLink :to="`/perfil/${username}/siguiendo`" class="bg-bta-dark-blue rounded-lg p-4 backdrop-blur-sm" exact-active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             {{ user?.number_followeds }}
           </div>
@@ -80,7 +80,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
           </div>
         </NuxtLink>
 
-        <NuxtLink :to="`/perfil/${username}/cursos`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+        <NuxtLink :to="`/perfil/${username}/cursos`" class="bg-bta-dark-blue rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             0
           </div>
@@ -89,7 +89,7 @@ const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${use
           </div>
         </NuxtLink>
 
-        <NuxtLink :to="`/perfil/${username}/preguntas`" class="bg-bta-section rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
+        <NuxtLink :to="`/perfil/${username}/preguntas`" class="bg-bta-dark-blue rounded-lg p-4 backdrop-blur-sm" active-class="ring-2 ring-bta-pink">
           <div class="text-bta-pink text-2xl font-bold">
             0
           </div>
