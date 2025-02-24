@@ -1,14 +1,14 @@
-<script>
-export default {
-  name: 'CardArticle',
-  props: {
-    article: {
-      type: Object,
-      required: true,
-    },
-  },
-
+<script setup lang="ts">
+interface Article {
+  title: string
+  image_thumb_service: string
+  short: string
+  slug: string
 }
+
+defineProps<{
+  article: Article
+}>()
 </script>
 
 <template>
@@ -40,13 +40,11 @@ export default {
             <div class="flex-grow">
               <!-- Header -->
               <header class="mb-3 site-heading">
-                <div class="glitch-parent">
-                  <h3
-                    class="font-bold leading-snug font-oswald text-white text-2xl"
-                  >
-                    <span aria-hidden="true">{{ article.title }}</span>
-                  </h3>
-                </div>
+                <h3
+                  class="font-bold leading-snug font-oswald text-white text-2xl glitch" :data-text="article.title"
+                >
+                  {{ article.title }}
+                </h3>
               </header>
               <!-- Content -->
               <div class="mb-8 text-gray-muted font-inconsolata line-clamp-3">
@@ -67,61 +65,48 @@ export default {
 </template>
 
 <style scoped>
-.glitch:hover{
+@keyframes glitch-effect {
+  0% { transform: translateX(-2px); }
+  25% { transform: translateX(2px); }
+  50% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
+}
+.glitch {
   position: relative;
-  text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
-    0.025em 0.04em 0 #e7e413fd;
-  animation: glitch 725ms infinite;
+  cursor: pointer;
 }
 
-.glitch span {
+.glitch:hover::before,
+.glitch:hover::after {
+  content: attr(data-text);
   position: absolute;
-  top: 0;
   left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.glitch span:first-child {
-  animation: glitch 500ms infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-  transform: translate(-0.04em, -0.03em);
-  opacity: 0.75;
+.glitch:hover::before {
+  animation: glitch-effect 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  text-shadow: -2px 0 #ff00c1;
 }
 
-.glitch span:last-child {
-  animation: glitch 375ms infinite;
-  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-  transform: translate(0.04em, 0.03em);
-  opacity: 0.75;
+.glitch:hover::after {
+  animation: glitch-effect 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  text-shadow: 2px 0 #00fff9;
 }
 
-@keyframes glitch {
-  0% {
-    text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
-      0.025em 0.04em 0 #fffc00;
-  }
-  15% {
-    text-shadow: 0.05em 0 0 #0846ff, -0.03em -0.04em 0 #f90c0c,
-      0.025em 0.04em 0 #fffc00;
-  }
-  16% {
-    text-shadow: -0.05em -0.025em 0 #0846ff, 0.025em 0.035em 0 #f90c0c,
-      -0.05em -0.05em 0 #fffc00;
-  }
-  49% {
-    text-shadow: -0.05em -0.025em 0 #0846ff, 0.025em 0.035em 0 #f90c0c,
-      -0.05em -0.05em 0 #fffc00;
-  }
-  50% {
-    text-shadow: 0.05em 0.035em 0 #0846ff, 0.03em 0 0 #f90c0c,
-      0 -0.04em 0 #fffc00;
-  }
-  99% {
-    text-shadow: 0.05em 0.035em 0 #0846ff, 0.03em 0 0 #f90c0c,
-      0 -0.04em 0 #fffc00;
-  }
-  100% {
-    text-shadow: -0.05em 0 0 #0846ff, -0.025em -0.04em 0 #f90c0c,
-      -0.04em -0.025em 0 #fffc00;
-  }
+/* Animación suave para el precio */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05) translateY(-0.25rem);
 }
 </style>
