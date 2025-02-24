@@ -11,6 +11,19 @@ const { username } = route.params
 const config = useRuntimeConfig()
 
 const { data: user } = useFetch<User>(`${config.public.apiBaseUrl}/profile/${username}`)
+
+useSeoMeta({
+  title: () => user?.value?.name || 'Perfil de usuario',
+  description: () => user?.value?.headline || 'Perfil de usuario',
+  ogTitle: () => user?.value?.name || 'Perfil de usuario',
+  ogDescription: () => user?.value?.headline || 'Perfil de usuario',
+  ogImage: () => user?.value?.avatar_url || 'https://www.bactrackacademy.com/og-image.png',
+  ogUrl: () => `https://www.bactrackacademy.com/perfil/${username}`,
+  twitterTitle: () => user?.value?.name || 'Perfil de usuario',
+  twitterDescription: () => user?.value?.headline || 'Perfil de usuario',
+  twitterImage: () => user?.value?.avatar_url || 'https://www.bactrackacademy.com/og-image.png',
+  twitterCard: 'summary',
+})
 </script>
 
 <template>
